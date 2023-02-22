@@ -4,13 +4,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-/* sub routes */
-const campers_1 = __importDefault(require("./campers"));
-const camps_1 = __importDefault(require("./camps"));
+const campers_1 = require("../controller/campers");
 const router = express_1.default.Router();
-router.get("/", (req, res) => {
-    res.json({ message: "Welcome to the API" });
-});
-router.use('/campers', campers_1.default);
-router.use('/camps', camps_1.default);
+// router.get("/", checkAuth, getCampers)
+router.get("/", campers_1.getCampers);
+router.get("/:id", campers_1.getCamper);
 exports.default = router;
