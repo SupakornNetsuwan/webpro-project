@@ -1,0 +1,24 @@
+name: "webpro-server"
+services:
+  mysql:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: "password"
+      MYSQL_DATABASE: "webpro"
+    ports:
+      - "3306:3306"
+    volumes:
+      - webpro-volume:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: mysql
+    depends_on:
+      - mysql
+volumes:
+  webpro-volume:
