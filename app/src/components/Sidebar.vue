@@ -20,7 +20,11 @@
       </div>
       <p className="text-gray-4">คุณสามารถไปหน้าต่างๆ ได้จากเมนูดังต่อไปนี้</p>
       <ul className="list-none flex flex-col space-y-2 mt-4">
-        <li @click="$router.push(route.path)" v-for="route in routes" :class="checkCurrentRoute(route.name)">
+        <li
+          @click="$router.push(route.path)"
+          v-for="route in routes"
+          :class="checkCurrentRoute(route.name)"
+        >
           <div>
             <component :is="route.icon" class="w-6 h-6" />
           </div>
@@ -31,11 +35,14 @@
   </div>
 </template>
 <script>
-import { MapIcon, HomeIcon } from "@heroicons/vue/24/outline";
+import { MapIcon, HomeIcon, Squares2X2Icon, LightBulbIcon } from "@heroicons/vue/24/outline";
+
 export default {
   components: {
     MapIcon,
     HomeIcon,
+    Squares2X2Icon,
+
   },
   created() {},
   methods: {
@@ -53,21 +60,21 @@ export default {
       routes: [
         {
           title: "หน้าหลัก",
-          name:"landing",
-          path: "/",
+          name: "home",
+          path: "/home",
           icon: HomeIcon,
         },
         {
           title: "รวมสรุป",
-          name:"summaries",
+          name: "summaries",
           path: "/summaries",
-          icon: HomeIcon,
+          icon: Squares2X2Icon,
         },
         {
           title: "แนะนำพิเศษ",
-          name:"suggest",
+          name: "suggest",
           path: "/suggest",
-          icon: HomeIcon,
+          icon: LightBulbIcon,
         },
       ],
     };

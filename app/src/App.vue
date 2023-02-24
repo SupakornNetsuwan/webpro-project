@@ -2,7 +2,10 @@
   <div className="flex flex-col h-screen">
     <Navbar />
     <div className="flex flex-1 overflow-y-auto">
-      <div className="lg:min-w-[20em] 2xl:min-w-[30em] overflow-y-auto">
+      <div
+        v-if="$route.path != '/'"
+        className="min-w-[20em] 2xl:min-w-[30em] overflow-y-auto"
+      >
         <Sidebar />
       </div>
       <div className="w-full flex overflow-y-auto bg-gray-1">

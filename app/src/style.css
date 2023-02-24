@@ -52,5 +52,9 @@
     .current-inactive-route div:nth-child(1) {
       @apply bg-blue-soft flex p-2 text-blue-primary rounded transition-all duration-200 ease-out;
     }
+
+    .current-inactive-route:hover {
+      @apply bg-blue-soft/50  transition-all duration-200;
+    }
   }
 }

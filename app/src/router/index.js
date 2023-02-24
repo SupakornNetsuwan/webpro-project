@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory } from "vue-router"
+import Home from "../pages/Home.vue"
 import Landing from "../pages/Landing.vue"
 import Suggest from "../pages/Suggest.vue"
 import Summaries from "../pages/Summaries.vue"
@@ -8,6 +9,7 @@ import Lesson from "../pages/Lesson.vue"
 
 const routes = [
     { path: '/', name: "landing", component: Landing },
+    { path: '/home', name: "home", component: Home },
     // { path: "/posts", name: "posts" },
     { path: '/suggest', name: "suggest", component: Suggest},
     { path: '/summaries', name: "summaries", component: Summaries },
