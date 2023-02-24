@@ -36,6 +36,25 @@
     @apply px-2 py-1 rounded-lg outline-none border-solid cursor-pointer;
   }
 
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    @apply bg-gray-2/80;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-3;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-4/60;
+  }
+
   @layer components {
     .current-active-route {
       @apply bg-gradient-to-br from-blue-soft to-purple-soft;

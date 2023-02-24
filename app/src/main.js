@@ -17,6 +17,13 @@ const store = createStore({
     mutations: {
         setAuthen(state, payload) {
             state.authen = payload
+
+            if(!payload){
+                localStorage.removeItem("authen");
+            }else{
+                localStorage.setItem("authen", true);
+                
+            }
         }
     }
 })

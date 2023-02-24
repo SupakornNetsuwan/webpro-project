@@ -14,7 +14,7 @@
       className="cursor-pointer w-[10em]"
     />
     <button
-    @click="signOut"
+      @click="signOut"
       v-if="authen"
       class="bg-white border-2 border-red-primary flex items-center space-x-1"
     >
@@ -47,24 +47,24 @@ export default {
     };
   },
   mounted() {
-    console.log(this.$store.state);
+    
   },
   computed: mapState({
     // State mapper
     authen: (state) => state.authen,
-    getGlobalCount() {
+    getAuthen() {
       return this.authen;
     },
   }),
   methods: {
     signIn() {
-      localStorage.setItem("authen", true);
-      this.$store.commit("setAuthen", true)
+      this.$store.commit("setAuthen", true);
+      this.$router.push("/home")
     },
     signOut() {
-      localStorage.setItem("authen", false);
-      this.$store.commit("setAuthen", false)
+      this.$router.push("/")
+      this.$store.commit("setAuthen", false);
     },
-  }
+  },
 };
 </script>

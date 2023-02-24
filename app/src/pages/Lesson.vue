@@ -1,18 +1,29 @@
 <template>
-    <div>
-        <p>Lesson</p>
-    </div>
+  <div>
+    <p>Lesson</p>
+  </div>
 </template>
 <script>
-    export default {
-        name: "Lesson",
-        created(){
-            // console.log(this.$route.params);
-        },  
-        data(){
-            return{
-
-            }
-        }
+import { mapState } from "vuex";
+export default {
+  name: "Lesson",
+  created() {
+    // console.log(this.$route.params);
+  },
+  data() {
+    return {};
+  },
+  beforeMount() {
+    if (!this.getAuthen) {
+      this.$router.push("/");
     }
+  },
+  computed: mapState({
+    authen: (state) => state.authen,
+    // to access local state with `this`, a normal function must be used
+    getAuthen(state) {
+      return state.authen;
+    },
+  }),
+};
 </script>

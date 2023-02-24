@@ -6,12 +6,16 @@ import Summaries from "../pages/Summaries.vue"
 import Notfound from "../pages/NotFound.vue"
 import Post from "../pages/Post.vue"
 import Lesson from "../pages/Lesson.vue"
+import SummaryManage from "../pages/SummaryManage.vue"
+import Profile from "../pages/Profile.vue"
 
 const routes = [
     { path: '/', name: "landing", component: Landing },
     { path: '/home', name: "home", component: Home },
+    { path: '/profile', name: "profile", component: Profile },
+    { path: '/summary-manage', name: "summaryManage", component: SummaryManage },
     // { path: "/posts", name: "posts" },
-    { path: '/suggest', name: "suggest", component: Suggest},
+    { path: '/suggest', name: "suggest", component: Suggest },
     { path: '/summaries', name: "summaries", component: Summaries },
     { path: '/posts/:id', name: "post", component: Post },
     { path: '/posts/:id/:lessonId', name: "lesson", component: Lesson },
