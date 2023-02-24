@@ -1,12 +1,17 @@
 <template>
   <div>
     <h4>Suggest</h4>
+    <PostCard/>
   </div>
 </template>
 <script>
 import { mapState } from "vuex";
+import PostCard from "../components/PostCard.vue";
 export default {
   name: "Suggest",
+  components: {
+    PostCard
+  },
   data() {
     return {};
   },

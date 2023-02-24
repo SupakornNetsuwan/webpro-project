@@ -8,11 +8,13 @@
 
 <script>
 import Navbar from "../components/Navbar.vue";
+import PostCard from "../components/PostCard.vue";
 
 export default {
   name: "Landing",
   components: {
     Navbar,
+    PostCard
   },
   setup(props) {},
   mounted() {},
