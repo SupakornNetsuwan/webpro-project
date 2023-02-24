@@ -1,17 +1,15 @@
 <template>
-  <div>
-    
-  </div>
+  <Navbar />
+  <router-view />
 </template>
 
 <script>
+import Navbar from "./components/Navbar.vue";
+
 export default {
-  setup(props) {},
-  data() {
-    return {
-      message: "Hello World",
-    };
+  components: {
+    Navbar,
   },
-  methods: {},
+  setup(props) {},
 };
 </script>
