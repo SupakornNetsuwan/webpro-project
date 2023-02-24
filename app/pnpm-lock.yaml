@@ -10,12 +10,14 @@ specifiers:
   vite: ^4.1.0
   vue: ^3.2.45
   vue-router: '4'
+  vuex: ^4.0.2
 
 dependencies:
   '@heroicons/vue': 2.0.16_vue@3.2.47
   unplugin-vue-components: 0.24.0_vue@3.2.47
   vue: 3.2.47
   vue-router: 4.1.6_vue@3.2.47
+  vuex: 4.0.2_vue@3.2.47
 
 devDependencies:
   '@vitejs/plugin-vue': 4.0.0_vite@4.1.1+vue@3.2.47
@@ -1770,6 +1772,15 @@ packages:
       '@vue/runtime-dom': 3.2.47
       '@vue/server-renderer': 3.2.47_vue@3.2.47
       '@vue/shared': 3.2.47
+
+  /vuex/4.0.2_vue@3.2.47:
+    resolution: {integrity: sha512-M6r8uxELjZIK8kTKDGgZTYX/ahzblnzC4isU1tpmEuOIIKmV+TRdc+H4s8ds2NuZ7wpUTdGRzJRtoj+lI+pc0Q==}
+    peerDependencies:
+      vue: ^3.0.2
+    dependencies:
+      '@vue/devtools-api': 6.5.0
+      vue: 3.2.47
+    dev: false
 
   /webpack-sources/3.2.3:
     resolution: {integrity: sha512-/DyMEOrDgLKKIG0fmvtz+4dUX/3Ghozwgm6iPp8KRhvn+eQf9+Q7GWxVNMk3+uCPWfdXYC4ExGBckIXdFEfH1w==}
