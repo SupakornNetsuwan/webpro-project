@@ -27,7 +27,7 @@
         <p className="text-gray-3">64070108@kmitl.ac.th</p>
       </div>
     </div>
-    <div className="flex flex-col p-4 flex-1 min-h-[20em] xl:min-h-[44em]">
+    <div className="flex flex-col p-4 flex-1 min-h-[30em] sm:min-h-[35em] xl:min-h-[45em]">
       <div className="flex items-center space-x-1 mt-6">
         <MapIcon class="w-6 h-6 text-black" />
         <h3 className="text-black">เมนู</h3>
