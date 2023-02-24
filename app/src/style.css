@@ -1,29 +1,56 @@
+@import url("https://fonts.googleapis.com/css2?family=Prompt:wght@100;200;300;400;500;600;700;800;900&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  *,
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  p,
-  ul,
-  ol,
-  li,
-  a,
-  button,
-  input,
-  textarea {
-    @apply font-sans m-0 p-0;
+  * {
+    @apply font-prompt m-0 p-0;
   }
 
-  *,
-  ::before,
-  ::after {
-    border-width: 0;
-    border-style: solid;
+  h1 {
+    @apply text-[28px] 2xl:text-[32px] font-semibold !important;
+  }
+
+  h2 {
+    @apply text-[24px] 2xl:text-[30px] font-medium !important;
+  }
+
+  h3 {
+    @apply text-[20px] 2xl:text-[24px] font-medium !important;
+  }
+
+  h4 {
+    @apply text-[18px] 2xl:text-[20px] font-medium !important;
+  }
+
+  h5 {
+    @apply text-[16px] 2xl:text-[18px] font-medium !important;
+  }
+
+  p {
+    @apply text-[14px] 2xl:text-[16px] font-normal !important;
+  }
+
+  button {
+    @apply px-2 py-1 rounded-lg outline-none border-solid cursor-pointer;
+  }
+
+  @layer components {
+    .current-active-route {
+      @apply bg-gradient-to-br from-blue-soft to-purple-soft;
+    }
+
+    .current-active-route div:nth-child(1) {
+      @apply bg-white flex p-2 text-blue-primary rounded shadow-md transition-all duration-200 ease-out;
+    }
+
+    .current-inactive-route {
+      @apply bg-white;
+    }
+
+    .current-inactive-route div:nth-child(1) {
+      @apply bg-blue-soft flex p-2 text-blue-primary rounded transition-all duration-200 ease-out;
+    }
   }
 }

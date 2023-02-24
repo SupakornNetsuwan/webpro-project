@@ -1,14 +1,25 @@
 <template>
-  <Navbar />
-  <router-view />
+  <div className="flex flex-col h-screen">
+    <Navbar />
+    <div className="flex flex-1 overflow-y-auto">
+      <div className="lg:min-w-[20em] 2xl:min-w-[30em] overflow-y-auto">
+        <Sidebar />
+      </div>
+      <div className="w-full flex overflow-y-auto bg-gray-1">
+        <router-view />
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
 import Navbar from "./components/Navbar.vue";
+import Sidebar from "./components/Sidebar.vue";
 
 export default {
   components: {
     Navbar,
+    Sidebar,
   },
   setup(props) {},
 };

@@ -10,9 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@ant-design/icons-vue": "^6.1.0",
     "@heroicons/vue": "^2.0.16",
-    "ant-design-vue": "^3.2.15",
     "unplugin-vue-components": "^0.24.0",
     "vue": "^3.2.45",
     "vue-router": "4"

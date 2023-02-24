@@ -1,8 +1,8 @@
 <template>
   <div
-    className="bg-gray-50 w-full min-h-screen flex flex-col justify-center items-center"
+    className="w-full min-h-[200vh] flex flex-col justify-center items-center"
   >
-    <p>Hello ✨</p> 
+    <p>Hello ✨</p>
   </div>
 </template>
 
