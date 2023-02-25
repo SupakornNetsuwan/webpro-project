@@ -1,6 +1,7 @@
 <template>
   <div
-    class="flex flex-col  bg-white border border-solid border-gray-2 rounded-xl p-2 hover:border-red-primary"
+    @click="route"
+    class="flex flex-col cursor-pointer bg-white border border-solid border-gray-2 rounded-xl p-2 hover:border-red-primary"
   >
     <img
       class="object-cover h-40 w-full rounded-lg"
@@ -14,8 +15,10 @@
           <ChevronRightIcon class="h-4 text-red-primary" />
         </div>
       </div>
-      <p class="text-gray-3 published">สร้างเมื่อวันที่ {{ postDetail.createdDate }}</p>
-      <div class="mt-2"><SubjectTag :subject="postDetail.subject"/></div>
+      <p class="text-gray-3 published">
+        สร้างเมื่อวันที่ {{ postDetail.createdDate }}
+      </p>
+      <div class="mt-2"><SubjectTag :subject="postDetail.subject" /></div>
     </div>
   </div>
 </template>
@@ -26,13 +29,18 @@ import { ChevronRightIcon } from "@heroicons/vue/24/solid";
 
 export default {
   name: "postCard",
-  props:{
+  props: {
     postDetail: Object,
   },
   components: {
     SubjectTag,
     ChevronRightIcon,
-  }
+  },
+  methods: {
+    route() {
+      this.$router.push({ name: "post", params: { id: this.postDetail.id } });
+    },
+  },
 };
 </script>
 
