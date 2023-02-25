@@ -8,7 +8,7 @@
       >
         <Sidebar />
       </div>
-      <div className="w-full flex overflow-y-auto bg-gray-1">
+      <div className="w-full overflow-y-auto">
         <router-view />
       </div>
     </div>

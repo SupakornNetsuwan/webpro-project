@@ -9,6 +9,7 @@
 <script>
 import Navbar from "../components/Navbar.vue";
 import PostCard from "../components/PostCard.vue";
+import { mapState } from "vuex";
 
 export default {
   name: "Landing",
@@ -26,10 +27,17 @@ export default {
       this.$store.commit("increment");
     },
   },
-  computed: {
-    getGlobalCount() {
-      return this.$store.state.count;
-    },
+  beforeMount(){
+    if(this.getAuthen){
+      this.$router.push("/home");
+    }
   },
+  computed: mapState({
+    authen: (state) => state.authen,
+    // to access local state with `this`, a normal function must be used
+    getAuthen(state) {
+      return state.authen;
+    },
+  }),
 };
 </script>

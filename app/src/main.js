@@ -6,6 +6,11 @@ import './style.css'
 import router from "./router/index"
 // Vuex
 import { createStore } from 'vuex'
+// Carousel
+import Flicking from "@egjs/vue3-flicking";
+import "@egjs/vue3-flicking/dist/flicking.css";
+// Or, if you have to support IE9
+import "@egjs/vue3-flicking/dist/flicking-inline.css";
 
 // Create a new store instance.
 const store = createStore({
@@ -31,4 +36,5 @@ const store = createStore({
 const app = createApp(App);
 app.use(router)
 app.use(store)
+app.component("Flicking", Flicking);
 app.mount('#app');

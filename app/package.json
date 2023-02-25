@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@egjs/flicking-plugins": "^4.7.0",
+    "@egjs/vue3-flicking": "^4.10.6",
     "@heroicons/vue": "^2.0.16",
     "unplugin-vue-components": "^0.24.0",
     "vue": "^3.2.45",
