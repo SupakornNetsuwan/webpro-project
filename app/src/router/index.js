@@ -9,6 +9,7 @@ import Post from "../pages/Post.vue"
 import Lesson from "../pages/Lesson.vue"
 import SummaryManage from "../pages/SummaryManage.vue"
 import Profile from "../pages/Profile.vue"
+import createPost from "../pages/createPost.vue"
 
 // Layout
 import SummariesLayout from "../layouts/SummariesLayout.vue"
@@ -17,7 +18,17 @@ const routes = [
     { path: '/', name: "landing", component: Landing },
     { path: '/home', name: "home", component: Home },
     { path: '/profile', name: "profile", component: Profile },
-    { path: '/summary-manage', name: "summaryManage", component: SummaryManage },
+    {
+        path: '/summary-manage', children: [{
+            path: '',
+            name: "summaryManage",
+            component: SummaryManage
+        }, {
+            path: 'create-post',
+            name: "createPost",
+            component: createPost
+        }]
+    },
     { path: '/suggest', name: "suggest", component: Suggest },
     {
         path: '/summaries',

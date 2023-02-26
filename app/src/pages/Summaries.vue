@@ -10,7 +10,11 @@
     <div
       className="relative w-full flex justify-center items-center min-h-[18em] bg-gradient-to-br from-purple-soft to-blue-soft"
     >
-    <img src="../assets/boy-girl-book.png" alt="boy-girl-book" className="absolute bottom-2 h-[90%] left-12 lg:left-24 opacity-50 lg:opacity-100 pointer-events-none"/>
+      <img
+        src="../assets/boy-girl-book.png"
+        alt="boy-girl-book"
+        className="absolute bottom-2 h-[90%] left-12 lg:left-24 opacity-50 lg:opacity-100 pointer-events-none"
+      />
       <Combobox
         v-model="selectedSubject"
         className="relative w-full mx-8 lg:mx-0 lg:max-w-[40%] "
@@ -58,7 +62,7 @@
           </h5>
         </div>
         <div
-          className="flex relative border border-gray-2 border-solid rounded-md"
+          className="flex relative border border-gray-2 border-solid rounded-md overflow-hidden"
         >
           <label for="fitlerSubject" className="flex text-gray-3 p-2">
             <MagnifyingGlassIcon class="w-6 h-6 self-center" />

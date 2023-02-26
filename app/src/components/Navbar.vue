@@ -1,6 +1,6 @@
 <template>
   <div
-    className=" bg-white border-b border-slate-200 px-8 py-2.5 flex items-center justify-between"
+    className=" bg-white border-b border-slate-200 pl-6 pr-8 py-2.5 flex items-center justify-between"
   >
     <!-- <h1
       className="bg-gradient-to-br from-purple-primary text-transparent to-blue-primary bg-clip-text font-bold m-0"
@@ -11,7 +11,7 @@
       <button
         v-if="this.$route.path != '/' "
         @click="toggleIsNavHide"
-        :class="[getIsNavHide ? ' bg-blue-primary text-blue-soft' : 'bg-blue-soft text-blue-primary', 'border-none flex items-center justify-center transition-all duration-500 ease-out']"
+        :class="[getIsNavHide ? ' bg-blue-primary/20 text-blue-primary' : 'bg-blue-soft text-blue-primary', 'border-none flex items-center justify-center transition-all duration-500 ease-out']"
       >
         <WindowIcon class="w-6 h-6 " />
       </button>

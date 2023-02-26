@@ -6,6 +6,7 @@ specifiers:
   '@headlessui/vue': ^1.7.11
   '@heroicons/vue': ^2.0.16
   '@vitejs/plugin-vue': ^4.0.0
+  atropos: ^1.0.2
   autoprefixer: ^10.4.13
   postcss: ^8.4.21
   tailwindcss: ^3.2.7
@@ -20,6 +21,7 @@ dependencies:
   '@egjs/vue3-flicking': 4.10.6_vue@3.2.47
   '@headlessui/vue': 1.7.11_vue@3.2.47
   '@heroicons/vue': 2.0.16_vue@3.2.47
+  atropos: 1.0.2
   unplugin-vue-components: 0.24.0_vue@3.2.47
   vue: 3.2.47
   vue-router: 4.1.6_vue@3.2.47
@@ -782,6 +784,11 @@ packages:
   /arg/5.0.2:
     resolution: {integrity: sha512-PYjyFOLKQ9y57JvQ6QLo8dAgNqswh8M1RMJYdQduT6xbWSgK36P/Z/v+p888pM69jMMfS8Xd8F6I1kQ/I9HUGg==}
     dev: true
+
+  /atropos/1.0.2:
+    resolution: {integrity: sha512-0RqyHfMyIhRXgnHuSQz2LVOE81jtAQ7EZTrF75ngiipklIsxajZ2vD042EXdiIEDs6eEAzfE10k+YhIbNl4/eg==}
+    engines: {node: '>= 12.0.0'}
+    dev: false
 
   /autoprefixer/10.4.13_postcss@8.4.21:
     resolution: {integrity: sha512-49vKpMqcZYsJjwotvt4+h/BCjJVnhGwcLpDt5xkcaOG3eLrG/HUYLagrihYsQ+qrIBgIzX1Rw7a6L8I/ZA1Atg==}

@@ -34,9 +34,9 @@ export default {
     },
   }),
   computed: {
-    isSidebarDisplay(){
-      return !this.$store.state.isNavHide && this.$route.path != '/' 
-    }
-  }
+    isSidebarDisplay() {
+      return !this.$store.state.isNavHide && this.$route.path != "/";
+    },
+  },
 };
 </script>
