@@ -17,6 +17,7 @@ const store = createStore({
     state() {
         return {
             authen: JSON.parse(localStorage.getItem('authen')) || false,
+            isNavHide:false,
         }
     },
     mutations: {
@@ -29,6 +30,9 @@ const store = createStore({
                 localStorage.setItem("authen", true);
                 
             }
+        },
+        setIsNavHide(state, status){
+            state.isNavHide = status
         }
     }
 })

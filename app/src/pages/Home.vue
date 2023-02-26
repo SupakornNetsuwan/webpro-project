@@ -1,5 +1,5 @@
 <template>
-  <div className="w-full flex flex-col ">
+  <div className="w-full flex flex-col bg-gray-1">
     <div className="w-full h-[14em]">
       <img
         className="w-full h-full object-cover object-center"
@@ -10,7 +10,7 @@
     <ContentWrapper>
       <div class="mb-8">
         <h3 className="text-black">โพสต์การเรียนล่าสุด</h3>
-        <p className="gray-4">
+        <p className="text-gray-3">
           นี่คือโพสต์การเรียนล่าสุดที่ถูกสร้างขึ้น
           คุณสามารถสำรวจเนื้อหาที่ต้องการได้ทันที
         </p>
@@ -34,7 +34,7 @@
       <div>
         <div class="mb-8">
           <h3 className="text-black">โพสต์การเรียนที่แนะนำ ✨</h3>
-          <p className="gray-4">
+          <p className="text-gray-3">
             นี่คือโพสต์การเรียนล่าสุดที่คุณอาจจะสนใจจากการติดตามของคุณ
           </p>
         </div>
@@ -76,7 +76,7 @@ export default {
       lastestPosts: [
         {
           id: 1,
-          imgSrc:"",
+          imgSrc: "",
           title: "การจัดการ DOM ใน React",
           createdDate: "12/2/2023",
           subject: "Webpro",
@@ -84,7 +84,7 @@ export default {
         },
         {
           id: 2,
-          imgSrc:"",
+          imgSrc: "",
           title: "การทำออกแบบ Database อย่างง่าย",
           createdDate: "11/2/2023",
           subject: "Database",
@@ -92,7 +92,7 @@ export default {
         },
         {
           id: 3,
-          imgSrc:"",
+          imgSrc: "",
           title: "วิธีการใช้ @media only screen and (max-width)",
           createdDate: "10/2/2023",
           subject: "Multimedia",
@@ -100,7 +100,7 @@ export default {
         },
         {
           id: 4,
-          imgSrc:"",
+          imgSrc: "",
           title: "วิธีการเลี้ยงกะทิ",
           createdDate: "9/2/2023",
           subject: "Cat",
@@ -108,7 +108,7 @@ export default {
         },
         {
           id: 5,
-          imgSrc:"",
+          imgSrc: "",
           title: "วิธีการเลี้ยงกาชา",
           createdDate: "9/2/2023",
           subject: "Cat",

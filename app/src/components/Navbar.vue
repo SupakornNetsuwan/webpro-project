@@ -7,12 +7,21 @@
     >
       Summarite
     </h1> -->
-    <img
-      @click="$router.push('/')"
-      :src="websitename"
-      alt="websitename"
-      className="cursor-pointer w-[10em]"
-    />
+    <div className="flex space-x-4">
+      <button
+        v-if="this.$route.path != '/' "
+        @click="toggleIsNavHide"
+        :class="[getIsNavHide ? ' bg-blue-primary text-blue-soft' : 'bg-blue-soft text-blue-primary', 'border-none flex items-center justify-center transition-all duration-500 ease-out']"
+      >
+        <WindowIcon class="w-6 h-6 " />
+      </button>
+      <img
+        @click="$router.push('/')"
+        :src="websitename"
+        alt="websitename"
+        className="cursor-pointer w-[10em]"
+      />
+    </div>
     <button
       @click="signOut"
       v-if="authen"
@@ -32,38 +41,52 @@
   </div>
 </template>
 <script>
-import { ArrowRightOnRectangleIcon } from "@heroicons/vue/24/outline";
 import websitename from "../assets/websitename.svg";
 import { mapState } from "vuex";
+import {
+  ArrowRightOnRectangleIcon,
+  WindowIcon,
+} from "@heroicons/vue/24/outline";
 
 export default {
   name: "Navbar",
   components: {
     ArrowRightOnRectangleIcon,
+    WindowIcon,
   },
   data() {
     return {
       websitename,
     };
   },
-  mounted() {
-    
-  },
+  mounted() {},
   computed: mapState({
     // State mapper
     authen: (state) => state.authen,
+    isNavHide: (state) => state.count,
     getAuthen() {
       return this.authen;
+    },
+    getIsNavHide(state) {
+      return state.isNavHide;
     },
   }),
   methods: {
     signIn() {
       this.$store.commit("setAuthen", true);
-      this.$router.push("/home")
+      this.$router.push("/home");
     },
     signOut() {
-      this.$router.push("/")
+      this.$router.push("/");
       this.$store.commit("setAuthen", false);
+    },
+    toggleIsNavHide() {
+      if (this.$store.state.isNavHide) {
+        this.$store.commit("setIsNavHide", false);
+        return;
+      }
+
+      this.$store.commit("setIsNavHide", true);
     },
   },
 };

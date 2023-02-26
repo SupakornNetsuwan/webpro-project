@@ -120,7 +120,7 @@ export default {
         },
         {
           title: "จัดการสรุปของคุณ",
-          name: "summary-manage",
+          name: "summaryManage",
           path: "/summary-manage",
           icon: FolderIcon,
         },

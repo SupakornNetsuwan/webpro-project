@@ -3,6 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@egjs/flicking-plugins': ^4.7.0
   '@egjs/vue3-flicking': ^4.10.6
+  '@headlessui/vue': ^1.7.11
   '@heroicons/vue': ^2.0.16
   '@vitejs/plugin-vue': ^4.0.0
   autoprefixer: ^10.4.13
@@ -17,6 +18,7 @@ specifiers:
 dependencies:
   '@egjs/flicking-plugins': 4.7.0
   '@egjs/vue3-flicking': 4.10.6_vue@3.2.47
+  '@headlessui/vue': 1.7.11_vue@3.2.47
   '@heroicons/vue': 2.0.16_vue@3.2.47
   unplugin-vue-components: 0.24.0_vue@3.2.47
   vue: 3.2.47
@@ -500,6 +502,15 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /@headlessui/vue/1.7.11_vue@3.2.47:
+    resolution: {integrity: sha512-VsNqx9Lc1ftOyIazBF9EX5BS4WYwwaFX+1jBWXQakeH1o4xnoZKlBSlvEgmAnFLO9GDVmn7kKVOWfFgQn2aRZA==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      vue: ^3.2.0
+    dependencies:
+      vue: 3.2.47
+    dev: false
 
   /@heroicons/vue/2.0.16_vue@3.2.47:
     resolution: {integrity: sha512-saVAExLlGu6epqmS543qeWd/UOJUxpTJyK9aXeFGqS3VIW8X7yyJQmUGT40A38gBEAxMOdTdH9jFSh8sjPFM7A==}

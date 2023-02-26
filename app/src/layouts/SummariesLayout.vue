@@ -1,16 +1,16 @@
 <template>
-  <div>
-    <h4>Suggest</h4>
-    
+  <div className="flex flex-col bg-gray-1 min-h-screen">
+    <SummariesNav />
+    <router-view></router-view>
   </div>
 </template>
 <script>
+import SummariesNav from "../components/SummariesNav.vue";
 import { mapState } from "vuex";
-
 export default {
-  name: "Suggest",
+  name: "SummariesLayout",
   components: {
-    
+    SummariesNav,
   },
   data() {
     return {};
@@ -26,6 +26,7 @@ export default {
     getAuthen(state) {
       return state.authen;
     },
+
   }),
 };
 </script>
