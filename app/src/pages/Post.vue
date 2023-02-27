@@ -1,7 +1,7 @@
 <template>
-  <div class="bg-gray-1">
-    <content-wrapper>
-      <div class="flex justify-between">
+  <div>
+    <content-wrapper class="py-4 md:py-8 lg:py-12" :noPadding="true">
+      <div class="flex justify-between mt-4 mx-4 md:mx-8 lg:mx-12">
         <div class="flex items-center">
           <ChevronLeftIcon class="h-4 text-red-primary" />
           <h4 class="text-red-primary">กลับ</h4>
@@ -9,20 +9,20 @@
         <button
           class="border-solid border-blue-primary bg-white text-blue-primary flex items-center"
         >
-          <PlusIcon class="h-6" />
-          <h4>ติดตาม</h4>
+          <StarIcon class="h-6" />
+          <h4>&nbsp;ติดตาม</h4>
         </button>
       </div>
-      <div class="flex justify-between mt-10">
+      <div class="flex justify-between mt-10 mx-4 md:mx-8 lg:mx-12">
         <h1>วิธีการเลี้ยงกาชาแบบง่ายๆ เข้าใจได้ใน 1 นาที</h1>
         <subject-tag :subject="cat" />
       </div>
-      <div class="flex my-2">
+      <div class="flex my-2 mx-4 md:mx-8 lg:mx-12">
         <p>โดย Yolradee Prayoonpunratn</p>
-        <p class="text-gray-3">• 64070089@kmitl.ac.th • 22/2/2023</p>
+        <p class="text-gray-3">&nbsp;• 64070089@kmitl.ac.th • 22/2/2023</p>
       </div>
       <img class="w-full h-96 object-cover my-5" src="../assets/kacha.jpg" />
-      <p class="text-gray-4" style="font-weight: 400 !important">
+      <p class="text-gray-4 mx-4 md:mx-8 lg:mx-12" style="font-weight: 400 !important">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur harum
         sint iusto odit, impedit sit molestias, facere veniam nisi suscipit
         vitae voluptates delectus accusantium asperiores ducimus neque possimus
@@ -31,18 +31,21 @@
         voluptate eaque pariatur dolore fugiat illo animi eos! Aut cupiditate
         alias blanditiis necessitatibus obcaecati.
       </p>
-      <hr class="my-12 text-gray-2" />
-      <h2>บทเรียนต่างๆ</h2>
-      <h4 class="text-gray-4 mb-5">
-        บทเรียนคือเนื้อหาที่อยู่ภายใต้โพสต์วิชาในแต่ละวิชาที่ถูกสร้างขึ้นโดยผู้เขียนโพสต์นั้นๆ
-      </h4>
-      <div class="flex flex-col">
-        <LessonCard
-          class="my-2"
-          :lessonDetail="ls"
-          :key="ls.id"
-          v-for="ls in lesson"
-        />
+      <div class="w-[1px] bg-gray-2 ml-2" />
+      <hr class="my-12 text-gray-2 mx-4 md:mx-8 lg:mx-12" />
+      <div class="mx-4 md:mx-8 lg:mx-12">
+        <h2>บทเรียนต่างๆ</h2>
+        <h4 class="text-gray-4 mb-5">
+          บทเรียนคือเนื้อหาที่อยู่ภายใต้โพสต์วิชาในแต่ละวิชาที่ถูกสร้างขึ้นโดยผู้เขียนโพสต์นั้นๆ
+        </h4>
+        <div class="flex flex-col">
+          <LessonCard
+            class="my-2"
+            :lessonDetail="ls"
+            :key="ls.id"
+            v-for="ls in lesson"
+          />
+        </div>
       </div>
     </content-wrapper>
     <content-wrapper>
@@ -70,7 +73,7 @@ import ContentWrapper from "../components/ContentWrapper.vue";
 import PostCard from "../components/postCard.vue";
 import SubjectTag from "../components/SubjectTag.vue";
 import { ChevronLeftIcon } from "@heroicons/vue/24/solid";
-import { PlusIcon } from "@heroicons/vue/24/solid";
+import { StarIcon } from "@heroicons/vue/24/outline";
 
 export default {
   name: "Post",
@@ -80,7 +83,7 @@ export default {
     PostCard,
     ChevronLeftIcon,
     SubjectTag,
-    PlusIcon,
+    StarIcon,
   },
   created() {
     // console.log(this.$route.params);
