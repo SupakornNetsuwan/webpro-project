@@ -12,9 +12,10 @@
     </div>
     <div class="m-2">
       <button
-        class="border-none bg-blue-soft h-full aspect-square flex items-center"
+        @click="route"
+        class="border-none flex justify-center items-center bg-blue-soft h-full aspect-square"
       >
-        <ChevronRightIcon class="text-blue-primary h-6 ml-2" />
+        <ChevronRightIcon class="text-blue-primary w-6 h-6" />
       </button>
     </div>
   </div>
@@ -34,5 +35,10 @@ export default {
   data() {
     return {};
   },
+  methods:{
+    route() {
+      this.$router.push(`./lessons/${this.lessonDetail.id}`);
+    },
+  }
 };
 </script>

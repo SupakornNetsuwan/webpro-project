@@ -2,10 +2,13 @@
   <div>
     <content-wrapper class="py-4 md:py-8 lg:py-12" :noPadding="true">
       <div class="flex justify-between mt-4 mx-4 md:mx-8 lg:mx-12">
-        <div class="flex items-center">
-          <ChevronLeftIcon class="h-4 text-red-primary" />
+        <button
+          @click="$event => $router.go(-1)"
+          class="flex items-center cursor-pointer border-none bg-transparent pl-0"
+        >
+          <ChevronLeftIcon class="h-5 w-5 text-red-primary" />
           <h4 class="text-red-primary">กลับ</h4>
-        </div>
+        </button>
         <button
           class="border-solid border-blue-primary bg-white text-blue-primary flex items-center"
         >
@@ -14,15 +17,20 @@
         </button>
       </div>
       <div class="flex justify-between mt-10 mx-4 md:mx-8 lg:mx-12">
-        <h1>วิธีการเลี้ยงกาชาแบบง่ายๆ เข้าใจได้ใน 1 นาที</h1>
+        <h1 className="text-black">
+          วิธีการเลี้ยงกาชาแบบง่ายๆ เข้าใจได้ใน 1 นาที
+        </h1>
         <subject-tag :subject="cat" />
       </div>
       <div class="flex my-2 mx-4 md:mx-8 lg:mx-12">
-        <p>โดย Yolradee Prayoonpunratn</p>
+        <p className="text-black">โดย Yolradee Prayoonpunratn</p>
         <p class="text-gray-3">&nbsp;• 64070089@kmitl.ac.th • 22/2/2023</p>
       </div>
       <img class="w-full h-96 object-cover my-5" src="../assets/kacha.jpg" />
-      <p class="text-gray-4 mx-4 md:mx-8 lg:mx-12" style="font-weight: 400 !important">
+      <p
+        class="text-gray-4 mx-4 md:mx-8 lg:mx-12"
+        style="font-weight: 400 !important"
+      >
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur harum
         sint iusto odit, impedit sit molestias, facere veniam nisi suscipit
         vitae voluptates delectus accusantium asperiores ducimus neque possimus
@@ -32,7 +40,7 @@
         alias blanditiis necessitatibus obcaecati.
       </p>
       <div class="w-[1px] bg-gray-2 ml-2" />
-      <hr class="my-12 text-gray-2 mx-4 md:mx-8 lg:mx-12" />
+      <div class="h-[1px] bg-gray-2 mx-4 my-8 md:mx-8 lg:mx-12" />
       <div class="mx-4 md:mx-8 lg:mx-12">
         <h2>บทเรียนต่างๆ</h2>
         <h4 class="text-gray-4 mb-5">
@@ -40,10 +48,10 @@
         </h4>
         <div class="flex flex-col">
           <LessonCard
+            v-for="ls in lesson"
             class="my-2"
             :lessonDetail="ls"
             :key="ls.id"
-            v-for="ls in lesson"
           />
         </div>
       </div>
@@ -57,10 +65,9 @@
       </div>
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-4">
         <PostCard
-          class="w-auto"
+          v-for="post in suggestPosts"
           :postDetail="post"
           :key="post.id"
-          v-for="post in suggestPosts"
         />
       </div>
     </content-wrapper>
