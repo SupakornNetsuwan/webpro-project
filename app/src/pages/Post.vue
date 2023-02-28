@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div className="w-full flex min-h-screen flex-col bg-gray-1">
     <content-wrapper class="py-4 md:py-8 lg:py-12" :noPadding="true">
       <div class="flex justify-between mt-4 mx-4 md:mx-8 lg:mx-12">
         <button
-          @click="$event => $router.go(-1)"
+          @click="($event) => $router.go(-1)"
           class="flex items-center cursor-pointer border-none bg-transparent pl-0"
         >
           <ChevronLeftIcon class="h-5 w-5 text-red-primary" />
@@ -79,8 +79,7 @@ import LessonCard from "../components/LessonCard.vue";
 import ContentWrapper from "../components/ContentWrapper.vue";
 import PostCard from "../components/postCard.vue";
 import SubjectTag from "../components/SubjectTag.vue";
-import { ChevronLeftIcon } from "@heroicons/vue/24/solid";
-import { StarIcon } from "@heroicons/vue/24/outline";
+import { ChevronLeftIcon, StarIcon } from "@heroicons/vue/24/outline";
 
 export default {
   name: "Post",

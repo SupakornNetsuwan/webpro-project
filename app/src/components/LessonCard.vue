@@ -13,7 +13,7 @@
     <div class="m-2">
       <button
         @click="route"
-        class="border-none flex justify-center items-center bg-blue-soft h-full aspect-square"
+        class="border-none flex justify-center items-center bg-blue-soft hover:bg-[#E5EEF8] h-full aspect-square"
       >
         <ChevronRightIcon class="text-blue-primary w-6 h-6" />
       </button>
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { ChevronRightIcon } from "@heroicons/vue/24/solid";
+import { ChevronRightIcon } from "@heroicons/vue/24/outline";
 
 export default {
   name: "lessonCard",

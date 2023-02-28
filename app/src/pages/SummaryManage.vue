@@ -53,6 +53,7 @@
           </Atropos>
         </div>
       </div>
+      <h3 className="text-black mt-16 mb-8">สถิติจำนวนผู้ที่ติดตามโพสต์ของคุณ</h3>
       <line-chart :data="chartData"></line-chart>
     </ContentWrapper>
   </div>
@@ -98,6 +99,7 @@ export default {
           amount: 42,
         },
       ],
+      moment: moment(),
     };
   },
   methods: {},
@@ -116,19 +118,15 @@ export default {
       return state.authen;
     },
     chartData() {
-      return [
-        ["Jan", 44],
-        ["Feb", 27],
-        ["Mar", 60],
-        ["Apr", 55],
-        ["May", 37],
-        ["Jun", 40],
-        ["Jul", 69],
-        ["Aug", 33],
-        ["Sept", 76],
-        ["Oct", 90],
-        [moment().subtract(-1, 'days').format("DD/MM/YYYY"), 34],
-        [moment().subtract(0, 'days').format("DD/MM/YYYY"), 22],
+      return [  
+        [this.moment.subtract(-7, 'days').format("DD/MM/YYYY"), 24],
+        [this.moment.subtract(-6, 'days').format("DD/MM/YYYY"), 12],
+        [this.moment.subtract(-5, 'days').format("DD/MM/YYYY"), 44],
+        [this.moment.subtract(-4, 'days').format("DD/MM/YYYY"), 24],
+        [this.moment.subtract(-3, 'days').format("DD/MM/YYYY"), 74],
+        [this.moment.subtract(-2, 'days').format("DD/MM/YYYY"), 90],
+        [this.moment.subtract(-1, 'days').format("DD/MM/YYYY"), 34],
+        [this.moment.subtract(0, 'days').format("DD/MM/YYYY"), 22],
       ];
     },
   }),

@@ -9,7 +9,7 @@ import Post from "../pages/Post.vue"
 import Lesson from "../pages/Lesson.vue"
 import SummaryManage from "../pages/SummaryManage.vue"
 import Profile from "../pages/Profile.vue"
-import createPost from "../pages/createPost.vue"
+import CreatePost from "../pages/CreatePost.vue"
 
 // Layout
 import SummariesLayout from "../layouts/SummariesLayout.vue"
@@ -26,7 +26,7 @@ const routes = [
         }, {
             path: 'create-post',
             name: "createPost",
-            component: createPost
+            component: CreatePost
         }]
     },
     { path: '/suggest', name: "suggest", component: Suggest },

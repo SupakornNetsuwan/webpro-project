@@ -25,7 +25,7 @@
 
 <script>
 import SubjectTag from "../components/SubjectTag.vue";
-import { ChevronRightIcon } from "@heroicons/vue/24/solid";
+import { ChevronRightIcon } from "@heroicons/vue/24/outline";
 
 export default {
   name: "postCard",

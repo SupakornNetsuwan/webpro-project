@@ -13,6 +13,9 @@ import "@egjs/vue3-flicking/dist/flicking.css";
 import "@egjs/vue3-flicking/dist/flicking-inline.css";
 import Chartkick from 'vue-chartkick'
 import Chart from 'chart.js/auto';
+// Rich text editor (Quill)
+import { QuillEditor } from '@vueup/vue-quill'
+import '@vueup/vue-quill/dist/vue-quill.snow.css';
 
 // Create a new store instance.
 const store = createStore({
@@ -44,4 +47,5 @@ app.use(router)
 app.use(store)
 app.component("Flicking", Flicking);
 app.use(Chartkick.use(Chart))
+app.component('QuillEditor', QuillEditor)
 app.mount('#app');
