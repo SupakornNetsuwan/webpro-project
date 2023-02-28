@@ -1,6 +1,6 @@
 <template>
   <div class="bg-gray-1">
-    <content-wrapper>
+    <content-wrapper :noPadding="true">
       <div class="flex justify-between">
         <div class="flex items-center">
           <ChevronLeftIcon class="h-4 text-red-primary" />

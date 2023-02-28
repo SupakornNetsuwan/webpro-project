@@ -9,8 +9,10 @@ import { createStore } from 'vuex'
 // Carousel
 import Flicking from "@egjs/vue3-flicking";
 import "@egjs/vue3-flicking/dist/flicking.css";
-// Or, if you have to support IE9
+// Chart.js
 import "@egjs/vue3-flicking/dist/flicking-inline.css";
+import Chartkick from 'vue-chartkick'
+import Chart from 'chart.js/auto';
 
 // Create a new store instance.
 const store = createStore({
@@ -41,4 +43,5 @@ const app = createApp(App);
 app.use(router)
 app.use(store)
 app.component("Flicking", Flicking);
+app.use(Chartkick.use(Chart))
 app.mount('#app');

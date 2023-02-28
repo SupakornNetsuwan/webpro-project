@@ -15,8 +15,11 @@
     "@headlessui/vue": "^1.7.11",
     "@heroicons/vue": "^2.0.16",
     "atropos": "^1.0.2",
+    "chart.js": "^4.2.1",
+    "moment": "^2.29.4",
     "unplugin-vue-components": "^0.24.0",
     "vue": "^3.2.45",
+    "vue-chartkick": "^1.1.0",
     "vue-router": "4",
     "vuex": "^4.0.2"
   },
