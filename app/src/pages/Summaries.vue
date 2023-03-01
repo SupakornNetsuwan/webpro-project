@@ -140,7 +140,7 @@ export default {
       "Prob stat",
       "Data structure",
       "PSCP",
-      "Undefined",
+      "Free knowledge",
     ];
 
     this.selectedSubject = this.subjects[0];

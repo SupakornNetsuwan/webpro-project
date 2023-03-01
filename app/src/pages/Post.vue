@@ -24,7 +24,9 @@
       </div>
       <div class="flex my-2 mx-4 md:mx-8 lg:mx-12">
         <p className="text-black">โดย {{ post.author }}</p>
-        <p class="text-gray-3">&nbsp;• {{ post.authorEmail }} • {{ post.createdDate }}</p>
+        <p class="text-gray-3">
+          &nbsp;• {{ post.authorEmail }} • {{ post.createdDate }}
+        </p>
       </div>
       <img :src="post.imgSrc" class="w-full h-96 object-cover my-5" />
       <p
@@ -75,8 +77,7 @@ import PostCard from "../components/postCard.vue";
 import SubjectTag from "../components/SubjectTag.vue";
 import { ChevronLeftIcon, StarIcon } from "@heroicons/vue/24/outline";
 /* --------------------- Mock API --------------------- */
-import postsApi from "../resources/postsApi.json"
-
+import postsApi from "../resources/postsApi.json";
 
 export default {
   name: "Post",
@@ -90,11 +91,19 @@ export default {
   },
   created() {
     // console.log(this.$route.params);
+    this.$watch(
+      () => this.$route.params,
+      (toParams, previousParams) => {
+        this.post = postsApi.find((post) => post.id == toParams.id);
+      }
+    );
   },
   data() {
     return {
-      post: postsApi.find(post => post.id == this.$router.currentRoute.value.params.id),
-      suggestPosts: postsApi,
+      post: postsApi.find(
+        (post) => post.id == this.$router.currentRoute.value.params.id
+      ),
+      suggestPosts: postsApi.slice(0, 3),
     };
   },
   beforeMount() {

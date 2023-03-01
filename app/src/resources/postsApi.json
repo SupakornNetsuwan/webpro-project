@@ -46,5 +46,53 @@
                 "createdDate": "19/2/2023"
             }
         ]
+    },
+    {
+        "id": 3,
+        "imgSrc": "https://www.patterns.dev/img/reactjs/react-logo@3x.svg",
+        "author": "Supakorn Netsuwan",
+        "authorEmail": "64070108@kmitl.ac.th",
+        "title": "การใช้ React",
+        "intro": "React is a modern JavaScript library used for building user interfaces. It is a powerful and efficient tool used by many websites and developers. React is primarily used for developing single-page websites and web applications. It is a component-based library that allows developers to quickly and easily develop high-performance web applications.",
+        "subject": "Webpro",
+        "createdDate": "16/2/2023",
+        "lessons": [
+            {
+                "id": 1,
+                "title": "Introducing to React DOM",
+                "content": "React is a modern JavaScript library used for building user interfaces. It is a powerful and efficient tool used by many websites and developers. React is primarily used for developing single-page websites and web applications. It is a component-based library that allows developers to quickly and easily develop high-performance web applications.",
+                "createdDate": "22/2/2023"
+            },
+            {
+                "id": 2,
+                "title": "React lifecycle",
+                "content": "React is a modern JavaScript library used for building user interfaces. It is a powerful and efficient tool used by many websites and developers. React is primarily used for developing single-page websites and web applications. It is a component-based library that allows developers to quickly and easily develop high-performance web applications.",
+                "createdDate": "23/2/2023"
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "imgSrc": "https://www.bacancytechnology.com/blog/wp-content/uploads/2022/09/Why-Use-Vue-JS-min.png",
+        "author": "Supakorn Netsuwan",
+        "authorEmail": "64070108@kmitl.ac.th",
+        "title": "ทำไมคุณถึงไม่ควรใช้ Vue.JS ในปี 2023",
+        "intro": "",
+        "subject": "Webpro",
+        "createdDate": "24/2/2023",
+        "lessons": [
+            {
+                "id": 1,
+                "title": "ข้อดีของ Vue.js",
+                "content": "React is a modern JavaScript library used for building user interfaces. It is a powerful and efficient tool used by many websites and developers. React is primarily used for developing single-page websites and web applications. It is a component-based library that allows developers to quickly and easily develop high-performance web applications.",
+                "createdDate": "25/2/2023"
+            },
+            {
+                "id": 2,
+                "title": "ข้อเสียของ Vue.js",
+                "content": "เป็นที่รู้จักกันดีว่า Vue.js เป็น Framework ที่นิยมใช้สำหรับการพัฒนาเว็บแอปพลิเคชันในปัจจุบัน แต่หากพูดถึงเหตุผลที่ไม่ควรใช้ Vue.js ในปี 2023 ได้แก่: การเปลี่ยนแปลงของเทคโนโลยี: เทคโนโลยีด้านการพัฒนาซอฟต์แวร์มีการเปลี่ยนแปลงอย่างรวดเร็ว ซึ่งอาจทำให้ Vue.js ไม่สามารถรองรับการพัฒนาและการเปลี่ยนแปลงของเทคโนโลยีได้ในอนาคต อย่างเช่นถ้ามีการเปลี่ยนแปลงในการพัฒนา JavaScript หรือการใช้งาน WebAssembly เป็นต้น การเลือกใช้ฟรามเวิร์กอื่น: ในปัจจุบันมีฟรามเวิร์กอื่นๆ ที่มีความนิยมและใช้งานได้ดีเช่น React และ Angular ซึ่งอาจเป็นทางเลือกที่ดีกว่าในการพัฒนาเว็บแอปพลิเคชันในปี 2023 ในบางกรณี สิ้นเปลืองทรัพยากร: Vue.js เป็น Framework ที่มีขนาดใหญ่และมีความซับซ้อน ซึ่งอาจทำให้ทรัพยากรของเซิร์ฟเวอร์ถูกใช้งานอย่างสูงเกินไป และทำให้เว็บแอปพลิเคชันที่พัฒนาด้วย Vue.js มีความช้าหรือโหลดหน้าเว็บช้าได้ ความยากลำบากในการแก้ไขปัญหา: หากเกิดปัญหาในการพัฒนาเว็บแอปพลิเคชันด้วย Vue.js อาจจะยากต่อการแก้ไข",
+                "createdDate": "28/2/2023"
+            }
+        ]
     }
 ]
