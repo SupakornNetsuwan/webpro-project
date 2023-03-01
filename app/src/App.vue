@@ -1,4 +1,5 @@
 <template>
+  <Modal/>
   <div className="flex flex-col h-screen">
     <Navbar />
     <div className="flex flex-1 overflow-y-auto">
@@ -18,12 +19,14 @@
 <script>
 import Navbar from "./components/Navbar.vue";
 import Sidebar from "./components/Sidebar.vue";
+import Modal from "./components/Modal.vue";
 import { mapState } from "vuex";
 
 export default {
   components: {
     Navbar,
     Sidebar,
+    Modal
   },
   setup(props) {},
   computed: mapState({

@@ -23,11 +23,16 @@ const store = createStore({
         return {
             authen: JSON.parse(localStorage.getItem('authen')) || false,
             isNavHide:false,
+            modal: {
+                isModalOpen: false,
+                content: "",
+                redirectTo: ""
+            }
         }
     },
     mutations: {
         setAuthen(state, payload) {
-            state.authen = payload
+            state.authen = payload;
 
             if(!payload){
                 localStorage.removeItem("authen");
@@ -37,7 +42,10 @@ const store = createStore({
             }
         },
         setIsNavHide(state, status){
-            state.isNavHide = status
+            state.isNavHide = status;
+        },
+        setIsModalOpen(state, payload){
+            state.modal = {...payload};
         }
     }
 })
