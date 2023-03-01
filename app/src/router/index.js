@@ -10,6 +10,8 @@ import Lesson from "../pages/Lesson.vue"
 import SummaryManage from "../pages/SummaryManage.vue"
 import Profile from "../pages/Profile.vue"
 import CreatePost from "../pages/CreatePost.vue"
+import EditPost from "../pages/EditPost.vue"
+import MyPost from "../pages/MyPost.vue"
 
 // Layout
 import SummariesLayout from "../layouts/SummariesLayout.vue"
@@ -27,6 +29,14 @@ const routes = [
             path: 'create-post',
             name: "createPost",
             component: CreatePost
+        }, {
+            path: 'my-posts',
+            name: "myposts",
+            component: MyPost
+        }, {
+            path: 'edit-post',
+            name: "editPost",
+            component: EditPost
         }]
     },
     { path: '/suggest', name: "suggest", component: Suggest },
@@ -52,6 +62,7 @@ const routes = [
     { path: '/posts/:id', name: "post", component: Post },
     { path: '/posts/:id/:lessonId', name: "lesson", component: Lesson },
     { path: '/:pathMatch(.*)*', name: 'not found', component: Notfound },
+    
 ]
 
 const router = createRouter({

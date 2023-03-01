@@ -54,7 +54,7 @@
 <script>
 import Navbar from "../components/Navbar.vue";
 import ContentWrapper from "../components/ContentWrapper.vue";
-import PostCard from "../components/postCard.vue";
+import PostCard from "../components/PostCard.vue";
 import { mapState } from "vuex";
 import { AutoPlay } from "@egjs/flicking-plugins";
 /* --------------------- Mock API --------------------- */

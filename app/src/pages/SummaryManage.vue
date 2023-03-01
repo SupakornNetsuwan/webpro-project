@@ -25,6 +25,9 @@
           </div>
         </div>
         <div
+          @click="
+            $router.push($router.currentRoute.value.path + '/my-posts')
+          "
           className="flex space-x-2 p-6 bg-blue-soft rounded-2xl cursor-pointer border-blue-soft hover:border-blue-primary border-solid border-2 transition-all duration-150"
         >
           <Cog6ToothIcon class="w-10 h-10 text-blue-primary mt-1" />
