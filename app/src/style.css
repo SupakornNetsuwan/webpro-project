@@ -56,6 +56,10 @@
   }
 
   @layer components {
+    .input{
+      @apply outline-none p-2 px-3 bg-gray-50/50 rounded mt-2 text-lg text-black border border-gray-3 border-solid ;
+    }
+
     .current-active-route {
       @apply bg-gradient-to-br from-blue-soft to-purple-soft;
     }
