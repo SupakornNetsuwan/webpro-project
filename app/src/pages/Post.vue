@@ -18,26 +18,20 @@
       </div>
       <div class="flex justify-between mt-10 mx-4 md:mx-8 lg:mx-12">
         <h1 className="text-black">
-          วิธีการเลี้ยงกาชาแบบง่ายๆ เข้าใจได้ใน 1 นาที
+          {{ post.title }}
         </h1>
-        <subject-tag :subject="cat" />
+        <subject-tag :subject="post.subject" />
       </div>
       <div class="flex my-2 mx-4 md:mx-8 lg:mx-12">
-        <p className="text-black">โดย Yolradee Prayoonpunratn</p>
-        <p class="text-gray-3">&nbsp;• 64070089@kmitl.ac.th • 22/2/2023</p>
+        <p className="text-black">โดย {{ post.author }}</p>
+        <p class="text-gray-3">&nbsp;• {{ post.authorEmail }} • {{ post.createdDate }}</p>
       </div>
-      <img class="w-full h-96 object-cover my-5" src="../assets/kacha.jpg" />
+      <img :src="post.imgSrc" class="w-full h-96 object-cover my-5" />
       <p
         class="text-gray-4 mx-4 md:mx-8 lg:mx-12"
         style="font-weight: 400 !important"
       >
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur harum
-        sint iusto odit, impedit sit molestias, facere veniam nisi suscipit
-        vitae voluptates delectus accusantium asperiores ducimus neque possimus
-        optio cum. Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        Cumque veritatis est, debitis cupiditate eligendi eum consequuntur
-        voluptate eaque pariatur dolore fugiat illo animi eos! Aut cupiditate
-        alias blanditiis necessitatibus obcaecati.
+        {{ post.intro }}
       </p>
       <div class="w-[1px] bg-gray-2 ml-2" />
       <div class="h-[1px] bg-gray-2 mx-4 my-8 md:mx-8 lg:mx-12" />
@@ -48,7 +42,7 @@
         </h4>
         <div class="flex flex-col">
           <LessonCard
-            v-for="ls in lesson"
+            v-for="ls in post.lessons"
             class="my-2"
             :lessonDetail="ls"
             :key="ls.id"
@@ -80,6 +74,9 @@ import ContentWrapper from "../components/ContentWrapper.vue";
 import PostCard from "../components/postCard.vue";
 import SubjectTag from "../components/SubjectTag.vue";
 import { ChevronLeftIcon, StarIcon } from "@heroicons/vue/24/outline";
+/* --------------------- Mock API --------------------- */
+import postsApi from "../resources/postsApi.json"
+
 
 export default {
   name: "Post",
@@ -96,44 +93,8 @@ export default {
   },
   data() {
     return {
-      cat: "CAT",
-      lesson: [
-        {
-          id: 1,
-          order: 1,
-          title: "ทำไมกาชาพูดมากจัง",
-          createdDate: "23/2/2023",
-        },
-        {
-          id: 1,
-          order: 2,
-          title: "หลักการทำงานของร่างกายกาชา",
-          createdDate: "24/2/2023",
-        },
-      ],
-      suggestPosts: [
-        {
-          id: 2,
-          imgSrc: "",
-          title: "การทำออกแบบ Database อย่างง่าย",
-          createdDate: "11/2/2023",
-          subject: "Database",
-        },
-        {
-          id: 3,
-          imgSrc: "",
-          title: "วิธีการใช้ @media only screen and (max-width)",
-          createdDate: "10/2/2023",
-          subject: "Multimedia",
-        },
-        {
-          id: 4,
-          imgSrc: "",
-          title: "วิธีการเลี้ยงกะทิ",
-          createdDate: "9/2/2023",
-          subject: "Cat",
-        },
-      ],
+      post: postsApi.find(post => post.id == this.$router.currentRoute.value.params.id),
+      suggestPosts: postsApi,
     };
   },
   beforeMount() {

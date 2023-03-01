@@ -12,6 +12,8 @@
 <script>
 import ContentWrapperVue from "../components/ContentWrapper.vue";
 import PostCard from "../components/PostCard.vue";
+/* --------------------- Mock API --------------------- */
+import postsApi from "../resources/postsApi.json"
 
 export default {
   name: "SummariesFollowing",
@@ -21,48 +23,7 @@ export default {
   },
   data() {
     return {
-      posts: [
-        {
-          id: 1,
-          imgSrc: "",
-          title: "การจัดการ DOM ใน React",
-          createdDate: "12/2/2023",
-          subject: "Webpro",
-          routeSrc: "/post/1",
-        },
-        {
-          id: 2,
-          imgSrc: "",
-          title: "การทำออกแบบ Database อย่างง่าย",
-          createdDate: "11/2/2023",
-          subject: "Database",
-          routeSrc: "/post/2",
-        },
-        {
-          id: 3,
-          imgSrc: "",
-          title: "วิธีการใช้ @media only screen and (max-width)",
-          createdDate: "10/2/2023",
-          subject: "Multimedia",
-          routeSrc: "/post/3",
-        },
-        {
-          id: 4,
-          imgSrc: "",
-          title: "วิธีการเลี้ยงกะทิ",
-          createdDate: "9/2/2023",
-          subject: "Cat",
-          routeSrc: "/post/4",
-        },
-        {
-          id: 5,
-          imgSrc: "",
-          title: "วิธีการเลี้ยงกาชา",
-          createdDate: "9/2/2023",
-          subject: "Cat",
-          routeSrc: "/post/5",
-        },
-      ],
+      posts: postsApi
     };
   },
 };

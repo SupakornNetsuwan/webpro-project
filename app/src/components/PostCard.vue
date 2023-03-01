@@ -5,7 +5,7 @@
   >
     <img
       class="object-cover h-40 w-full rounded-lg"
-      src="../assets/kacha.jpg"
+      :src="postDetail.imgSrc"
     />
     <div class="m-2">
       <div class="flex flex-row w-full justify-between">
@@ -38,7 +38,7 @@ export default {
   },
   methods: {
     route() {
-      this.$router.push({ name: "post", params: { id: this.postDetail.id } });
+      this.$router.push(`/posts/${this.postDetail.id}`);
     },
   },
 };

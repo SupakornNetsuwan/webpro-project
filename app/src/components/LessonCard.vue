@@ -4,7 +4,7 @@
   >
     <div>
       <h3 class="text-blue-primary">
-        บทที่ {{ lessonDetail.order }} {{ lessonDetail.title }}
+        {{ lessonDetail.title }}
       </h3>
       <h5 class="text-gray-3 mt-1">
         สร้างเมื่อวันที่ {{ lessonDetail.createdDate }}
@@ -35,10 +35,12 @@ export default {
   data() {
     return {};
   },
-  methods:{
+  methods: {
     route() {
-      this.$router.push(`./lessons/${this.lessonDetail.id}`);
+      this.$router.push(
+        `${this.$router.currentRoute.value.fullPath}/${this.lessonDetail.id}`
+      );
     },
-  }
+  },
 };
 </script>
