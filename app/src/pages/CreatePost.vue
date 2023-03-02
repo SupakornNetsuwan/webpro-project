@@ -9,9 +9,7 @@
         <h4 class="text-red-primary">กลับ</h4>
       </button>
 
-      <h1 className="text-black mt-10">
-        สร้างโพสต์
-      </h1>
+      <h1 className="text-black mt-10">สร้างโพสต์</h1>
       <h4 className="text-gray-3">
         เลือกวิชาที่ต้องการสร้างโพสต์ และ ลงบทเรียน เพื่อแบ่งปันเนื้อหา หรือ
         สรุป
@@ -69,7 +67,6 @@
             <input
               type="file"
               class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded file:text-sm file:font-semibold file:bg-white file:text-blue-primary file:border-blue-primary file:border-2 file:border-solid hover:file:bg-blue-soft hover:file:cursor-pointer"
-              
             />
           </label>
 
@@ -89,7 +86,8 @@
 <script>
 import ContentWrapper from "../components/ContentWrapper.vue";
 import { ChevronLeftIcon, PlusIcon } from "@heroicons/vue/24/outline";
-import postsApi from '../resources/postsApi.json';
+import postsApi from "../resources/postsApi.json";
+import { mapState } from "vuex";
 
 export default {
   components: {
@@ -132,11 +130,21 @@ export default {
     //   fs.writeFileSync('../resources/postApi.json', data)
     // }
   },
-  computed: {
-    createdDate(){
+  beforeMount() {
+    if (!this.getAuthen) {
+      this.$router.push("/");
+    }
+  },
+  computed: mapState({
+    authen: (state) => state.authen,
+    // to access local state with `this`, a normal function must be used
+    getAuthen(state) {
+      return state.authen;
+    },
+    createdDate() {
       const date = new Date();
       return date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear();
-    }
-  }
+    },
+  }),
 };
 </script>

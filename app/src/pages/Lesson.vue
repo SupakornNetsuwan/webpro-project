@@ -14,8 +14,8 @@
       </div>
       <p class="my-2">{{ post.title }}</p>
       <div class="flex my-2">
-        <p>โดย {{ post.author }}</p>
-        <p class="text-gray-3">&nbsp;• {{ post.authorEmail }} • {{ lesson.createdDate }}</p>
+        <h4>โดย {{ post.author }}</h4>
+        <h4 class="text-gray-3">&nbsp;• {{ post.authorEmail }} • {{ lesson.createdDate }}</h4>
       </div>
       <hr class="my-6 text-gray-2" />
       <button
