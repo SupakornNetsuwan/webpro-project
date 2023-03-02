@@ -75,16 +75,25 @@
   <script>
 import ContentWrapper from "../components/ContentWrapper.vue";
 import { ChevronLeftIcon, PencilSquareIcon } from "@heroicons/vue/24/outline";
+import postsApi from "../resources/postsApi.json";
+
 export default {
   components: {
     ContentWrapper,
     ChevronLeftIcon,
     PencilSquareIcon,
   },
+  created() {
+    this.title = this.lesson.title
+    this.content = this.lesson.content
+  },
   data() {
+    const { id: postId, lessonId } = this.$router.currentRoute.value.params;
     return {
       title: null,
       content: null,
+      post: postsApi.find(post => post.id == postId),
+      lesson: postsApi.find(post => post.id == postId).lessons.find((lesson) => lesson.id == lessonId),
     };
   },
   mounted() {},

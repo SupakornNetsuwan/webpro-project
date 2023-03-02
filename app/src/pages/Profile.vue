@@ -27,7 +27,7 @@
             <h5 class="text-blue-primary">{{ user.nickname }}</h5>
           </div>
           <div class="flex flex-row justify-between">
-            <h5>เข้าร่วมเมื่อวันทีี่</h5>
+            <h5>เข้าร่วมเมื่อวันที่</h5>
             <h5 class="text-blue-primary">{{ user.createdDate }}</h5>
           </div>
         </div>

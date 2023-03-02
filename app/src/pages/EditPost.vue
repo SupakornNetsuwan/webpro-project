@@ -24,6 +24,7 @@
             id="post-topic"
             name="post-topic"
             className="input w-full md:max-w-[70%]"
+            v-model="title"
           />
         </div>
         <div>
@@ -35,6 +36,7 @@
             id="post-topic"
             name="post-topic"
             className="input w-full md:max-w-[70%]"
+            v-model="subject"
           />
         </div>
         <div>
@@ -51,6 +53,7 @@
             id="post-intro"
             rows="5"
             className="w-full resize-none input"
+            v-model="intro"
           />
         </div>
         <div>
@@ -83,6 +86,7 @@
 import ContentWrapper from "../components/ContentWrapper.vue";
 import { ChevronLeftIcon, PencilSquareIcon } from "@heroicons/vue/24/outline";
 import { mapState } from "vuex";
+import postsApi from "../resources/postsApi.json";
 
 export default {
   components: {
@@ -90,8 +94,17 @@ export default {
     ChevronLeftIcon,
     PencilSquareIcon,
   },
+  created(){
+    console.log(this.post.title)
+    this.title = this.post.title
+    this.subject = this.post.subject
+    this.intro = this.post.intro
+  },
   data() {
     return {
+      post: postsApi.find(
+        (post) => post.id == this.$router.currentRoute.value.params.id
+      ),
       title: null,
       subject: null,
       intro: null,

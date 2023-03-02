@@ -24,7 +24,7 @@
           </button>
           <button
             class="border-solid border-red-primary bg-white text-red-primary flex items-center h-fit mr-10"
-            @click="openModal"
+            @click="openModal('ลบโพสการเรียนเรียบร้อย ⭐️')"
           >
             <TrashIcon class="h-6" />
             <h4>&nbsp;ลบโพสต์</h4>
@@ -52,6 +52,7 @@
             </button>
             <button
               class="border-solid border-red-primary bg-white text-red-primary flex items-center h-fit mr-10"
+              @click="openModal('ลบบทเรียนเรียบร้อย ⭐️')"
             >
               <TrashIcon class="h-6" />
               <h4>&nbsp;ลบบทเรียน</h4>
@@ -85,10 +86,10 @@ export default {
   },
   setup() {},
   methods: {
-    openModal() {
+    openModal(txt) {
       this.$store.commit("setIsModalOpen", {
         isModalOpen: true,
-        content: "ลบโพสการเรียนเรียบร้อย ⭐️",
+        content: txt,
         // redirectTo: "/posts/1",
       });
     },
