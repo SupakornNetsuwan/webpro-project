@@ -81,7 +81,7 @@ export default {
   },
   data() {
     return {
-      isShowLesson: true,
+      isShowLesson: false,
     };
   },
   setup() {},
