@@ -116,7 +116,7 @@ export default {
   },
   methods: {
     clickHandler() {
-      this.$store.commit("increment");
+      
     },
   },
   beforeMount() {

@@ -33,14 +33,14 @@
             เนื้อหานำสำหรับบทเรียนของคุณ
             ลองอธิบายว่าโพสต์ของคุณจะมีการแนะนำเนื้อหาใดบ้างในอนาคต
           </p>
-          <!-- <QuillEditor theme="snow" toolbar="minimal"/> -->
-          <textarea
+          <QuillEditor theme="snow" toolbar="minimal" contentType="text" :content='content' @update:content="textChange" />
+          <!-- <textarea
             name="post-intro"
             id="post-intro"
             rows="5"
             className="w-full resize-none input"
             v-model="content"
-          />
+          /> -->
         </div>
         <div>
           <!-- <div>
@@ -72,7 +72,7 @@
     </ContentWrapper>
   </div>
 </template>
-  <script>
+<script>
 import ContentWrapper from "../components/ContentWrapper.vue";
 import { ChevronLeftIcon, PencilSquareIcon } from "@heroicons/vue/24/outline";
 import postsApi from "../resources/postsApi.json";
@@ -84,16 +84,18 @@ export default {
     PencilSquareIcon,
   },
   created() {
-    this.title = this.lesson.title
-    this.content = this.lesson.content
+    this.title = this.lesson.title;
+    this.content = this.lesson.content;
   },
   data() {
     const { id: postId, lessonId } = this.$router.currentRoute.value.params;
     return {
       title: null,
       content: null,
-      post: postsApi.find(post => post.id == postId),
-      lesson: postsApi.find(post => post.id == postId).lessons.find((lesson) => lesson.id == lessonId),
+      post: postsApi.find((post) => post.id == postId),
+      lesson: postsApi
+        .find((post) => post.id == postId)
+        .lessons.find((lesson) => lesson.id == lessonId),
     };
   },
   mounted() {},
@@ -105,6 +107,14 @@ export default {
         redirectTo: "/posts/1/1",
       });
     },
+    textChange(e){
+      console.log(e)
+    }
   },
+  watch:{
+    // content(newContent){
+    //   console.log(newContent)
+    // }
+  }
 };
 </script>
