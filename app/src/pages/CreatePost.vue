@@ -90,6 +90,7 @@
 import ContentWrapper from "../components/ContentWrapper.vue";
 import { ChevronLeftIcon, PlusIcon } from "@heroicons/vue/24/outline";
 import postsApi from '../resources/postsApi.json';
+
 export default {
   components: {
     ContentWrapper,
@@ -114,6 +115,28 @@ export default {
         redirectTo: "/posts/1",
       });
     },
+    // writeToJson() {
+    //   let newPost = {
+    //     "id" : this.posts[this.posts.length - 1].id + 1,
+    //     "imgSrc" : this.imgSrc,
+    //     "author": "Yolradee Prayoonpunratn",
+    //     "authorEmail": "64070089@kmitl.ac.th",
+    //     "title": this.title,
+    //     "intro": this.intro,
+    //     "subject": this.subject,
+    //     "createdDate": this.createdDate,
+    //     "lessons": []
+    //   }
+    //   let data = JSON.stringify(this.posts.push(newPost))
+    //   const fs = require('fs')
+    //   fs.writeFileSync('../resources/postApi.json', data)
+    // }
   },
+  computed: {
+    createdDate(){
+      const date = new Date();
+      return date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear();
+    }
+  }
 };
 </script>

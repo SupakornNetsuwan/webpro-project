@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="w-full flex min-h-screen flex-col bg-gray-1">
     <content-wrapper>
       <button
         @click="($event) => $router.go(-1)"

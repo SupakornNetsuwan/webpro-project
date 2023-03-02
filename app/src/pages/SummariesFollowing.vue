@@ -9,6 +9,7 @@
     </div>
   </ContentWrapperVue>
 </template>
+
 <script>
 import ContentWrapperVue from "../components/ContentWrapper.vue";
 import PostCard from "../components/PostCard.vue";

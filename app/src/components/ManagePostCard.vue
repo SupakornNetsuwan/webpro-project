@@ -17,14 +17,16 @@
         <div class="flex flex-row gap-3 justify-center items-center">
           <button
             class="border-solid border-blue-primary bg-white text-blue-primary flex items-center h-fit"
+            @click="this.$router.push(`/summary-manage/edit-post`)"
           >
             <PencilAltIcon class="h-6" />
             <h4>&nbsp;แก้ไขโพสต์</h4>
           </button>
           <button
             class="border-solid border-red-primary bg-white text-red-primary flex items-center h-fit mr-10"
+            @click="openModal"
           >
-            <PencilAltIcon class="h-6" />
+            <TrashIcon class="h-6" />
             <h4>&nbsp;ลบโพสต์</h4>
           </button>
           <div @click="isShowLesson = !isShowLesson">
@@ -50,7 +52,7 @@
             <button
               class="border-solid border-red-primary bg-white text-red-primary flex items-center h-fit mr-10"
             >
-              <PencilAltIcon class="h-6" />
+              <TrashIcon class="h-6" />
               <h4>&nbsp;ลบบทเรียน</h4>
             </button>
           </div>
@@ -62,13 +64,14 @@
 </template>
 
 <script>
-import { PencilAltIcon, ChevronDownIcon } from "@heroicons/vue/24/outline";
+import { PencilAltIcon, ChevronDownIcon, TrashIcon } from "@heroicons/vue/24/outline";
 
 export default {
   name: "ManagePostCard",
   components: {
     PencilAltIcon,
     ChevronDownIcon,
+    TrashIcon,
   },
   props: {
     post: Object,
@@ -79,5 +82,14 @@ export default {
     };
   },
   setup() {},
+  methods: {
+    openModal() {
+      this.$store.commit("setIsModalOpen", {
+        isModalOpen: true,
+        content: "ลบโพสการเรียนเรียบร้อย ⭐️",
+        // redirectTo: "/posts/1",
+      });
+    },
+  },
 };
 </script>
