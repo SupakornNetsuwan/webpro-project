@@ -84,6 +84,8 @@
   <script>
   import ContentWrapper from "../components/ContentWrapper.vue";
   import { ChevronLeftIcon, PencilAltIcon } from "@heroicons/vue/24/outline";
+  import postsApi from "../resources/postsApi.json";
+
   export default {
     components: {
       ContentWrapper,
@@ -91,7 +93,12 @@
       PencilAltIcon,
     },
     data() {
-      return {};
+      return {
+        title: null,
+        subject: null,
+        intro: null,
+        imgSrc: null
+      };
     },
     mounted() {},
     methods: {

@@ -9,7 +9,7 @@
         <h4 class="text-red-primary">กลับ</h4>
       </button>
 
-      <h1 className="text-black  mt-10">
+      <h1 className="text-black mt-10">
         สร้างโพสต์
       </h1>
       <h4 className="text-gray-3">
@@ -27,6 +27,7 @@
             id="post-topic"
             name="post-topic"
             className="input w-full md:max-w-[70%]"
+            v-model="title"
           />
         </div>
         <div>
@@ -38,6 +39,7 @@
             id="post-topic"
             name="post-topic"
             className="input w-full md:max-w-[70%]"
+            v-model="subject"
           />
         </div>
         <div>
@@ -54,6 +56,7 @@
             id="post-intro"
             rows="5"
             className="w-full resize-none input"
+            v-model="intro"
           />
         </div>
         <div>
@@ -66,6 +69,7 @@
             <input
               type="file"
               class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded file:text-sm file:font-semibold file:bg-white file:text-blue-primary file:border-blue-primary file:border-2 file:border-solid hover:file:bg-blue-soft hover:file:cursor-pointer"
+              
             />
           </label>
 
@@ -85,6 +89,7 @@
 <script>
 import ContentWrapper from "../components/ContentWrapper.vue";
 import { ChevronLeftIcon, PlusIcon } from "@heroicons/vue/24/outline";
+import postsApi from '../resources/postsApi.json';
 export default {
   components: {
     ContentWrapper,
@@ -92,7 +97,13 @@ export default {
     PlusIcon,
   },
   data() {
-    return {};
+    return {
+      title: null,
+      subject: null,
+      intro: null,
+      imgSrc: null,
+      posts: postsApi,
+    };
   },
   mounted() {},
   methods: {
