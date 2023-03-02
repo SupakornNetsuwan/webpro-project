@@ -82,6 +82,7 @@
   <script>
 import ContentWrapper from "../components/ContentWrapper.vue";
 import { ChevronLeftIcon, PencilAltIcon } from "@heroicons/vue/24/outline";
+import { mapState } from "vuex";
 
 export default {
   components: {
@@ -97,7 +98,18 @@ export default {
       imgSrc: null,
     };
   },
-  mounted() {},
+  beforeMount() {
+    if (!this.getAuthen) {
+      this.$router.push("/");
+    }
+  },
+  computed: mapState({
+    authen: (state) => state.authen,
+    // to access local state with `this`, a normal function must be used
+    getAuthen(state) {
+      return state.authen;
+    },
+  }),
   methods: {
     openModal() {
       this.$store.commit("setIsModalOpen", {

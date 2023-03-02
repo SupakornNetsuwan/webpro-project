@@ -23,10 +23,10 @@
         <subject-tag :subject="post.subject" />
       </div>
       <div class="flex my-2 mx-4 md:mx-8 lg:mx-12">
-        <p className="text-black">โดย {{ post.author }}</p>
-        <p class="text-gray-3">
+        <h4 className="text-black">โดย {{ post.author }}</h4>
+        <h4 class="text-gray-3">
           &nbsp;• {{ post.authorEmail }} • {{ post.createdDate }}
-        </p>
+        </h4>
       </div>
       <img :src="post.imgSrc" class="w-full h-96 object-cover my-5" />
       <p

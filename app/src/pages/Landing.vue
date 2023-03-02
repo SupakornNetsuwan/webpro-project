@@ -1,8 +1,10 @@
 <template>
   <div
-    className="w-full min-h-[100vh] flex flex-col justify-center items-center"
+    className="w-full min-h-[100vh]"
   >
-    <h4>Landing ✨</h4>
+    <div className="w-full h-96 bg-slate-100">
+
+    </div>
   </div>
 </template>
 
@@ -15,7 +17,7 @@ export default {
   name: "Landing",
   components: {
     Navbar,
-    PostCard
+    PostCard,
   },
   setup(props) {},
   mounted() {},
@@ -27,8 +29,8 @@ export default {
       this.$store.commit("increment");
     },
   },
-  beforeMount(){
-    if(this.getAuthen){
+  beforeMount() {
+    if (this.getAuthen) {
       this.$router.push("/home");
     }
   },
