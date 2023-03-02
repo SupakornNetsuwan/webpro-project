@@ -10,7 +10,7 @@
         <Sidebar />
       </div>
       <div className="w-full overflow-y-auto">
-        <router-view />
+        <router-view/>
       </div>
     </div>
   </div>

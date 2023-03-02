@@ -27,7 +27,7 @@ const store = createStore({
                 isModalOpen: false,
                 content: "",
                 redirectTo: ""
-            }
+            },
         }
     },
     mutations: {

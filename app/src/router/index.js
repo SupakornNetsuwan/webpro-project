@@ -49,7 +49,9 @@ const routes = [
             component: EditLesson
         },]
     },
-    { path: '/suggest', name: "suggest", component: Suggest },
+    { path: '/suggest', name: "suggest", component: Suggest, props: {
+        xxxx :"EARTH"
+    } },
     {
         path: '/summaries',
         name: "summaries",
@@ -58,7 +60,7 @@ const routes = [
             path: '',
             name: "summaries",
             components: {
-                default: Summaries
+                default: Summaries,
             }
         }, {
             path: 'following',

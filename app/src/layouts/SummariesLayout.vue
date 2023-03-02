@@ -1,6 +1,7 @@
 <template>
   <div className="flex flex-col bg-gray-1 min-h-screen">
     <SummariesNav />
+    <router-view name="xxxx"></router-view>
     <router-view></router-view>
   </div>
 </template>
