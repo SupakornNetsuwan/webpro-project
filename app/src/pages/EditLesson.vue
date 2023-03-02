@@ -9,40 +9,28 @@
         <h4 class="text-red-primary">กลับ</h4>
       </button>
 
-      <h1 className="text-black  mt-10">แก้ไขโพสต์</h1>
-      <h4 className="text-gray-3">
-        แก้ไขหัวข้อ วิชา หรือเนื้อหาเกริ่นที่คุณได้ลงไว้แล้ว
-      </h4>
+      <h1 className="text-black  mt-10">แก้ไขบทเรียน</h1>
+      <h4 className="text-gray-3">แก้ไขหัวข้อ เนื้อหา ที่คุณได้ลงไว้แล้ว</h4>
       <div class="h-[1px] bg-gray-2 my-8" />
       <div className="md:max-w-[50%]">
         <div>
           <h4 className="text-blue-primary ">
-            หัวข้อโพสต์<span className="text-red-primary">*</span>
+            หัวข้อบทเรียน<span className="text-red-primary">*</span>
           </h4>
           <input
             type="text"
             id="post-topic"
             name="post-topic"
             className="input w-full md:max-w-[70%]"
+            v-model="title"
           />
         </div>
         <div>
           <h4 className="text-blue-primary mt-8">
-            วิชา<span className="text-red-primary">*</span>
-          </h4>
-          <input
-            type="text"
-            id="post-topic"
-            name="post-topic"
-            className="input w-full md:max-w-[70%]"
-          />
-        </div>
-        <div>
-          <h4 className="text-blue-primary mt-8">
-            เนื้อหาเกริ่น<span className="text-red-primary">*</span>
+            เนื้อหา<span className="text-red-primary">*</span>
           </h4>
           <p className="text-gray-3 w-full">
-            เนื้อหาเกริ่นนำสำหรับโพสต์ของคุณ
+            เนื้อหานำสำหรับบทเรียนของคุณ
             ลองอธิบายว่าโพสต์ของคุณจะมีการแนะนำเนื้อหาใดบ้างในอนาคต
           </p>
           <!-- <QuillEditor theme="snow" toolbar="minimal"/> -->
@@ -51,20 +39,25 @@
             id="post-intro"
             rows="5"
             className="w-full resize-none input"
+            v-model="content"
           />
         </div>
         <div>
-          <h4 className="text-blue-primary mt-8">
-            ภาพปก<span className="text-red-primary">*</span>
-          </h4>
-          <p className="text-gray-3 w-full">เลือกภาพปกสำหรับโพสต์ใหม่ของคุณ</p>
+          <!-- <div>
+            <h4 className="text-blue-primary mt-8">
+              ภาพประกอบ<span className="text-red-primary">*</span>
+            </h4>
+            <p className="text-gray-3 w-full">
+              เลือกภาพประกอบสำหรับบทเรียนของคุณ
+            </p>
 
-          <label class="block bg-blue-soft rounded p-2 mt-4">
-            <input
-              type="file"
-              class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded file:text-sm file:font-semibold file:bg-white file:text-blue-primary file:border-blue-primary file:border-2 file:border-solid hover:file:bg-blue-soft hover:file:cursor-pointer"
-            />
-          </label>
+            <label class="block bg-blue-soft rounded p-2 mt-4">
+              <input
+                type="file"
+                class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded file:text-sm file:font-semibold file:bg-white file:text-blue-primary file:border-blue-primary file:border-2 file:border-solid hover:file:bg-blue-soft hover:file:cursor-pointer"
+              />
+            </label>
+          </div> -->
 
           <div class="h-[1px] bg-gray-2 my-8" />
           <button
@@ -72,7 +65,7 @@
             className="flex items-center space-x-1 px-4 py-2 transition-all duration-300 bg-blue-primary border-blue-primary"
           >
             <PencilSquareIcon class="w-6 h-6 text-white" />
-            <h5 class="text-white">แก้ไขโพสต์</h5>
+            <h5 class="text-white">แก้ไขบทเรียน</h5>
           </button>
         </div>
       </div>
@@ -82,7 +75,6 @@
   <script>
 import ContentWrapper from "../components/ContentWrapper.vue";
 import { ChevronLeftIcon, PencilSquareIcon } from "@heroicons/vue/24/outline";
-
 export default {
   components: {
     ContentWrapper,
@@ -92,9 +84,7 @@ export default {
   data() {
     return {
       title: null,
-      subject: null,
-      intro: null,
-      imgSrc: null,
+      content: null,
     };
   },
   mounted() {},
@@ -102,11 +92,10 @@ export default {
     openModal() {
       this.$store.commit("setIsModalOpen", {
         isModalOpen: true,
-        content: "แก้ไขเนื้อหาโพสการเรียนเรียบร้อย ⭐️",
-        redirectTo: "/posts/1",
+        content: "ทำการแก้ไขเนื้อหาบทเรียนเรียบร้อย ⭐️",
+        redirectTo: "/posts/1/1",
       });
     },
   },
 };
 </script>
-  

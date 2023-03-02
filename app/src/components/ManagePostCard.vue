@@ -17,9 +17,9 @@
         <div class="flex flex-row gap-3 justify-center items-center">
           <button
             class="border-solid border-blue-primary bg-white text-blue-primary flex items-center h-fit"
-            @click="this.$router.push(`/summary-manage/edit-post`)"
+            @click="routePost"
           >
-            <PencilAltIcon class="h-6" />
+            <PencilSquareIcon class="h-6" />
             <h4>&nbsp;แก้ไขโพสต์</h4>
           </button>
           <button
@@ -45,8 +45,9 @@
           <div class="flex flex-row gap-3 justify-center items-center">
             <button
               class="border-solid border-blue-primary bg-white text-blue-primary flex items-center h-fit"
+              @click="this.$router.push(`/summary-manage/edit-post/${post.id}/${l.id}`)"
             >
-              <PencilAltIcon class="h-6" />
+              <PencilSquareIcon class="h-6" />
               <h4>&nbsp;แก้ไขบทเรียน</h4>
             </button>
             <button
@@ -64,14 +65,15 @@
 </template>
 
 <script>
-import { PencilAltIcon, ChevronDownIcon, TrashIcon } from "@heroicons/vue/24/outline";
+import { PencilSquareIcon, ChevronDownIcon, TrashIcon, PencilIcon } from "@heroicons/vue/24/outline";
 
 export default {
   name: "ManagePostCard",
   components: {
-    PencilAltIcon,
+    PencilSquareIcon,
     ChevronDownIcon,
     TrashIcon,
+    PencilIcon,
   },
   props: {
     post: Object,
@@ -89,6 +91,9 @@ export default {
         content: "ลบโพสการเรียนเรียบร้อย ⭐️",
         // redirectTo: "/posts/1",
       });
+    },
+    routePost() {
+      this.$router.push(`/summary-manage/edit-post/${this.post.id}`)
     },
   },
 };

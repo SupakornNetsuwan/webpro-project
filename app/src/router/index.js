@@ -12,6 +12,7 @@ import Profile from "../pages/Profile.vue"
 import CreatePost from "../pages/CreatePost.vue"
 import CreateLesson from "../pages/CreateLesson.vue"
 import EditPost from "../pages/EditPost.vue"
+import EditLesson from "../pages/EditLesson.vue"
 import MyPost from "../pages/MyPost.vue"
 
 // Layout
@@ -35,13 +36,17 @@ const routes = [
             name: "myposts",
             component: MyPost
         }, {
-            path: 'edit-post',
+            path: 'edit-post/:id',
             name: "editPost",
             component: EditPost
         }, {
             path: 'create-lesson',
             name: "createLesson",
             component: CreateLesson
+        }, {
+            path: 'edit-post/:id/:lessonId',
+            name: "editLesson",
+            component: EditLesson
         },]
     },
     { path: '/suggest', name: "suggest", component: Suggest },

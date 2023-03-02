@@ -90,7 +90,7 @@ export default {
     StarIcon,
   },
   created() {
-    // console.log(this.$route.params);
+    console.log(this.$route.params);
     this.$watch(
       () => this.$route.params,
       (toParams, previousParams) => {
