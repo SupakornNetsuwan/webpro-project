@@ -84,6 +84,9 @@ export default {
       this.$router.push("/");
     }
   },
+  mounted(){
+    console.log()
+  },
   computed: mapState({
     authen: (state) => state.authen,
     // to access local state with `this`, a normal function must be used

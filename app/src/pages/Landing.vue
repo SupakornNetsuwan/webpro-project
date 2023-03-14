@@ -31,13 +31,18 @@
       </div>
       <span class="sr-only">Loading...</span>
     </div>
-
+    <GoogleSignInButton
+      @success="handleLoginSuccess"
+      @error="handleLoginError"
+    />
     <div
       role="status"
       class="space-y-2.5 animate-pulse max-w-lg mx-auto mt-12 flex flex-col items-center"
     >
       <div>
-        <h3 className="text-blue-primary mb-2 text-center">ทำไมคุณถึงควรใช้ Summarite</h3>
+        <h3 className="text-blue-primary mb-2 text-center">
+          ทำไมคุณถึงควรใช้ Summarite
+        </h3>
         <p className="text-center mb-4 text-gray-4">
           เพราะคุณหล่อเท่มากพ่อไงละ แล้วถ้าคุณจะไม่ให้ Prototype
           นี้ผ่านได้อย่างไร?
@@ -102,12 +107,14 @@
 import Navbar from "../components/Navbar.vue";
 import PostCard from "../components/PostCard.vue";
 import { mapState } from "vuex";
+import { GoogleSignInButton } from "vue3-google-signin";
 
 export default {
   name: "Landing",
   components: {
     Navbar,
     PostCard,
+    GoogleSignInButton,
   },
   setup(props) {},
   mounted() {},
@@ -115,9 +122,13 @@ export default {
     return {};
   },
   methods: {
-    clickHandler() {
-      
+    handleLoginSuccess: (response) => {
+      const { credential } = response;
+      console.log("Access Token", credential);
     },
+    handleLoginError: () => {
+      console.log("Error")
+    }
   },
   beforeMount() {
     if (this.getAuthen) {
