@@ -11,10 +11,19 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  email     String   @unique
-  firstname String
-  lastname  String
-  nickname  String
+  email         String   @id
+  createdAt     DateTime @default(now())
+  firstname     String
+  lastname      String
+  name          String
+  picture       String
+  refresh_token String?  @db.LongText
+  role          Role     @default(USER)
+
+  @@map("users")
+}
+
+enum Role {
+  USER
+  ADMIN
 }
