@@ -14,7 +14,7 @@ const createUser = async (email: string, picture: string, name: string, given_na
     })
 
     const modifyUser = { ...newUser } as Partial<User>;
-    delete modifyUser.refresh_token;
+    delete modifyUser.refresh_token; // Remove not needed data
 
     return modifyUser as User;
 }

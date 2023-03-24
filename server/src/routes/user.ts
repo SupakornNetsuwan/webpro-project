@@ -1,18 +1,44 @@
 import express, { Response, Request } from "express";
 import jwt_decode from "jwt-decode"
 import { GoogleUserPayload } from "../types/types";
-import prisma from "../lib/connection/prisma";
 import getErrorMessage from "../lib/functions/getErrorMessage"
 import { createAccessToken, createRefreshToken } from "../lib/jwt/encryptJWT"
+import getUser from "../lib/functions/prisma/user/getUser"
 import createUser from "../lib/functions/prisma/user/createUser"
 import updateUserRefreshToken from "../lib/functions/prisma/user/updateUserRefreshToken"
+import readJWT from "../lib/jwt/readJWT";
+import prisma from "../lib/connection/prisma"
+
 const app = express();
 
 app.get("/", (req: Request, res: Response) => {
     res.json({ message: "Oh, login is working now 🟢" })
 })
 
-app.post("/", async (req, res) => {
+app.post("/logout", readJWT, async (req, res) => {
+    const userDetails = res.locals.userDetails
+    const { email } = userDetails
+    await prisma.user.update({
+        where: {
+            email: email
+        },
+        data: {
+            refresh_token: null
+        }
+    })
+
+    //set header for refresh token
+    res.cookie('refresh_token', null, { httpOnly: false });
+    res.cookie('jwt_token', null, { httpOnly: false });
+
+    res.send({
+        status:200,
+        message: "Logout complete"
+    })
+
+})
+
+app.post("/login", async (req, res) => {
     const { credential }: { credential: string } = req.body || null;
 
     try {
@@ -20,37 +46,31 @@ app.post("/", async (req, res) => {
         const decoded = jwt_decode<GoogleUserPayload>(credential.split(" ")[1]);
         const { email, picture, name, given_name, family_name }: GoogleUserPayload = decoded;
 
-        const user = await prisma.user.findFirst({
-            where: {
-                email: email
-            }
-        })
+        let user = await getUser(email, { getRefreshToken: false });
+        let newUser = false;
 
         if (user === null) {
-            const newUser = await createUser(email, picture, name, given_name, family_name);
-            const jwt_token = createAccessToken(newUser) // create token from newUser data
-            const refresh_token = createRefreshToken(newUser) // create refresh token from newUser data
-            await updateUserRefreshToken(newUser.email, refresh_token)
-
-            //set header for refresh token
-            res.cookie('refresh_token', refresh_token, { httpOnly: false });
-            res.cookie('jwt_token', jwt_token, { httpOnly: false });
-
-            res.json({
-                status: 200,
-                message: "New user login complete 🟢",
-                jwt_token: jwt_token,
-                refresh_token: refresh_token
-            })
-
-            return;
+            // Create new user
+            newUser = true;
+            user = await createUser(email, picture, name, given_name, family_name);
         }
 
-        // Todo : make response on case that user isn't new one
+        const jwt_token = createAccessToken(user) // create token from newUser data
+        const refresh_token = createRefreshToken(user) // create refresh token from newUser data
+        await updateUserRefreshToken(user.email, refresh_token)
+
+        //set header for refresh token
+        res.cookie('refresh_token', refresh_token, { httpOnly: false });
+        res.cookie('jwt_token', jwt_token, { httpOnly: false });
+
         res.json({
             status: 200,
-            credential: "..."
+            message: newUser ? "Welcome new user, login complete" : "Login complete",
+            jwt_token: jwt_token,
+            refresh_token: refresh_token
         })
+
+        return;
 
     } catch (err) {
         /* Below was old style error checking */
@@ -59,8 +79,6 @@ app.post("/", async (req, res) => {
 
         // console.log(message)
         const message = getErrorMessage(err)
-
-        console.log(message)
 
         if (message === "Invalid token specified: Cannot read properties of undefined (reading 'replace')") {
             res.status(400).send({ status: 403, message: "Your token is not valid" })
