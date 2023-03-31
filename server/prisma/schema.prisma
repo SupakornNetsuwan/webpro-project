@@ -19,8 +19,42 @@ model User {
   picture       String
   refresh_token String?  @db.LongText
   role          Role     @default(USER)
+  posts         Post[]
 
   @@map("users")
+}
+
+model Subject {
+  subject_id      Int    @id
+  subject_name    String
+  description     String
+  instructor_name String
+  posts           Post[]
+}
+
+model Post {
+  post_id     Int      @id
+  post_title  String
+  intro       String
+  create_date DateTime @default(now())
+  subject     Subject  @relation(fields: [subject_id], references: [subject_id])
+  subject_id  Int
+  lessons     Lesson[]
+  user        User     @relation(fields: [email], references: [email])
+  email       String
+}
+
+model Lesson {
+  lesson_id      Int      @id
+  lesson_title   String
+  lesson_content String
+  published_date DateTime @default(now())
+  file_location  String
+  img_location   String
+  post           Post     @relation(fields: [post_id], references: [post_id])
+  post_id        Int
+  created_date   DateTime @default(now())
+  updated_date   DateTime @default(now())
 }
 
 enum Role {
