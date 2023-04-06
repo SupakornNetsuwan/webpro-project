@@ -7,12 +7,15 @@ const prisma = new PrismaClient()
 const router = express.Router()
 
 router.get('/post/:postId:lessonId', async (req: Request, res: Response) => {
-    const postId = parseInt(req.params.postId)
-    const lessonId = parseInt(req.params.lessonId)
+    const postId = req.params.postId
+    const lessonId = req.params.lessonId
     
     const lesson = prisma.lesson.findUnique({
         where: {
             lesson_id: lessonId
         }
     })
+    res.json(lesson)
 })
+
+export default router;

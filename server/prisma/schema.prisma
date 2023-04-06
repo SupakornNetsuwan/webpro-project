@@ -33,7 +33,7 @@ model Subject {
 }
 
 model Post {
-  post_id     Int      @id
+  post_id     String   @id @default(cuid())
   post_title  String
   intro       String
   create_date DateTime @default(now())
@@ -45,14 +45,14 @@ model Post {
 }
 
 model Lesson {
-  lesson_id      Int      @id
+  lesson_id      String   @id @default(cuid())
   lesson_title   String
   lesson_content String
   published_date DateTime @default(now())
-  file_location  String
-  img_location   String
+  file_location  String?
+  img_location   String?
   post           Post     @relation(fields: [post_id], references: [post_id])
-  post_id        Int
+  post_id        String
   created_date   DateTime @default(now())
   updated_date   DateTime @default(now())
 }

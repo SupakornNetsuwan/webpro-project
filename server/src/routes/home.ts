@@ -6,9 +6,9 @@ const prisma = new PrismaClient()
 
 const router = express.Router()
 
-router.post('/create-post', async (req: Request, res: Response) => {
-    //add new post
-
+router.get('/',async (req: Request, res: Response) => {
+    //select post to show, leatest, recommend
+    res.json({"message": "hi"})
 })
 
 export default router;

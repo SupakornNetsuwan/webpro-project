@@ -6,27 +6,16 @@ const prisma = new PrismaClient()
 
 const router = express.Router()
 
-router.get('/home',async (req: Request, res: Response) => {
-    //select post to show, leatest, recommend
-})
-
-router.get('/summaries',async (req: Request, res: Response) => {
-    //select all post
-})
-
-router.post('/summaries',async (req: Request, res: Response) => {
-    //req - filter วิชา , search โพสต์ได้
-    const subject = req.body.selectedSubject
-})
-
-router.get('/summaries/following',async (req: Request, res: Response) => {
-    //select post เฉพาะที่ติดตามเอาไว้
-})
-
-router.get('/post/:id', async (req: Request, res: Response) => {
-    const postId = parseInt(req.params.id)
+router.get('/:id', async (req: Request, res: Response) => {
+    const postId = req.params.id
     //select post ที่มี id เท่านี้
     const post = await prisma.post.findUnique({
-        where: {post_id: postId}
+        where: {post_id: postId }
     })
+    const postLesson = await prisma.lesson.findMany({
+        where: { post_id: postId }
+    })
+    res.json([post, postLesson])
 })
+
+export default router;
