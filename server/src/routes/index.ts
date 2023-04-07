@@ -3,8 +3,9 @@ import express, { Response, Request } from "express";
 import login from "./login"
 import protect from "./protect"
 import home from './home'
-import summaries from './summaries';
+import summaries from './summaries'
 import post from './post'
+import manage from './manage'
 
 const router = express.Router();
 
@@ -17,6 +18,6 @@ router.use("/protect", protect)
 router.use('/home', home)
 router.use('/post', post)
 router.use('/summaries', summaries)
-
+router.use('/', manage)
 
 export default router;
