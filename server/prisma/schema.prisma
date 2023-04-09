@@ -11,14 +11,14 @@ datasource db {
 }
 
 model User {
-  email         String   @id
-  createdAt     DateTime @default(now())
+  email         String        @id
+  createdAt     DateTime      @default(now())
   firstname     String
   lastname      String
   name          String
   picture       String
-  refresh_token String?  @db.LongText
-  role          Role     @default(USER)
+  refresh_token String?       @db.LongText
+  role          Role          @default(USER)
   posts         post[]
   follow_post   follow_post[]
 
@@ -26,23 +26,23 @@ model User {
 }
 
 model subject {
-  subject_id      String    @id
+  subject_id      String @id
   subject_name    String
-  description     String
+  description     String @db.Text
   instructor_name String
   posts           post[]
 }
 
 model post {
-  post_id      String   @id @default(cuid())
+  post_id      String        @id @default(cuid())
   post_title   String
-  intro        String
-  create_date  DateTime @default(now())
-  subject      subject  @relation(fields: [subject_id], references: [subject_id])
+  intro        String        @db.Text
+  create_date  DateTime      @default(now())
+  subject      subject       @relation(fields: [subject_id], references: [subject_id])
   subject_id   String
   lessons      lesson[]
-  user         User     @relation(fields: [email], references: [email])
-  email        String
+  user         User?          @relation(fields: [email], references: [email])
+  email        String?
   img_location String?
   follow_post  follow_post[]
 }
@@ -50,7 +50,7 @@ model post {
 model lesson {
   lesson_id      String   @id @default(cuid())
   lesson_title   String
-  lesson_content String
+  lesson_content String   @db.Text
   published_date DateTime @default(now())
   file_location  String?
   img_location   String?
@@ -61,10 +61,11 @@ model lesson {
 }
 
 model follow_post {
-  user User @relation(fields: [email], references: [email])
-  email String
-  post post @relation(fields: [post_id], references: [post_id])
+  user    User   @relation(fields: [email], references: [email])
+  email   String
+  post    post   @relation(fields: [post_id], references: [post_id])
   post_id String
+
   @@id([email, post_id])
 }
 

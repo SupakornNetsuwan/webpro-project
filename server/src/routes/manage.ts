@@ -17,7 +17,7 @@ router.post('/create-post', upload.single('imgSrc'), async (req, res) => {
         post_title: title,
         intro: intro,
         subject_id: subject,
-        email: "64070089@kmitl.ac.th",
+        email: null,
         img_location: file? file.path.substr(6): null,
     }
     const addPost = await prisma.post.create({
