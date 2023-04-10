@@ -12,7 +12,7 @@ import refreshToken from "./refreshToken";
 const checkJWT = (req: Request, res: Response, next: NextFunction) => {
     const { jwt_token, refresh_token }: { jwt_token: string, refresh_token: string } = req.cookies
 
-    if (!jwt_token) return res.json({ status: 403, message: "No JWT token found in header's cookie" })
+    if (!jwt_token) return res.status(403).send("No token provided.")
 
     jwt.verify(jwt_token.split(" ")[1], process.env.JWT_PRIVATEKEY as string, async (err, decoded) => {
         const message = getErrorMessage(err);
@@ -39,12 +39,12 @@ const checkJWT = (req: Request, res: Response, next: NextFunction) => {
             } catch (err) {
                 // If can't use refresh token, we'll return error
                 const message = getErrorMessage(err);
-                return res.json({ status: 401, message: message });
+                return res.status(401).send(message)
             }
         }
 
         // Unknown error 🔴
-        return res.json({ status: 400, message: message });
+        return res.status(500).send(message)
     })
 }
 

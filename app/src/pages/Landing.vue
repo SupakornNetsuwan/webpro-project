@@ -31,10 +31,6 @@
       </div>
       <span class="sr-only">Loading...</span>
     </div>
-    <GoogleSignInButton
-      @success="handleLoginSuccess"
-      @error="handleLoginError"
-    />
     <div
       role="status"
       class="space-y-2.5 animate-pulse max-w-lg mx-auto mt-12 flex flex-col items-center"
@@ -107,29 +103,22 @@
 import Navbar from "../components/Navbar.vue";
 import PostCard from "../components/PostCard.vue";
 import { mapState } from "vuex";
-import { GoogleSignInButton } from "vue3-google-signin";
+import axios from "axios";
 
 export default {
   name: "Landing",
   components: {
     Navbar,
     PostCard,
-    GoogleSignInButton,
   },
   setup(props) {},
-  mounted() {},
+  mounted() {
+    
+  },
   data() {
     return {};
   },
-  methods: {
-    handleLoginSuccess: (response) => {
-      const { credential } = response;
-      console.log("Access Token", credential);
-    },
-    handleLoginError: () => {
-      console.log("Error")
-    }
-  },
+  methods: {},
   beforeMount() {
     if (this.getAuthen) {
       this.$router.push("/home");

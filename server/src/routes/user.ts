@@ -28,11 +28,11 @@ app.post("/logout", readJWT, async (req, res) => {
     })
 
     //set header for refresh token
-    res.cookie('refresh_token', null, { httpOnly: false });
-    res.cookie('jwt_token', null, { httpOnly: false });
+    res.cookie('refresh_token', null, { httpOnly: true });
+    res.cookie('jwt_token', null, { httpOnly: true });
 
     res.send({
-        status:200,
+        status: 200,
         message: "Logout complete"
     })
 
@@ -40,7 +40,6 @@ app.post("/logout", readJWT, async (req, res) => {
 
 app.post("/login", async (req, res) => {
     const { credential }: { credential: string } = req.body || null;
-
     try {
         // อ่าน Payload จาก Goole authen เพื่อนำ payload มาใช้ต่อ
         const decoded = jwt_decode<GoogleUserPayload>(credential.split(" ")[1]);
@@ -60,14 +59,15 @@ app.post("/login", async (req, res) => {
         await updateUserRefreshToken(user.email, refresh_token)
 
         //set header for refresh token
-        res.cookie('refresh_token', refresh_token, { httpOnly: false });
-        res.cookie('jwt_token', jwt_token, { httpOnly: false });
+        res.cookie('refresh_token', refresh_token, { httpOnly: true });
+        res.cookie('jwt_token', jwt_token, { httpOnly: true });
 
         res.json({
             status: 200,
             message: newUser ? "Welcome new user, login complete" : "Login complete",
             jwt_token: jwt_token,
-            refresh_token: refresh_token
+            refresh_token: refresh_token,
+            user: user
         })
 
         return;
