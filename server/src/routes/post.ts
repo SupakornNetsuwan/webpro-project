@@ -18,4 +18,16 @@ router.get('/:id', async (req: Request, res: Response) => {
     res.json([post, postLesson])
 })
 
+router.get('/:id/:lessonId', async (req: Request, res: Response) => {
+    const postId = req.params.id
+    const lessonId = req.params.lessonId
+
+    const lesson = prisma.lesson.findUnique({
+        where: {
+            lesson_id: lessonId,
+        }
+    })
+    res.json(lesson)
+})
+
 export default router;
