@@ -1,7 +1,14 @@
 import prisma from "../../../connection/prisma";
 import { User } from "@prisma/client";
 
-const getUser = async (email: string, { getRefreshToken }: { getRefreshToken?: boolean }) => {
+interface GetUserOptionProps {
+    getRefreshToken: boolean
+}
+
+/**
+ * @description ดึงข้อมูลผู้ใช้ออกมาโดยที่เราจะสามารถเลือกได้ด้วยว่าจะเอา RefreshToken หรือไม่ที่ Parameter ตัวที่สอง
+ */
+const getUser = async (email: string, { getRefreshToken }: GetUserOptionProps): Promise<User> => {
 
     const user = await prisma.user.findFirst({
         where: {

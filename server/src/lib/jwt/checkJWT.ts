@@ -3,12 +3,13 @@ import jwt from "jsonwebtoken";
 import getErrorMessage from "../functions/getErrorMessage";
 import refreshToken from "./refreshToken";
 
-/* 
-    ทำหน้าที่ในการตรวจสอบ JWT token ที่แนบมาใน header ว่าถูกต้องหรือไม่
+/**
+ * 
+ * @description ทำหน้าที่ในการตรวจสอบ JWT token ที่แนบมาใน header ว่าถูกต้องหรือไม่
     หากถูกต้อง ให้ส่งไปต่อไปใน route ต่อไป หากไม่ถูกต้อง ให้ส่ง Error กลับไป
 
-    มีการทำ Refresh token อยู่ภายใน Function ให้เรียบร้อยแล้ว
-*/
+    มีการทำ Refresh Token อยู่ภายใน Function ให้เรียบร้อยแล้ว
+ */
 const checkJWT = (req: Request, res: Response, next: NextFunction) => {
     const { jwt_token, refresh_token }: { jwt_token: string, refresh_token: string } = req.cookies
 
@@ -25,10 +26,10 @@ const checkJWT = (req: Request, res: Response, next: NextFunction) => {
 
         // Something wrong 🔴
         if (message === "jwt expired") {
-            // Let's try refresh token
+            // หมดอายุ ก็ลองทำ Refresh ดู
             try {
                 const { jwt_token, new_refresh_token } = await refreshToken(refresh_token, res);
-                //set header for refresh token , jwt token to new one
+                // เปลี่ยน Access Token , Refresh Token เป็นอันใหม่
                 res.cookie('refresh_token', new_refresh_token, { httpOnly: false });
                 res.cookie('jwt_token', jwt_token, { httpOnly: false });
 
@@ -37,7 +38,7 @@ const checkJWT = (req: Request, res: Response, next: NextFunction) => {
                 console.log("Refreshed a token 🐕")
                 return next();
             } catch (err) {
-                // If can't use refresh token, we'll return error
+                // ถ้่าไม่สามารถ Refresh Token ได้ก็แสดงว่า invalid refresh_token
                 const message = getErrorMessage(err);
                 return res.status(401).send(message)
             }

@@ -8,6 +8,7 @@ import createUser from "../lib/functions/prisma/user/createUser"
 import updateUserRefreshToken from "../lib/functions/prisma/user/updateUserRefreshToken"
 import readJWT from "../lib/jwt/readJWT";
 import prisma from "../lib/connection/prisma"
+import { User } from "@prisma/client";
 
 const app = express();
 
@@ -27,7 +28,7 @@ app.post("/logout", readJWT, async (req, res) => {
         }
     })
 
-    //set header for refresh token
+    //Clear cookie 
     res.cookie('refresh_token', null, { httpOnly: true });
     res.cookie('jwt_token', null, { httpOnly: true });
 
@@ -49,16 +50,22 @@ app.post("/login", async (req, res) => {
         let newUser = false;
 
         if (user === null) {
-            // Create new user
+            // สร้างผู้ใช้ใหม่
             newUser = true;
-            user = await createUser(email, picture, name, given_name, family_name);
+            user = await createUser({ email, picture, name, given_name, family_name }, { getRefreshToken: false });
         }
 
-        const jwt_token = createAccessToken(user) // create token from newUser data
-        const refresh_token = createRefreshToken(user) // create refresh token from newUser data
-        await updateUserRefreshToken(user.email, refresh_token)
+        const jwt_token = createAccessToken<User>(user) // create token from newUser data
+        const refresh_token = createRefreshToken<User>(user) // create refresh token from newUser data
+        const isUpdatedRefreshToken = await updateUserRefreshToken(user.email, refresh_token)
 
-        //set header for refresh token
+        if (!isUpdatedRefreshToken) {
+            console.log("Cannot update refresh token")
+        }
+
+        console.log(jwt_token)
+
+        //set header เก็บ token ลงไปใน Cookie
         res.cookie('refresh_token', refresh_token, { httpOnly: true });
         res.cookie('jwt_token', jwt_token, { httpOnly: true });
 
@@ -81,11 +88,11 @@ app.post("/login", async (req, res) => {
         const message = getErrorMessage(err)
 
         if (message === "Invalid token specified: Cannot read properties of undefined (reading 'replace')") {
-            res.status(400).send({ status: 403, message: "Your token is not valid" })
+            res.status(403).send("Your token is not valid")
             return;
         }
 
-        res.status(400).send("Some unknown error occured")
+        res.status(500).send("Some unknown error occured")
     }
 })
 
