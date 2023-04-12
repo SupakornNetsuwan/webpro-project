@@ -31,13 +31,14 @@
       </div>
       <span class="sr-only">Loading...</span>
     </div>
-
     <div
       role="status"
       class="space-y-2.5 animate-pulse max-w-lg mx-auto mt-12 flex flex-col items-center"
     >
       <div>
-        <h3 className="text-blue-primary mb-2 text-center">ทำไมคุณถึงควรใช้ Summarite</h3>
+        <h3 className="text-blue-primary mb-2 text-center">
+          ทำไมคุณถึงควรใช้ Summarite
+        </h3>
         <p className="text-center mb-4 text-gray-4">
           เพราะคุณหล่อเท่มากพ่อไงละ แล้วถ้าคุณจะไม่ให้ Prototype
           นี้ผ่านได้อย่างไร?
@@ -102,6 +103,7 @@
 import Navbar from "../components/Navbar.vue";
 import PostCard from "../components/PostCard.vue";
 import { mapState } from "vuex";
+import axios from "axios";
 
 export default {
   name: "Landing",
@@ -110,15 +112,13 @@ export default {
     PostCard,
   },
   setup(props) {},
-  mounted() {},
+  mounted() {
+    
+  },
   data() {
     return {};
   },
-  methods: {
-    clickHandler() {
-      
-    },
-  },
+  methods: {},
   beforeMount() {
     if (this.getAuthen) {
       this.$router.push("/home");

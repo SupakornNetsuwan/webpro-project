@@ -16,13 +16,20 @@ import Chart from 'chart.js/auto';
 // Rich text editor (Quill)
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
+// Google Oauth 2.0
+import GoogleSignInPlugin from "vue3-google-signin"
+import axios from "axios";
+
+// ทำ custom server path
+axios.defaults.baseURL = import.meta.env.VITE_SERVER_URL
+axios.defaults.withCredentials = true
 
 // Create a new store instance.
 const store = createStore({
     state() {
         return {
-            authen: JSON.parse(localStorage.getItem('authen')) || false,
-            isNavHide:false,
+            authen: JSON.parse(localStorage.getItem('authen') || "null"), // ถ้าหากว่ามี user object อยู่ใน localstorage
+            isNavHide: false,
             modal: {
                 isModalOpen: false,
                 content: "",
@@ -34,23 +41,25 @@ const store = createStore({
         setAuthen(state, payload) {
             state.authen = payload;
 
-            if(!payload){
+            if (!payload) {
                 localStorage.removeItem("authen");
-            }else{
-                localStorage.setItem("authen", true);
-                
+            } else {
+                localStorage.setItem("authen", JSON.stringify(payload));
             }
         },
-        setIsNavHide(state, status){
+        setIsNavHide(state, status) {
             state.isNavHide = status;
         },
-        setIsModalOpen(state, payload){
-            state.modal = {...payload};
+        setIsModalOpen(state, payload) {
+            state.modal = { ...payload };
         }
     }
 })
 
 const app = createApp(App);
+app.use(GoogleSignInPlugin, {
+    clientId: import.meta.env.VITE_CLIENT_ID,
+});
 app.use(router)
 app.use(store)
 app.component("Flicking", Flicking);
