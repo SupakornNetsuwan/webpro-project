@@ -58,7 +58,7 @@ import PostCard from "../components/PostCard.vue";
 import { mapState } from "vuex";
 import { AutoPlay } from "@egjs/flicking-plugins";
 /* --------------------- Mock API --------------------- */
-import postsApi from "../resources/postsApi.json"
+import postsApi from "../resources/postsApi.json";
 
 const plugins = [
   new AutoPlay({ duration: 2000, direction: "NEXT", stopOnHover: true }),
@@ -74,25 +74,21 @@ export default {
   setup(props) {},
   data() {
     return {
+      // user: JSON.parse(JSON.stringify(this.$store.state.authen)),
       plugins,
       lastestPosts: postsApi,
     };
   },
   methods: {},
   beforeMount() {
-    if (!this.getAuthen) {
+    if (!this.authen) {
       this.$router.push("/");
     }
   },
-  mounted(){
-    console.log()
-  },
+  mounted() {},
   computed: mapState({
     authen: (state) => state.authen,
     // to access local state with `this`, a normal function must be used
-    getAuthen(state) {
-      return state.authen;
-    },
   }),
 };
 </script>

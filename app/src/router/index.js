@@ -49,9 +49,11 @@ const routes = [
             component: EditLesson
         },]
     },
-    { path: '/suggest', name: "suggest", component: Suggest, props: {
-        xxxx :"EARTH"
-    } },
+    {
+        path: '/suggest', name: "suggest", component: Suggest, props: {
+            xxxx: "EARTH"
+        }
+    },
     {
         path: '/summaries',
         name: "summaries",
@@ -74,7 +76,7 @@ const routes = [
     { path: '/posts/:id', name: "post", component: Post },
     { path: '/posts/:id/:lessonId', name: "lesson", component: Lesson },
     { path: '/:pathMatch(.*)*', name: 'not found', component: Notfound },
-    
+
 ]
 
 const router = createRouter({

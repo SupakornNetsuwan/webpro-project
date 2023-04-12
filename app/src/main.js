@@ -18,12 +18,17 @@ import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 // Google Oauth 2.0
 import GoogleSignInPlugin from "vue3-google-signin"
+import axios from "axios";
+
+// ทำ custom server path
+axios.defaults.baseURL = import.meta.env.VITE_SERVER_URL
+axios.defaults.withCredentials = true
 
 // Create a new store instance.
 const store = createStore({
     state() {
         return {
-            authen: JSON.parse(localStorage.getItem('authen')) || false,
+            authen: JSON.parse(localStorage.getItem('authen') || "null"), // ถ้าหากว่ามี user object อยู่ใน localstorage
             isNavHide: false,
             modal: {
                 isModalOpen: false,
@@ -39,8 +44,7 @@ const store = createStore({
             if (!payload) {
                 localStorage.removeItem("authen");
             } else {
-                localStorage.setItem("authen", true);
-
+                localStorage.setItem("authen", JSON.stringify(payload));
             }
         },
         setIsNavHide(state, status) {
