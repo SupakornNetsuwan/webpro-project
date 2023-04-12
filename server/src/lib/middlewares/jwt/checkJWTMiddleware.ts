@@ -31,8 +31,8 @@ const checkJWTMiddleware = (req: Request, res: Response, next: NextFunction) => 
             try {
                 const { jwt_token, new_refresh_token } = await refreshToken(refresh_token);
                 // เปลี่ยน Access Token , Refresh Token เป็นอันใหม่
-                res.cookie('refresh_token', new_refresh_token, { httpOnly: false });
-                res.cookie('jwt_token', jwt_token, { httpOnly: false });
+                res.cookie('refresh_token', new_refresh_token, { httpOnly: true, secure: true });
+                res.cookie('jwt_token', jwt_token, { httpOnly: true, secure: true });
                 // ทำการอ่านข้อมูลเพื่อเก็บใน res.locals.userDetails
                 const decoded = jwt_decode(jwt_token.split(" ")[1]);
                 res.locals.userDetails = decoded;

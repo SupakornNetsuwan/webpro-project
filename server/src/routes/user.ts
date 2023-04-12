@@ -29,8 +29,8 @@ app.post("/logout", readJWTMiddleware, async (req, res) => {
     })
 
     //Clear cookie 
-    res.cookie('refresh_token', null, { httpOnly: true });
-    res.cookie('jwt_token', null, { httpOnly: true });
+    res.cookie('refresh_token', null, { httpOnly: true, secure: true });
+    res.cookie('jwt_token', null, { httpOnly: true, secure: true });
 
     res.send({
         status: 200,
