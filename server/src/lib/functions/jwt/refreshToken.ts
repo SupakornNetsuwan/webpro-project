@@ -1,9 +1,8 @@
-import { Response } from "express";
 import jwt from "jsonwebtoken";
 import { User } from "@prisma/client";
-import getUser from "../functions/prisma/user/getUser";
-import { createAccessToken, createRefreshToken } from "./encryptJWT";
-import updateUserRefreshToken from "../functions/prisma/user/updateUserRefreshToken";
+import getUser from "../user/getUser";
+import { createAccessToken, createRefreshToken } from "./encryptJWT"
+import updateUserRefreshToken from "../user/updateUserRefreshToken"
 
 /**
  * @description  สามารถ ตรวจสอบ Refresh token ที่แนบมาว่าเหมือนกันหรือไม่ โดยการเอา Refresh token ที่แนบมาไปเทียบกับ Refresh token ที่เก็บไว้ใน DB
@@ -12,7 +11,7 @@ import updateUserRefreshToken from "../functions/prisma/user/updateUserRefreshTo
     
     ทีนี้เรา return เป็น Object เมื่อสำเร็จ
  */
-const refreshToken = async (refresh_token: string, res: Response) => {
+const refreshToken = async (refresh_token: string) => {
 
     // ถอดรหัส Refresh Token
     const decoded = jwt.verify(refresh_token.split(" ")[1], process.env.REFRESHTOKEN_PRIVATEKEY as string)

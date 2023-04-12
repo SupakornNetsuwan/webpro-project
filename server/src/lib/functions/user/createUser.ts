@@ -1,4 +1,4 @@
-import prisma from "../../../connection/prisma";
+import prisma from "../../connection/prisma";
 import { User } from "@prisma/client";
 
 interface CreateUserProps {

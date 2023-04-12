@@ -1,10 +1,10 @@
 import { Request , Response, NextFunction} from "express";
 import jwt_decode from "jwt-decode"
-import getErrorMessage from "../functions/getErrorMessage";
+import getErrorMessage from "../../functions/getErrorMessage";
 
 /**
  * 
- * @describe ทำหน้าที่ในการอ่าน JWT token ที่แนบมาใน cookie และเก็บเข้าไปใน res.locals.userDetails
+ * @describe ทำหน้าที่ในการอ่าน JWT token ที่แนบมาใน cookie และเก็บเข้าไปใน res.locals.userDetails (การอ่านไม่เหมือนกับการ check เพราะมันไม่ทำอะไรแม้หมดอายุ)
  * 
  * @example
  * {
@@ -18,13 +18,12 @@ import getErrorMessage from "../functions/getErrorMessage";
 }
  * 
  */
-const readJWT = (req : Request, res : Response, next : NextFunction) => {
+const readJWTMiddleware = (req : Request, res : Response, next : NextFunction) => {
     try{
         const jwt_token = req.cookies.jwt_token;
         const decoded = jwt_decode(jwt_token.split(" ")[1]);
         
         res.locals.userDetails = decoded;
-        console.log(res.locals.userDetails)
 
         return next() 
     }catch(err){
@@ -33,4 +32,4 @@ const readJWT = (req : Request, res : Response, next : NextFunction) => {
     }
 }
 
-export default readJWT
+export default readJWTMiddleware

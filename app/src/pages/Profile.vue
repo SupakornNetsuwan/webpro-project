@@ -25,7 +25,7 @@
           </div>
           <div class="flex flex-row justify-between">
             <h5>อีเมล</h5>
-            <h5 class="text-blue-primary">{{ user.email }}</h5>
+            <h5 class="text-blue-primary">{{ authen.email }}</h5>
           </div>
           <div class="flex flex-row justify-between">
             <h5>เข้าร่วมเมื่อวันที่</h5>
@@ -43,6 +43,7 @@
 import Navbar from "../components/Navbar.vue";
 import ContentWrapper from "../components/ContentWrapper.vue";
 import { mapState } from "vuex";
+import axios from "axios";
 
 export default {
   name: "Profile",
@@ -51,21 +52,13 @@ export default {
     ContentWrapper,
   },
   setup(props) {},
-  data() {
-    return {
-      user: {
-        name: "Supakorn Netsuwan",
-        email: "64070108@kmitl.ac.th",
-        nickname: "เอิร์ธ",
-        createdDate: "10/2/2023",
-      },
-    };
-  },
   methods: {},
   beforeMount() {
     if (!this.authen) {
       this.$router.push("/");
     }
+
+    axios.get("/api/protect").then(data => console.log(data.data)).catch(err => console.log(err.response.data))
   },
   computed: {
     ...mapState({

@@ -1,7 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import getErrorMessage from "../functions/getErrorMessage";
-import refreshToken from "./refreshToken";
+import getErrorMessage from "../../functions/getErrorMessage";
+import refreshToken from "../../functions/jwt/refreshToken";
+import jwt_decode from "jwt-decode"
 
 /**
  * 
@@ -10,7 +11,7 @@ import refreshToken from "./refreshToken";
 
     มีการทำ Refresh Token อยู่ภายใน Function ให้เรียบร้อยแล้ว
  */
-const checkJWT = (req: Request, res: Response, next: NextFunction) => {
+const checkJWTMiddleware = (req: Request, res: Response, next: NextFunction) => {
     const { jwt_token, refresh_token }: { jwt_token: string, refresh_token: string } = req.cookies
 
     if (!jwt_token) return res.status(403).send("No token provided.")
@@ -28,11 +29,12 @@ const checkJWT = (req: Request, res: Response, next: NextFunction) => {
         if (message === "jwt expired") {
             // หมดอายุ ก็ลองทำ Refresh ดู
             try {
-                const { jwt_token, new_refresh_token } = await refreshToken(refresh_token, res);
+                const { jwt_token, new_refresh_token } = await refreshToken(refresh_token);
                 // เปลี่ยน Access Token , Refresh Token เป็นอันใหม่
                 res.cookie('refresh_token', new_refresh_token, { httpOnly: false });
                 res.cookie('jwt_token', jwt_token, { httpOnly: false });
-
+                // ทำการอ่านข้อมูลเพื่อเก็บใน res.locals.userDetails
+                const decoded = jwt_decode(jwt_token.split(" ")[1]);
                 res.locals.userDetails = decoded;
 
                 console.log("Refreshed a token 🐕")
@@ -49,4 +51,4 @@ const checkJWT = (req: Request, res: Response, next: NextFunction) => {
     })
 }
 
-export default checkJWT;
+export default checkJWTMiddleware;

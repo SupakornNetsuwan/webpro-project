@@ -1,4 +1,4 @@
-import prisma from "../../../connection/prisma";
+import prisma from "../../connection/prisma";
 
 /**
  * @description อัปเดต Refresh Token ของผู้ใช้ลงในฐานข้อมูล

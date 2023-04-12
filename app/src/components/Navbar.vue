@@ -61,6 +61,9 @@ export default {
       websitename,
     };
   },
+  mounted() {
+    
+  },
   computed: mapState({
     // State mapper
     authen: (state) => state.authen,
@@ -73,6 +76,7 @@ export default {
           credential: "Bearer " + credential,
         })
         .then((response) => {
+          console.log(response.data);
           this.$store.commit("setAuthen", response.data.user);
           this.$router.push("/home");
         })
@@ -89,7 +93,7 @@ export default {
         .then((response) => {
           console.log(response.data);
           this.$store.commit("setAuthen", false);
-          this.$router.push("/home");
+          this.$router.push("/");
         })
         .catch((err) => {
           console.log(err.response.data);

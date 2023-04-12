@@ -2,11 +2,11 @@ import express, { Response, Request } from "express";
 import jwt_decode from "jwt-decode"
 import { GoogleUserPayload } from "../types/types";
 import getErrorMessage from "../lib/functions/getErrorMessage"
-import { createAccessToken, createRefreshToken } from "../lib/jwt/encryptJWT"
-import getUser from "../lib/functions/prisma/user/getUser"
-import createUser from "../lib/functions/prisma/user/createUser"
-import updateUserRefreshToken from "../lib/functions/prisma/user/updateUserRefreshToken"
-import readJWT from "../lib/jwt/readJWT";
+import { createAccessToken, createRefreshToken } from "../lib/functions/jwt/encryptJWT"
+import getUser from "../lib/functions/user/getUser"
+import createUser from "../lib/functions/user/createUser"
+import updateUserRefreshToken from "../lib/functions/user/updateUserRefreshToken"
+import readJWTMiddleware from "../lib/middlewares/jwt/readJWTMiddleware";
 import prisma from "../lib/connection/prisma"
 import { User } from "@prisma/client";
 
@@ -16,7 +16,7 @@ app.get("/", (req: Request, res: Response) => {
     res.json({ message: "Oh, login is working now 🟢" })
 })
 
-app.post("/logout", readJWT, async (req, res) => {
+app.post("/logout", readJWTMiddleware, async (req, res) => {
     const userDetails = res.locals.userDetails
     const { email } = userDetails
     await prisma.user.update({
