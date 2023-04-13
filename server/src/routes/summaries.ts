@@ -22,7 +22,7 @@ router.post('/',async (req: Request, res: Response) => {
 })
 
 router.get('/following',async (req: Request, res: Response) => {
-    //select post เฉพาะที่ติดตามเอาไว้
+    //select post เฉพาะที่ user ติดตามเอาไว้
     const followPost = await prisma.follow_post.findMany({
         where: {
             email: "email"

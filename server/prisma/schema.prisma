@@ -41,8 +41,8 @@ model post {
   subject      subject       @relation(fields: [subject_id], references: [subject_id])
   subject_id   String
   lessons      lesson[]
-  user         User?          @relation(fields: [email], references: [email])
-  email        String?
+  user         User          @relation(fields: [email], references: [email])
+  email        String
   img_location String?
   follow_post  follow_post[]
 }

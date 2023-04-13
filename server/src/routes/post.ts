@@ -1,8 +1,5 @@
 import express, { Response, Request } from "express";
-import { PrismaClient } from '@prisma/client'
-
-const prisma = new PrismaClient()
-// use `prisma` in your application to read and write data in your DB
+import prisma from "../lib/connection/prisma"
 
 const router = express.Router()
 
@@ -12,6 +9,7 @@ router.get('/:id', async (req: Request, res: Response) => {
     const post = await prisma.post.findUnique({
         where: {post_id: postId }
     })
+    //select lesson ที่เป็นของ post นี้
     const postLesson = await prisma.lesson.findMany({
         where: { post_id: postId }
     })
@@ -22,6 +20,7 @@ router.get('/:id/:lessonId', async (req: Request, res: Response) => {
     const postId = req.params.id
     const lessonId = req.params.lessonId
 
+    //select lesson ที่ต้องการเปิด
     const lesson = prisma.lesson.findUnique({
         where: {
             lesson_id: lessonId,
