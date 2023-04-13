@@ -29,8 +29,8 @@ app.post("/logout", readJWTMiddleware, async (req, res) => {
     })
 
     //Clear cookie 
-    res.cookie('refresh_token', null, { httpOnly: true });
-    res.cookie('jwt_token', null, { httpOnly: true });
+    res.cookie('refresh_token', null, { httpOnly: true, secure: true });
+    res.cookie('jwt_token', null, { httpOnly: true, secure: true });
 
     res.send({
         status: 200,
@@ -63,11 +63,9 @@ app.post("/login", async (req, res) => {
             console.log("Cannot update refresh token")
         }
 
-        console.log(jwt_token)
-
         //set header เก็บ token ลงไปใน Cookie
-        res.cookie('refresh_token', refresh_token, { httpOnly: true });
-        res.cookie('jwt_token', jwt_token, { httpOnly: true });
+        res.cookie('refresh_token', refresh_token, { httpOnly: true, secure:true });
+        res.cookie('jwt_token', jwt_token, { httpOnly: true, secure:true });
 
         res.json({
             status: 200,
