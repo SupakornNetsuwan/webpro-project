@@ -8,7 +8,7 @@
       ]"
     >
       <Squares2X2Icon class="w-6 h-6 text-blue-primary" />
-      <h5 class="text-blue-primary">โพสต์ทั้งหมด</h5>
+      <h5 class="text-blue-primary">โพสต์ตามวิชา</h5>
     </button>
     <div className="w-[1px] rounded bg-gray-3" />
     <button

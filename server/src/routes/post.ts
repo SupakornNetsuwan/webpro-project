@@ -3,6 +3,11 @@ import prisma from "../lib/connection/prisma"
 
 const router = express.Router()
 
+// TODO : GET "/api/post" ดึงโพสต์ทั้งหมด
+
+/**
+ * @description ทำการดึง post เฉพาะที่ต้องการ ด้วย id ของโพสต์
+ */
 router.get('/:id', async (req: Request, res: Response) => {
     const postId = req.params.id
     //select post ที่มี id เท่านี้
@@ -16,6 +21,9 @@ router.get('/:id', async (req: Request, res: Response) => {
     res.json([post, postLesson])
 })
 
+/**
+ * @description ทำการดึง lesson เฉพาะที่ต้องการ ด้วย id ของ lesson และ id ของโพสต์
+ */
 router.get('/:id/:lessonId', async (req: Request, res: Response) => {
     const postId = req.params.id
     const lessonId = req.params.lessonId

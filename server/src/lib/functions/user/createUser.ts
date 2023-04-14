@@ -36,7 +36,7 @@ const createUser = async (
             name: true,
             picture: true,
             role: true,
-            createdAt: true,
+            created_date: true,
             refresh_token: getRefreshToken ? true : false
         }
     })

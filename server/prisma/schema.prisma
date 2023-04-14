@@ -11,60 +11,61 @@ datasource db {
 }
 
 model User {
-  email         String        @id
-  createdAt     DateTime      @default(now())
+  email         String       @id
+  created_date  DateTime     @default(now())
   firstname     String
   lastname      String
   name          String
   picture       String
-  refresh_token String?       @db.LongText
-  role          Role          @default(USER)
-  posts         post[]
-  follow_post   follow_post[]
+  refresh_token String?      @db.LongText
+  role          Role         @default(USER)
+  posts         Post[]
+  follow_post   FollowPost[]
 
   @@map("users")
 }
 
-model subject {
+model Subject {
   subject_id      String @id
   subject_name    String
-  description     String @db.Text
+  description     String @db.MediumText
   instructor_name String
-  posts           post[]
+  posts           Post[]
 }
 
-model post {
-  post_id      String        @id @default(cuid())
+model Post {
+  post_id      String       @id @default(cuid())
   post_title   String
-  intro        String        @db.Text
-  create_date  DateTime      @default(now())
-  subject      subject       @relation(fields: [subject_id], references: [subject_id])
-  subject_id   String
-  lessons      lesson[]
-  user         User          @relation(fields: [email], references: [email])
-  email        String
+  intro        String       @db.MediumText
   img_location String?
-  follow_post  follow_post[]
+  subject_id   String
+  subject      Subject      @relation(fields: [subject_id], references: [subject_id])
+  author_email String
+  author       User         @relation(fields: [author_email], references: [email])
+  lessons      Lesson[]
+  follow_post  FollowPost[]
+  create_date  DateTime     @default(now())
+  updated_date DateTime     @updatedAt
 }
 
-model lesson {
+model Lesson {
   lesson_id      String   @id @default(cuid())
   lesson_title   String
-  lesson_content String   @db.Text
-  published_date DateTime @default(now())
+  lesson_content String   @db.LongText
   file_location  String?
   img_location   String?
-  post           post     @relation(fields: [post_id], references: [post_id])
   post_id        String
+  post           Post     @relation(fields: [post_id], references: [post_id])
+  published_date DateTime @default(now()) //เอาออกดีมั้ย
   created_date   DateTime @default(now())
-  updated_date   DateTime @default(now())
+  updated_date   DateTime @updatedAt
 }
 
-model follow_post {
-  user    User   @relation(fields: [email], references: [email])
-  email   String
-  post    post   @relation(fields: [post_id], references: [post_id])
-  post_id String
+model FollowPost {
+  email    String
+  follower User   @relation(fields: [email], references: [email])
+  post_id  String
+  post     Post   @relation(fields: [post_id], references: [post_id])
 
   @@id([email, post_id])
 }

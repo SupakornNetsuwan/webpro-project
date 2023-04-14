@@ -33,9 +33,9 @@
     <ContentWrapper>
       <div>
         <div class="mb-8">
-          <h3 className="text-black">โพสต์การเรียนที่แนะนำ ✨</h3>
+          <h3 className="text-black">โพสต์การเรียนที่แนะนำทั้งหมด ✨</h3>
           <p className="text-gray-3">
-            นี่คือโพสต์การเรียนล่าสุดที่คุณอาจจะสนใจจากการติดตามของคุณ
+            นี่คือโพสต์การเรียนล่าที่คุณอาจจะสนใจ
           </p>
         </div>
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-4">
