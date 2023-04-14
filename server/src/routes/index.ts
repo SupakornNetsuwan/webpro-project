@@ -1,6 +1,6 @@
 import express, { Response, Request } from "express";
 /* sub routes */
-import user from "./user"
+import auth from "./auth"
 import protect from "./protect"
 import home from './home'
 import summaries from './summaries'
@@ -13,7 +13,7 @@ router.get("/", (req: Request, res: Response) => {
     res.json({ message: "Welcome to the API" })
 })
 
-router.use("/user", user)
+router.use("/auth", auth)
 router.use("/protect", protect)
 router.use('/home', home) // home อันนี้คือเอาไว้ทำอะไรนะะ
 router.use('/post', post) // ควรเป็นคำพหุนาม /posts เพราะว่าเรามองว่า post มันเป็นเรื่องของโพสต์ในระบบ แต่เราก็ไม่ได้มองว่ามันเป็นเรื่องของโพสต์ๆ ไหนเจาะจงเหมือน /user ที่เป็นการเข้าถึง user เพียง 1 เดียว
