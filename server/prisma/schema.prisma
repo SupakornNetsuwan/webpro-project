@@ -56,16 +56,16 @@ model Lesson {
   img_location   String?
   post_id        String
   post           Post     @relation(fields: [post_id], references: [post_id])
-  published_date DateTime @default(now()) //เอาออกดีมั้ย
   created_date   DateTime @default(now())
   updated_date   DateTime @updatedAt
 }
 
 model FollowPost {
-  email    String
-  follower User   @relation(fields: [email], references: [email])
-  post_id  String
-  post     Post   @relation(fields: [post_id], references: [post_id])
+  email       String
+  follower    User     @relation(fields: [email], references: [email])
+  post_id     String
+  post        Post     @relation(fields: [post_id], references: [post_id])
+  follow_date DateTime @default(now())
 
   @@id([email, post_id])
 }
