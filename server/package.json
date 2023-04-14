@@ -29,6 +29,9 @@
     "mac-dev": "nodemon --watch 'src/**' src/server.ts",
     "start": "npx tsc && node build/server"
   },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

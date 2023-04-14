@@ -21,13 +21,10 @@ model User {
   role          Role         @default(USER)
   posts         Post[]
   follow_post   FollowPost[]
-
-  @@map("users")
 }
 
 model Subject {
-  subject_id      String @id
-  subject_name    String
+  subject_name    String @id
   description     String @db.MediumText
   instructor_name String
   posts           Post[]
@@ -37,11 +34,11 @@ model Post {
   post_id      String       @id @default(cuid())
   post_title   String
   intro        String       @db.MediumText
-  img_location String?
-  subject_id   String
-  subject      Subject      @relation(fields: [subject_id], references: [subject_id])
+  post_img     String?
+  subject_name String
+  subject      Subject      @relation(fields: [subject_name], references: [subject_name], onDelete: Cascade)
   author_email String
-  author       User         @relation(fields: [author_email], references: [email])
+  author       User         @relation(fields: [author_email], references: [email], onDelete: Cascade)
   lessons      Lesson[]
   follow_post  FollowPost[]
   create_date  DateTime     @default(now())
@@ -55,16 +52,16 @@ model Lesson {
   file_location  String?
   img_location   String?
   post_id        String
-  post           Post     @relation(fields: [post_id], references: [post_id])
+  post           Post     @relation(fields: [post_id], references: [post_id], onDelete: Cascade)
   created_date   DateTime @default(now())
   updated_date   DateTime @updatedAt
 }
 
 model FollowPost {
   email       String
-  follower    User     @relation(fields: [email], references: [email])
+  follower    User     @relation(fields: [email], references: [email], onDelete: Cascade)
   post_id     String
-  post        Post     @relation(fields: [post_id], references: [post_id])
+  post        Post     @relation(fields: [post_id], references: [post_id], onDelete: Cascade)
   follow_date DateTime @default(now())
 
   @@id([email, post_id])
