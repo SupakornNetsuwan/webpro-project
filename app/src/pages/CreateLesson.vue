@@ -13,8 +13,7 @@
           สร้างบทเรียน
         </h1>
         <h4 className="text-gray-3">
-          เลือกวิชาที่ต้องการสร้างโพสต์ และ ลงบทเรียน เพื่อแบ่งปันเนื้อหา หรือ
-          สรุป
+          สร้างบทเรียนใหม่ แบ่งปันเนื้อหา หรือสรุป
         </h4>
         <div class="h-[1px] bg-gray-2 my-8" />
         <div className="md:max-w-[50%]">
@@ -31,30 +30,18 @@
           </div>
           <div>
             <h4 className="text-blue-primary mt-8">
-              โพสต์<span className="text-red-primary">*</span>
-            </h4>
-            <input
-              type="text"
-              id="post-topic"
-              name="post-topic"
-              className="input w-full md:max-w-[70%]"
-            />
-          </div>
-          <div>
-            <h4 className="text-blue-primary mt-8">
               เนื้อหา<span className="text-red-primary">*</span>
             </h4>
             <p className="text-gray-3 w-full">
-              เนื้อหานำสำหรับบทเรียนของคุณ
-              ลองอธิบายว่าโพสต์ของคุณจะมีการแนะนำเนื้อหาใดบ้างในอนาคต
+              เนื้อหาในบทเรียนของคุณ
             </p>
-            <!-- <QuillEditor theme="snow" toolbar="minimal"/> -->
-            <textarea
+            <QuillEditor theme="snow" name="lesson-content" toolbar="minimal"/>
+            <!-- <textarea
               name="post-intro"
               id="post-intro"
               rows="5"
               className="w-full resize-none input"
-            />
+            /> -->
           </div>
           <div>
             <h4 className="text-blue-primary mt-8">
