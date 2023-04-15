@@ -27,3 +27,36 @@ export const getAllLessonsFromPost = async (req: Request, res: Response) => {
         return res.status(500).send(getErrorMessage(err))
     }
 }
+
+
+export const getMyLessonsAmount = async (req: Request, res: Response) => {
+    
+    try {
+        const { email, role } = res.locals.userDetails
+
+        if (role === "ADMIN") {
+            const allLessonsAmount = await prisma.lesson.count({});
+            return res.send(allLessonsAmount.toString())
+        }
+
+        const myLessonsAmount = await prisma.lesson.count({
+            where: {
+                post: {
+                    author_email: email,
+                },
+            },
+        });
+
+        res.send(myLessonsAmount.toString())
+
+    } catch (err) {
+        if (err instanceof Prisma.PrismaClientKnownRequestError) {
+            switch (err.code) {
+                default:
+                    return res.status(500).send("เกิดข้อผิดพลาดในระบบ")
+            }
+        }
+
+        return res.status(500).send(getErrorMessage(err))
+    }
+}

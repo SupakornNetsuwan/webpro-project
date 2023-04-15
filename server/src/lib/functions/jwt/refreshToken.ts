@@ -30,6 +30,7 @@ const refreshToken = async (refresh_token: string) => {
     await updateUserRefreshToken(email, new_refresh_token)
 
     return { jwt_token, new_refresh_token }
+
 }
 
 export default refreshToken

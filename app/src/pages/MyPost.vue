@@ -26,6 +26,7 @@ import ManagePostCard from "../components/ManagePostCard.vue";
 import postsApi from "../resources/postsApi.json";
 import { ChevronLeftIcon } from "@heroicons/vue/24/outline";
 import { mapState } from "vuex";
+import { getMyPosts } from "../resources/api";
 
 export default {
   name: "myposts",
@@ -42,6 +43,15 @@ export default {
   beforeMount() {
     if (!this.getAuthen) {
       this.$router.push("/");
+    }
+  },
+  async created() {
+    try {
+      getMyPosts().then((res) => {
+        console.log(res.data);
+      });
+    } catch (err) {
+      console.log(err);
     }
   },
   computed: mapState({

@@ -18,11 +18,6 @@ import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 // Google Oauth 2.0
 import GoogleSignInPlugin from "vue3-google-signin"
-import axios from "axios";
-
-// ทำ custom server path
-axios.defaults.baseURL = import.meta.env.VITE_SERVER_URL
-axios.defaults.withCredentials = true
 
 // Create a new store instance.
 const store = createStore({

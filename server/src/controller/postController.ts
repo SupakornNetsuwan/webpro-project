@@ -39,7 +39,7 @@ export const createPost = async (req: Request, res: Response) => {
                 intro: intro,
                 subject_name: subjectName,
                 author_email: authorEmail,
-                post_img: process.env.SERVER_PUBLIC_URL + "/" + filename
+                ...(filename && { post_img: process.env.SERVER_PUBLIC_URL + "/" + filename })
             }
         })
 
@@ -165,13 +165,86 @@ export const followPost = async (req: Request, res: Response) => {
     const postId = req.params.postId
     const { email } = res.locals.userDetails
 
-    //สร้างข้อมูลการติดตามโพสใหม่
-    const newFollow = await prisma.followPost.create({
-        data: {
-            post_id: postId,
-            email: email
+    try {
+        //สร้างข้อมูลการติดตามโพสใหม่
+        const newFollow = await prisma.followPost.create({
+            data: {
+                post_id: postId,
+                email: email
+            }
+        })
+
+        res.send("ติดตามโพสต์เรียบร้อย")
+
+    } catch (err) {
+        if (err instanceof Prisma.PrismaClientKnownRequestError) {
+            switch (err.code) {
+                case "P2025":
+                    return res.status(400).send("ไม่พบโพสต์ที่ต้องการติดตาม")
+                default:
+                    return res.status(500).send("เกิดข้อผิดพลาดในระบบ")
+            }
+        }
+
+        return res.status(500).send(getErrorMessage(err))
+    }
+
+}
+
+/**
+ * @route /api/posts/myposts
+ * @method GET
+ * @description ดึงโพสต์ที่เป็นของตัวเองเท่านั้น
+ */
+
+export const getMyPosts = async (req: Request, res: Response) => {
+    const { email, role } = res.locals.userDetails;
+
+    if (role === "ADMIN") {
+        // Admin เข้าถึงได้ทุก post
+        const allPosts = await prisma.post.findMany({
+            include: {
+                lessons: true
+            }
+        })
+        return res.send(allPosts)
+    }
+
+
+    const myPosts = await prisma.post.findMany({
+        where: {
+            author_email: email
+        },
+        include: {
+            lessons: true
         }
     })
 
-    res.status(200).send({ message: "ติดตามโพสต์เรียบร้อย" })
+    res.send(myPosts)
+}
+
+
+/**
+ * @route /api/posts/myposts-amount
+ * @method GET
+ * @description ดึงจำนวนโพสต์ที่เป็นของตัวเองเท่านั้น
+ */
+
+export const getMyPostsAmount = async (req: Request, res: Response) => {
+    const { email, role } = res.locals.userDetails;
+
+    if (role === "ADMIN") {
+        // Admin เข้าถึงได้ทุก post
+        const allPostsAmount = await prisma.post.count()
+
+        return res.send(allPostsAmount.toString())
+    }
+
+    const myPostsAmount = await prisma.post.count({
+        where: {
+            author_email: email
+        }
+    })
+
+    res.send(myPostsAmount.toString())
 }

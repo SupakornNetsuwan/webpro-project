@@ -49,7 +49,7 @@ import {
 } from "@heroicons/vue/24/outline";
 import axios from "axios";
 import { GoogleSignInButton } from "vue3-google-signin";
-
+import { login, logout } from "../resources/api";
 export default {
   name: "Navbar",
   components: {
@@ -61,20 +61,15 @@ export default {
       websitename,
     };
   },
-  mounted() {
-    
-  },
+  mounted() {},
   computed: mapState({
     // State mapper
     authen: (state) => state.authen,
     isNavHide: (state) => state.count,
   }),
   methods: {
-    signIn({ credential }) {
-      axios
-        .post("/api/user/login", {
-          credential: "Bearer " + credential,
-        })
+    async signIn({ credential }) {
+      login(credential)
         .then((response) => {
           console.log(response.data);
           this.$store.commit("setAuthen", response.data.user);
@@ -84,12 +79,11 @@ export default {
           console.log(err.response.data);
         });
     },
-    signOut() {
+    async signOut() {
       this.$router.push("/");
       this.$store.commit("setAuthen", false);
 
-      axios
-        .post("/api/user/logout")
+      logout()
         .then((response) => {
           console.log(response.data);
           this.$store.commit("setAuthen", false);

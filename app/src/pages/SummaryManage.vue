@@ -25,9 +25,7 @@
           </div>
         </div>
         <div
-          @click="
-            $router.push($router.currentRoute.value.path + '/my-posts')
-          "
+          @click="$router.push($router.currentRoute.value.path + '/my-posts')"
           className="flex space-x-2 p-6 bg-blue-soft rounded-2xl cursor-pointer border-blue-soft hover:border-blue-primary border-solid border-2 transition-all duration-150"
         >
           <Cog6ToothIcon class="w-10 h-10 text-blue-primary mt-1" />
@@ -56,7 +54,9 @@
           </Atropos>
         </div>
       </div>
-      <h3 className="text-black mt-16 mb-8">สถิติจำนวนผู้ที่ติดตามโพสต์ของคุณ</h3>
+      <h3 className="text-black mt-16 mb-8">
+        สถิติจำนวนผู้ที่ติดตามโพสต์ของคุณ
+      </h3>
       <line-chart :data="chartData"></line-chart>
     </ContentWrapper>
   </div>
@@ -67,11 +67,12 @@ import Navbar from "../components/Navbar.vue";
 import ContentWrapper from "../components/ContentWrapper.vue";
 import { DocumentPlusIcon, Cog6ToothIcon } from "@heroicons/vue/24/outline";
 import { mapState } from "vuex";
+import { getMyPostsAmount, getMyLessonsAmount } from "../resources/api";
 // Atropos
 import Atropos from "atropos/vue";
 import "atropos/css/min";
 // moment
-import moment from 'moment';
+import moment from "moment";
 
 export default {
   name: "SummaryManage",
@@ -111,8 +112,17 @@ export default {
       this.$router.push("/");
     }
   },
-  mounted(){
-    console.log()
+  async created() {
+    getMyPostsAmount().then((res) => {
+      this.statistics[0].amount = res.data;
+    });
+
+    getMyLessonsAmount().then((res) => {
+      this.statistics[1].amount = res.data;
+    });
+  },
+  mounted() {
+    console.log();
   },
   computed: mapState({
     authen: (state) => state.authen,
@@ -121,15 +131,15 @@ export default {
       return state.authen;
     },
     chartData() {
-      return [  
-        [this.moment.subtract(-7, 'days').format("DD/MM/YYYY"), 24],
-        [this.moment.subtract(-6, 'days').format("DD/MM/YYYY"), 12],
-        [this.moment.subtract(-5, 'days').format("DD/MM/YYYY"), 44],
-        [this.moment.subtract(-4, 'days').format("DD/MM/YYYY"), 24],
-        [this.moment.subtract(-3, 'days').format("DD/MM/YYYY"), 74],
-        [this.moment.subtract(-2, 'days').format("DD/MM/YYYY"), 90],
-        [this.moment.subtract(-1, 'days').format("DD/MM/YYYY"), 34],
-        [this.moment.subtract(0, 'days').format("DD/MM/YYYY"), 22],
+      return [
+        [this.moment.subtract(-7, "days").format("DD/MM/YYYY"), 24],
+        [this.moment.subtract(-6, "days").format("DD/MM/YYYY"), 12],
+        [this.moment.subtract(-5, "days").format("DD/MM/YYYY"), 44],
+        [this.moment.subtract(-4, "days").format("DD/MM/YYYY"), 24],
+        [this.moment.subtract(-3, "days").format("DD/MM/YYYY"), 74],
+        [this.moment.subtract(-2, "days").format("DD/MM/YYYY"), 90],
+        [this.moment.subtract(-1, "days").format("DD/MM/YYYY"), 34],
+        [this.moment.subtract(0, "days").format("DD/MM/YYYY"), 22],
       ];
     },
   }),
