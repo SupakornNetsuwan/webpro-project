@@ -2,13 +2,13 @@
   <div>
     <div class="w-full rounded-xl border border-solid border-gray-2">
       <div class="flex flex-row justify-between m-5 ml-10">
-        <div class="flex flex-row">
+        <div class="flex">
           <img
             class="w-36 h-20 object-cover rounded-lg"
             :src="post.imgSrc"
           />
           <div class="flex flex-col p-2 ml-5">
-            <h3 class="truncate text-black">
+            <h3 class="whitespace-nowrap text-ellipsis overflow-hidden w-[200px] 2xl:w-[500px] text-black" @click="routePost">
               {{ post.title }}
             </h3>
             <h5 class="text-gray-3">สร้างเมื่อวันที่ {{ post.createdDate }}</h5>
@@ -17,13 +17,20 @@
         <div class="flex flex-row gap-3 justify-center items-center">
           <button
             class="border-solid border-blue-primary bg-white text-blue-primary flex items-center h-fit"
-            @click="routePost"
+            @click="routeCreateLesson"
+          >
+            <DocumentPlusIcon class="h-6" />
+            <h4>&nbsp;สร้างบทเรียน</h4>
+          </button>
+          <button
+            class="border-solid border-blue-primary bg-white text-blue-primary flex items-center h-fit"
+            @click="routeEditPost"
           >
             <PencilSquareIcon class="h-6" />
             <h4>&nbsp;แก้ไขโพสต์</h4>
           </button>
           <button
-            class="border-solid border-red-primary bg-white text-red-primary flex items-center h-fit mr-10"
+            class="border-solid border-red-primary bg-white text-red-primary flex items-center h-fit mr-8"
             @click="openModal('ลบโพสการเรียนเรียบร้อย ⭐️')"
           >
             <TrashIcon class="h-6" />
@@ -66,7 +73,7 @@
 </template>
 
 <script>
-import { PencilSquareIcon, ChevronDownIcon, TrashIcon, PencilIcon } from "@heroicons/vue/24/outline";
+import { PencilSquareIcon, ChevronDownIcon, TrashIcon, PencilIcon, DocumentPlusIcon } from "@heroicons/vue/24/outline";
 
 export default {
   name: "ManagePostCard",
@@ -75,6 +82,7 @@ export default {
     ChevronDownIcon,
     TrashIcon,
     PencilIcon,
+    DocumentPlusIcon,
   },
   props: {
     post: Object,
@@ -93,9 +101,15 @@ export default {
         // redirectTo: "/posts/1",
       });
     },
-    routePost() {
+    routeEditPost() {
       this.$router.push(`/summary-manage/edit-post/${this.post.id}`)
     },
+    routeCreateLesson() {
+      this.$router.push(`/summary-manage/${this.post.id}/create-lesson`)
+    },
+    routePost() {
+      this.$router.push(`/posts/${this.post.id}`)
+    }
   },
 };
 </script>

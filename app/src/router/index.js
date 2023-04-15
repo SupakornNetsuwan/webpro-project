@@ -40,7 +40,7 @@ const routes = [
             name: "editPost",
             component: EditPost
         }, {
-            path: 'create-lesson',
+            path: ':id/create-lesson',
             name: "createLesson",
             component: CreateLesson
         }, {
