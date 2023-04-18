@@ -1,7 +1,7 @@
 <template>
   <div className="w-full flex min-h-screen flex-col bg-gray-1">
-    <content-wrapper class="py-4 md:py-8 lg:py-12" :noPadding="true">
-      <div class="flex justify-between mt-4 mx-4 md:mx-8 lg:mx-12">
+    <content-wrapper class="" :noPadding="true">
+      <div class="flex justify-between mt-4 mx-4 md:mx-8 lg:mx-12 pt-4 md:pt-8 lg:pt-12">
         <button
           @click="($event) => $router.go(-1)"
           class="flex items-center cursor-pointer border-none bg-transparent pl-0"
@@ -37,8 +37,8 @@
       </p>
       <div class="w-[1px] bg-gray-2 ml-2" />
       <div class="h-[1px] bg-gray-2 mx-4 my-8 md:mx-8 lg:mx-12" />
-      <div class="mx-4 md:mx-8 lg:mx-12">
-        <h2>บทเรียนต่างๆ</h2>
+      <div class="mx-4 md:mx-8 lg:mx-12 pb-4 md:pb-8 lg:pb-12">
+        <h2 class="text-black">บทเรียนต่างๆ</h2>
         <h4 class="text-gray-4 mb-5">
           บทเรียนคือเนื้อหาที่อยู่ภายใต้โพสต์วิชาในแต่ละวิชาที่ถูกสร้างขึ้นโดยผู้เขียนโพสต์นั้นๆ
         </h4>

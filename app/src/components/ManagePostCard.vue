@@ -5,13 +5,13 @@
         <div class="flex">
           <img
             class="w-36 h-20 object-cover rounded-lg"
-            :src="post.imgSrc"
+            :src="post.post_img"
           />
           <div class="flex flex-col p-2 ml-5">
             <h3 class="whitespace-nowrap text-ellipsis overflow-hidden w-[200px] 2xl:w-[500px] text-black" @click="routePost">
-              {{ post.title }}
+              {{ post.post_title }}
             </h3>
-            <h5 class="text-gray-3">สร้างเมื่อวันที่ {{ post.createdDate }}</h5>
+            <h5 class="text-gray-3">สร้างเมื่อวันที่ {{ new Date(post.create_date).toLocaleDateString() }}</h5>
           </div>
         </div>
         <div class="flex flex-row gap-3 justify-center items-center">
@@ -48,11 +48,11 @@
     >
       <div v-for="l in post.lessons" :key="l.id">
         <div class="px-20 flex flex-row justify-between items-center">
-          <h4 class="text-blue-primary">{{ l.title }}</h4>
+          <h4 class="text-blue-primary">{{ l.lesson_title }}</h4>
           <div class="flex flex-row gap-3 justify-center items-center">
             <button
               class="border-solid border-blue-primary bg-white text-blue-primary flex items-center h-fit"
-              @click="this.$router.push(`/summary-manage/edit-post/${post.id}/${l.id}`)"
+              @click="this.$router.push(`/summary-manage/edit-post/${post.post_id}/${l.lesson_id}`)"
             >
               <PencilSquareIcon class="h-6" />
               <h4>&nbsp;แก้ไขบทเรียน</h4>
@@ -66,7 +66,7 @@
             </button>
           </div>
         </div>
-        <div v-if="l.id != post.lessons[post.lessons.length - 1].id" class="h-[1px] bg-gray-2 my-5" />
+        <div v-if="l.lesson_id != post.lessons[post.lessons.length - 1].lesson_id" class="h-[1px] bg-gray-2 my-5" />
       </div>
     </div>
   </div>
@@ -92,6 +92,9 @@ export default {
       isShowLesson: false,
     };
   },
+  created(){
+    console.log(this.post)
+  },
   setup() {},
   methods: {
     openModal(txt) {
@@ -102,13 +105,13 @@ export default {
       });
     },
     routeEditPost() {
-      this.$router.push(`/summary-manage/edit-post/${this.post.id}`)
+      this.$router.push(`/summary-manage/edit-post/${this.post.post_id}`)
     },
     routeCreateLesson() {
-      this.$router.push(`/summary-manage/${this.post.id}/create-lesson`)
+      this.$router.push(`/summary-manage/${this.post.post_id}/create-lesson`)
     },
     routePost() {
-      this.$router.push(`/posts/${this.post.id}`)
+      this.$router.push(`/posts/${this.post.post_id}`)
     }
   },
 };

@@ -4,6 +4,7 @@ import prisma from "../lib/connection/prisma"
 import checkJWTMiddleware from "../lib/middlewares/jwt/checkJWTMiddleware";
 import upload from "../lib/middlewares/multerMiddleware";
 import getErrorMessage from "../lib/functions/getErrorMessage";
+import exp from "constants";
 
 /**
  * @route /api/posts
@@ -100,9 +101,80 @@ export const getPost = async (req: Request, res: Response) => {
 }
 
 /**
+ * @route /api/posts/edit-post/:postId
+ * @method PUT
+ * @description ส่งข้อมูลจาก Client มาแก้ไขโพสที่มีอยู่ ด้วย id ของโพสต์
+ * @payload
+ * ```
+ * {
+ *  title: string,
+ *  intro: string,
+ *  subjectName: string,
+ *  thumbnail: file
+ * }
+ * ```
+ */
+
+export const editPost = async (req: Request, res: Response) => {
+    try {
+        const { postId } = req.params
+        const { title, intro, subjectName } = req.body
+        const { email: userEmail } = res.locals.userDetails
+        //ถ้าไม่มีไฟล์ให้เป็น {}
+        const { filename, path } = req.file || {}
+        
+        if (!postId) return res.status(400).send("โปรดระบุ id ของโพสต์ที่ต้องการแก้ไช")
+        
+        //ตรวจสอบว่าเป็นเจ้าของโพสต์มั้ย โดยเช็คจากข้อมูลผู้เขียนของโพสต์นั้น
+        const postAuthor = await prisma.post.findUnique({
+            where: {
+                post_id: postId,
+            },
+            select: {
+                author_email: true
+            }
+        })
+        if (userEmail != postAuthor?.author_email){
+            return res.status(400).send("คุณไม่ใช่เจ้าของโพสต์")
+        }
+        
+        if (!title || !intro || !userEmail || !subjectName) {
+            // ตรวจสอบว่าครบมั้ย
+            return res.status(400).send("โปรดกรอกข้อมูให้ครบถ้วน")
+        }
+
+        await prisma.post.update({
+            where: {
+                post_id: postId
+            },
+            data: {
+                post_title: title,
+                intro: intro,
+                subject_name: subjectName,
+                ...(filename && { post_img: process.env.SERVER_PUBLIC_URL + "/" + filename })
+            }
+        })
+
+        res.send("แก้ไขโพสเรียบร้อย")
+
+    }catch (err) {
+        if (err instanceof Prisma.PrismaClientKnownRequestError) {
+            switch (err.code) {
+                case "P2025":
+                    return res.status(400).send("ไม่พบโพสต์ที่ต้องการแก้ไข")
+                default:
+                    return res.status(500).send("เกิดข้อผิดพลาดในระบบ")
+            }
+        }
+
+        return res.status(500).send(getErrorMessage(err))
+    }
+}
+
+/**
  * @route /api/posts/:postId
  * @method DELETE
- * @description ทำการดึง post เฉพาะที่ต้องการ ด้วย id ของโพสต์
+ * @description ทำการลบ post ที่ต้องการ ด้วย id ของโพสต์
  */
 
 export const deletePost = async (req: Request, res: Response) => {

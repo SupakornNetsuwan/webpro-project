@@ -22,7 +22,7 @@ instance.interceptors.response.use(response => {
     return error;
 });
 
-const getPosts = async () => {
+export const getPosts = async () => {
     instance.get("http://localhost:3001/api/summaries")
 }
 
@@ -36,6 +36,11 @@ export const login = async (credential) => {
 
 export const logout = async () => {
     const response = await instance.post("/api/auth/logout")
+    return response
+}
+
+export const getPost = async (postId) => {
+    const response = await instance.get(`/api/posts/${postId}`)
     return response
 }
 

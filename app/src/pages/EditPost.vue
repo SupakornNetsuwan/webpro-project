@@ -31,12 +31,10 @@
           <h4 className="text-blue-primary mt-8">
             วิชา<span className="text-red-primary">*</span>
           </h4>
-          <input
-            type="text"
-            id="post-topic"
-            name="post-topic"
-            className="input w-full md:max-w-[70%]"
-            v-model="subject"
+          <ComboBox
+            :list="subjectList"
+            :chosenListItem="chosenSubject"
+            @changeList="changeList"
           />
         </div>
         <div>
@@ -87,28 +85,39 @@ import ContentWrapper from "../components/ContentWrapper.vue";
 import { ChevronLeftIcon, PencilSquareIcon } from "@heroicons/vue/24/outline";
 import { mapState } from "vuex";
 import postsApi from "../resources/postsApi.json";
+import { getPost, getSubjects } from '../resources/api';
+import ComboBox from "../components/ComboBox.vue";
 
 export default {
   components: {
     ContentWrapper,
     ChevronLeftIcon,
     PencilSquareIcon,
+    ComboBox,
   },
-  created(){
-    console.log(this.post.title)
-    this.title = this.post.title
-    this.subject = this.post.subject
-    this.intro = this.post.intro
+  async created(){
+    try {
+      const { data } = await getSubjects();
+      this.subjectList = data.map((subject) => subject.subject_name);
+      getPost(this.$router.currentRoute.value.params.id).then((res) => {
+        this.post = res.data
+        this.title = res.data.post_title
+        this.intro = res.data.intro
+        this.chosenSubject = res.data.subject_name
+      })
+    }catch (err){
+      console.log(err)
+    }
   },
   data() {
     return {
-      post: postsApi.find(
-        (post) => post.id == this.$router.currentRoute.value.params.id
-      ),
+      post: null,
       title: null,
       subject: null,
       intro: null,
       imgSrc: null,
+      subjectList: [],
+      chosenSubject: null,
     };
   },
   beforeMount() {
@@ -127,9 +136,12 @@ export default {
     openModal() {
       this.$store.commit("setIsModalOpen", {
         isModalOpen: true,
-        content: "แก้ไขเนื้อหาโพสการเรียนเรียบร้อย ⭐️",
-        redirectTo: "/posts/1",
+        content: "แก้ไขเนื้อหาโพสต์การเรียนเรียบร้อย ⭐️",
+        redirectTo: `/posts/${this.$router.currentRoute.value.params.id}`,
       });
+    },
+    changeList(e) {
+      this.chosenSubject = e;
     },
   },
 };

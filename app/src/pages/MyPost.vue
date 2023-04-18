@@ -14,7 +14,7 @@
       </h4>
       <div class="h-[1px] bg-gray-2 my-8" />
       <div class="grid gap-5">
-        <manage-post-card v-for="p in mypost" :key="p.id" :post="p" />
+        <manage-post-card v-for="p in mypost" :key="p.post_id" :post="p" />
       </div>
     </content-wrapper>
   </div>
@@ -37,7 +37,7 @@ export default {
   },
   data() {
     return {
-      mypost: postsApi,
+      mypost: null,
     };
   },
   beforeMount() {
@@ -48,6 +48,7 @@ export default {
   async created() {
     try {
       getMyPosts().then((res) => {
+        this.mypost = res.data
         console.log(res.data);
       });
     } catch (err) {
