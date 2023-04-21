@@ -4,7 +4,6 @@ import prisma from "../lib/connection/prisma"
 import checkJWTMiddleware from "../lib/middlewares/jwt/checkJWTMiddleware";
 import upload from "../lib/middlewares/multerMiddleware";
 import getErrorMessage from "../lib/functions/getErrorMessage";
-import exp from "constants";
 
 /**
  * @route /api/posts
@@ -101,7 +100,7 @@ export const getPost = async (req: Request, res: Response) => {
 }
 
 /**
- * @route /api/posts/edit-post/:postId
+ * @route /api/posts/:postId
  * @method PUT
  * @description ส่งข้อมูลจาก Client มาแก้ไขโพสที่มีอยู่ ด้วย id ของโพสต์
  * @payload
@@ -135,12 +134,12 @@ export const editPost = async (req: Request, res: Response) => {
             }
         })
         if (userEmail != postAuthor?.author_email){
-            return res.status(400).send("คุณไม่ใช่เจ้าของโพสต์")
+            return res.status(403).send("คุณไม่ใช่เจ้าของโพสต์")
         }
         
         if (!title || !intro || !userEmail || !subjectName) {
             // ตรวจสอบว่าครบมั้ย
-            return res.status(400).send("โปรดกรอกข้อมูให้ครบถ้วน")
+            return res.status(401).send("โปรดกรอกข้อมูให้ครบถ้วน")
         }
 
         await prisma.post.update({

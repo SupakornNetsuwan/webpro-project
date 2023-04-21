@@ -30,7 +30,7 @@
           <div class="flex flex-row justify-between">
             <h5>เข้าร่วมเมื่อวันที่</h5>
             <h5 class="text-blue-primary">
-              {{ new Date(authen.createdAt).toLocaleDateString() }}
+              {{ new Date(authen.created_date).toLocaleDateString() }}
             </h5>
           </div>
         </div>
@@ -65,6 +65,6 @@ export default {
       authen: (state) => state.authen,
       // to access local state with `this`, a normal function must be used
     }),
-  },
+  }
 };
 </script>

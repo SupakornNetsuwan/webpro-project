@@ -24,9 +24,10 @@ router.get('/following', checkJWTMiddleware, getFollowingPost)
 
 router.post('/follow/:postId', checkJWTMiddleware, followPost)
 
-router.put('/edit-post/:postId', checkJWTMiddleware, upload.single('thumbnail'), editPost)
 
 // ลำดับของ route สำคัญเพราะมันอาจจะไปเข้า /:postId ได้
+
+router.put('/:postId', checkJWTMiddleware, upload.single('thumbnail'), editPost)
 
 router.get('/:postId', checkJWTMiddleware, getPost)
 
