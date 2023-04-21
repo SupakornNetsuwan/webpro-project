@@ -42,7 +42,7 @@
         </div>
         <div
           v-if="(authen.role === 'ADMIN')"
-          @click="$router.push($router.currentRoute.value.path + '/add-subject')"
+          @click="$router.push($router.currentRoute.value.path + '/create-subject')"
           className="flex space-x-2 p-6 bg-blue-soft rounded-2xl cursor-pointer border-blue-soft hover:border-blue-primary border-solid border-2 transition-all duration-150"
         >
           <PlusCircleIcon class="w-10 h-10 text-blue-primary mt-1" />
