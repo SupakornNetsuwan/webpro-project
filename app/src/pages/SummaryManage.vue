@@ -40,6 +40,17 @@
             <p className="text-gray-4">แก้ไข ลบ เพิ่มบทเรียนภายใต้โพสต์</p>
           </div>
         </div>
+        <div
+          v-if="(authen.role === 'ADMIN')"
+          @click="$router.push($router.currentRoute.value.path + '/add-subject')"
+          className="flex space-x-2 p-6 bg-blue-soft rounded-2xl cursor-pointer border-blue-soft hover:border-blue-primary border-solid border-2 transition-all duration-150"
+        >
+          <PlusCircleIcon class="w-10 h-10 text-blue-primary mt-1" />
+          <div>
+            <h4 className="text-blue-primary">เพิ่มวิชา</h4>
+            <p className="text-gray-4">เพิ่มวิชาใหม่สำหรับการสร้างโพสต์</p>
+          </div>
+        </div>
       </div>
       <h3 className="text-black mt-16 mb-8">สถิติ</h3>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:flex ">
@@ -71,7 +82,7 @@
 <script>
 import Navbar from "../components/Navbar.vue";
 import ContentWrapper from "../components/ContentWrapper.vue";
-import { DocumentPlusIcon, Cog6ToothIcon } from "@heroicons/vue/24/outline";
+import { DocumentPlusIcon, Cog6ToothIcon, PlusCircleIcon } from "@heroicons/vue/24/outline";
 import { mapState } from "vuex";
 import { getMyPostsAmount, getMyLessonsAmount } from "../resources/api";
 // Atropos
@@ -88,6 +99,7 @@ export default {
     ContentWrapper,
     DocumentPlusIcon,
     Cog6ToothIcon,
+    PlusCircleIcon,
   },
   setup(props) {},
   data() {

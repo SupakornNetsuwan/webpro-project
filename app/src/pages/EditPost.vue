@@ -56,9 +56,9 @@
         </div>
         <div>
           <h4 className="text-blue-primary mt-8">
-            ภาพปก<span className="text-red-primary">*</span>
+            ภาพปก
           </h4>
-          <p className="text-gray-3 w-full">เลือกภาพปกสำหรับโพสต์ใหม่ของคุณ</p>
+          <p className="text-gray-3 w-full">แก้ไขภาพปกสำหรับโพสต์ของคุณ</p>
 
           <label class="flex bg-blue-soft rounded p-2 mt-4">
             <input

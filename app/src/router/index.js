@@ -14,6 +14,7 @@ import CreateLesson from "../pages/CreateLesson.vue"
 import EditPost from "../pages/EditPost.vue"
 import EditLesson from "../pages/EditLesson.vue"
 import MyPost from "../pages/MyPost.vue"
+import AddSubject from "../pages/AddSubject.vue"
 
 // Layout
 import SummariesLayout from "../layouts/SummariesLayout.vue"
@@ -69,6 +70,10 @@ const routes = [
             path: 'edit-post/:id/:lessonId',
             name: "editLesson",
             component: EditLesson
+        }, {
+            path: 'add-subject',
+            name: "addSubject",
+            component: AddSubject
         },]
     },
     {

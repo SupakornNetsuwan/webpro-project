@@ -59,6 +59,7 @@
       v-if="isShowLesson"
       class="border border-solid border-gray-2 rounded-lg p-5"
     >
+      <h5 v-if="post.lessons.length == 0" className="text-gray-3 flex items-center justify-center">ยังไม่มีบทเรียนภายใต้โพสต์นี้</h5>
       <div v-for="l in post.lessons" :key="l.id">
         <div class="px-20 flex flex-row justify-between items-center">
           <h4 class="text-blue-primary">{{ l.lesson_title }}</h4>
