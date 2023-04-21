@@ -60,16 +60,17 @@
           </h4>
           <p className="text-gray-3 w-full">เลือกภาพปกสำหรับโพสต์ใหม่ของคุณ</p>
 
-          <label class="block bg-blue-soft rounded p-2 mt-4">
+          <label class="flex bg-blue-soft rounded p-2 mt-4">
             <input
               type="file"
               class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded file:text-sm file:font-semibold file:bg-white file:text-blue-primary file:border-blue-primary file:border-2 file:border-solid hover:file:bg-blue-soft hover:file:cursor-pointer"
+              @click="chooseImage"
             />
           </label>
 
           <div class="h-[1px] bg-gray-2 my-8" />
           <button
-            @click="openModal"
+            @click="editPost"
             className="flex items-center space-x-1 px-4 py-2 transition-all duration-300 bg-blue-primary border-blue-primary"
           >
             <PencilSquareIcon class="w-6 h-6 text-white" />
@@ -85,7 +86,7 @@ import ContentWrapper from "../components/ContentWrapper.vue";
 import { ChevronLeftIcon, PencilSquareIcon } from "@heroicons/vue/24/outline";
 import { mapState } from "vuex";
 import postsApi from "../resources/postsApi.json";
-import { getPost, getSubjects } from '../resources/api';
+import { getPost, getSubjects, editPost } from '../resources/api';
 import ComboBox from "../components/ComboBox.vue";
 
 export default {
@@ -133,15 +134,49 @@ export default {
     },
   }),
   methods: {
-    openModal() {
-      this.$store.commit("setIsModalOpen", {
-        isModalOpen: true,
-        content: "แก้ไขเนื้อหาโพสต์การเรียนเรียบร้อย ⭐️",
-        redirectTo: `/posts/${this.$router.currentRoute.value.params.id}`,
-      });
+    async editPost() {
+      if (!this.title || !this.intro || !this.chosenSubject) {
+        this.$store.commit("setIsModalOpen", {
+          isModalOpen: true,
+          content: "โปรดกรอกข้อมูลให้ครบถ้วน",
+          redirectTo: "",
+        });
+
+        return;
+      }
+
+      try{
+        const formData = new FormData();
+        formData.append("title", this.title);
+        formData.append("intro", this.intro);
+        formData.append("subjectName", this.chosenSubject);
+        formData.append("thumbnail", this.img || null);
+
+        const response = await editPost(formData, this.$router.currentRoute.value.params.id);
+        console.log("Edit success")
+        console.log(response.data)
+
+        this.$store.commit("setIsModalOpen", {
+          isModalOpen: true,
+          content: "แก้ไขโพสต์การเรียนเรียบร้อย ⭐️",
+          redirectTo: "",
+        });
+
+      }catch(err){
+        this.$store.commit("setIsModalOpen", {
+          isModalOpen: true,
+          content: err.response.data,
+          redirectTo: "",
+        });
+      }
     },
     changeList(e) {
       this.chosenSubject = e;
+    },
+    chooseImage(e) {
+      const files = e.target.files || e.dataTransfer.files;
+      if (!files.length) return;
+      this.img = files[0];
     },
   },
 };

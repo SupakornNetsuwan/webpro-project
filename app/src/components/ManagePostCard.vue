@@ -5,7 +5,7 @@
         <div class="flex">
           <img
             class="w-36 h-20 object-cover rounded-lg"
-            :src="post.post_img"
+            :src="post.post_img ? post.post_img: 'https://media.istockphoto.com/vectors/default-image-icon-vector-missing-picture-page-for-website-design-or-vector-id1357365823?b=1&k=20&m=1357365823&s=170667a&w=0&h=y6ufWZhEt3vYWetga7F33Unbfta2oQXCZLUsEa67ydM='"
           />
           <div class="flex flex-col p-2 ml-5">
             <h3 class="whitespace-nowrap text-ellipsis overflow-hidden w-[200px] 2xl:w-[500px] text-black" @click="routePost">

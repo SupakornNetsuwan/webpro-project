@@ -5,6 +5,7 @@ import checkJWTMiddleware from "../lib/middlewares/jwt/checkJWTMiddleware";
 import upload from "../lib/middlewares/multerMiddleware";
 import getErrorMessage from "../lib/functions/getErrorMessage";
 import exp from "constants";
+const path = require('path')
 
 /**
  * @route /api/posts
@@ -95,6 +96,7 @@ export const getPost = async (req: Request, res: Response) => {
         if (!searchedPost) return res.status(400).send("ไม่พบโพสต์ที่ต้องการ")
 
         res.json(searchedPost)
+
     } catch (err) {
         return res.status(500).send(getErrorMessage(err))
     }
@@ -122,9 +124,9 @@ export const editPost = async (req: Request, res: Response) => {
         const { email: userEmail } = res.locals.userDetails
         //ถ้าไม่มีไฟล์ให้เป็น {}
         const { filename, path } = req.file || {}
-        
+
         if (!postId) return res.status(400).send("โปรดระบุ id ของโพสต์ที่ต้องการแก้ไช")
-        
+
         //ตรวจสอบว่าเป็นเจ้าของโพสต์มั้ย โดยเช็คจากข้อมูลผู้เขียนของโพสต์นั้น
         const postAuthor = await prisma.post.findUnique({
             where: {
@@ -134,13 +136,13 @@ export const editPost = async (req: Request, res: Response) => {
                 author_email: true
             }
         })
-        if (userEmail != postAuthor?.author_email){
+        if (userEmail != postAuthor?.author_email) {
             return res.status(400).send("คุณไม่ใช่เจ้าของโพสต์")
         }
-        
+
         if (!title || !intro || !userEmail || !subjectName) {
             // ตรวจสอบว่าครบมั้ย
-            return res.status(400).send("โปรดกรอกข้อมูให้ครบถ้วน")
+            return res.status(400).send("โปรดกรอกข้อมูลให้ครบถ้วน")
         }
 
         await prisma.post.update({
@@ -157,7 +159,7 @@ export const editPost = async (req: Request, res: Response) => {
 
         res.send("แก้ไขโพสเรียบร้อย")
 
-    }catch (err) {
+    } catch (err) {
         if (err instanceof Prisma.PrismaClientKnownRequestError) {
             switch (err.code) {
                 case "P2025":

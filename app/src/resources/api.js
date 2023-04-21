@@ -54,6 +54,11 @@ export const createPost = async (payload) => {
     return response
 }
 
+export const editPost = async (payload, postId) => {
+    const response = await instance.put(`/api/posts/edit-post/${postId}`, payload)
+    return response
+}
+
 export const getMyPosts = async () => {
     const response = await instance.get("/api/posts/myposts")
     return response
@@ -67,4 +72,8 @@ export const getMyPostsAmount = async () => {
 export const getMyLessonsAmount = async () => {
     const response = await instance.get("/api/lessons/mylessons-amount")
     return response
+}
+
+export const getImageFile = async (fileName) => {
+    const response = await instance.get("")
 }
