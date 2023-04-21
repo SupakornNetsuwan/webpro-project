@@ -54,11 +54,7 @@ export default {
   setup(props) {},
   methods: {},
   beforeMount() {
-    if (!this.authen) {
-      this.$router.push("/");
-    }
-
-    axios.get("/api/protect").then(data => console.log(data.data)).catch(err => console.log(err.response.data))
+    
   },
   computed: {
     ...mapState({

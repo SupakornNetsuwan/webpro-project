@@ -100,7 +100,7 @@ import {
 } from "@heroicons/vue/24/outline";
 import PostCard from "../components/PostCard.vue";
 /* --------------------- Mock API --------------------- */
-import postsApi from "../resources/postsApi.json"
+import postsApi from "../resources/postsApi.json";
 
 export default {
   name: "Summaries",
@@ -122,7 +122,7 @@ export default {
       query: "",
       subject: [],
       selectedSubject: null,
-      posts:postsApi
+      posts: postsApi,
     };
   },
   methods: {

@@ -20,7 +20,7 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import GoogleSignInPlugin from "vue3-google-signin"
 
 // Create a new store instance.
-const store = createStore({
+export const store = createStore({
     state() {
         return {
             authen: JSON.parse(localStorage.getItem('authen') || "null"), // ถ้าหากว่ามี user object อยู่ใน localstorage

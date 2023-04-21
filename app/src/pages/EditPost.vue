@@ -64,7 +64,7 @@
             <input
               type="file"
               class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded file:text-sm file:font-semibold file:bg-white file:text-blue-primary file:border-blue-primary file:border-2 file:border-solid hover:file:bg-blue-soft hover:file:cursor-pointer"
-              @click="chooseImage"
+              @change="chooseImage"
             />
           </label>
 
@@ -116,15 +116,13 @@ export default {
       title: null,
       subject: null,
       intro: null,
-      imgSrc: null,
+      img: null,
       subjectList: [],
       chosenSubject: null,
     };
   },
   beforeMount() {
-    if (!this.getAuthen) {
-      this.$router.push("/");
-    }
+    
   },
   computed: mapState({
     authen: (state) => state.authen,
@@ -152,9 +150,9 @@ export default {
         formData.append("subjectName", this.chosenSubject);
         formData.append("thumbnail", this.img || null);
 
+
         const response = await editPost(formData, this.$router.currentRoute.value.params.id);
         console.log("Edit success")
-        console.log(response.data)
 
         this.$store.commit("setIsModalOpen", {
           isModalOpen: true,

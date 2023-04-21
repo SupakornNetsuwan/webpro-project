@@ -1,5 +1,5 @@
 import express, { Response, Request } from "express";
-import { Prisma } from "@prisma/client";
+import { Post, Prisma } from "@prisma/client";
 import prisma from "../lib/connection/prisma"
 import checkJWTMiddleware from "../lib/middlewares/jwt/checkJWTMiddleware";
 import upload from "../lib/middlewares/multerMiddleware";
@@ -120,23 +120,26 @@ export const editPost = async (req: Request, res: Response) => {
     try {
         const { postId } = req.params
         const { title, intro, subjectName } = req.body
-        const { email: userEmail } = res.locals.userDetails
+        const { email: userEmail, role } = res.locals.userDetails
         //ถ้าไม่มีไฟล์ให้เป็น {}
         const { filename, path } = req.file || {}
 
         if (!postId) return res.status(400).send("โปรดระบุ id ของโพสต์ที่ต้องการแก้ไช")
 
-        //ตรวจสอบว่าเป็นเจ้าของโพสต์มั้ย โดยเช็คจากข้อมูลผู้เขียนของโพสต์นั้น
-        const postAuthor = await prisma.post.findUnique({
-            where: {
-                post_id: postId,
-            },
-            select: {
-                author_email: true
+        if (role != "ADMIN") {
+            //ตรวจสอบว่าเป็นเจ้าของโพสต์มั้ย โดยเช็คจากข้อมูลผู้เขียนของโพสต์นั้น ยกเว้นแอดมิน
+            const postAuthor = await prisma.post.findUnique({
+                where: {
+                    post_id: postId,
+                },
+                select: {
+                    author_email: true
+                }
+            })
+
+            if (userEmail != postAuthor?.author_email) {
+                return res.status(403).send("คุณไม่ใช่เจ้าของโพสต์")
             }
-        })
-        if (userEmail != postAuthor?.author_email){
-            return res.status(400).send("คุณไม่ใช่เจ้าของโพสต์")
         }
 
         if (!title || !intro || !userEmail || !subjectName) {
@@ -181,7 +184,22 @@ export const editPost = async (req: Request, res: Response) => {
 export const deletePost = async (req: Request, res: Response) => {
     try {
         const { postId } = req.params
+        const { role, email: userEmail } = res.locals.userDetails;
         if (!postId) return res.status(400).send("โปรดระบุ id ของโพสต์ที่ต้องการลบ")
+
+
+        if (role != "ADMIN") {
+            const chosenPost = await prisma.post.findUnique({
+                where: {
+                    post_id: postId,
+                }
+            })
+
+            if (chosenPost?.author_email != userEmail) {
+                return res.status(503).send("คุณไม่ใช่เจ้าของโพสต์")
+            }
+        }
+
         await prisma.post.delete({
             where: {
                 post_id: postId

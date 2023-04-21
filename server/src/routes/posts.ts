@@ -4,7 +4,7 @@ import checkJWTMiddleware from "../lib/middlewares/jwt/checkJWTMiddleware";
 import upload from "../lib/middlewares/multerMiddleware";
 
 // From controllers
-import { createPost, getPosts, getPost, deletePost, followPost , getFollowingPost , getMyPosts , getMyPostsAmount, editPost} from "../controller/postController";
+import { createPost, getPosts, getPost, deletePost, followPost, getFollowingPost, getMyPosts, getMyPostsAmount, editPost } from "../controller/postController";
 
 /**
  * @desciption จัดการเกี่ยวกับ Post

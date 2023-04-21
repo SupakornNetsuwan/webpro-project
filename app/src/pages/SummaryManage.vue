@@ -2,6 +2,12 @@
   <div className="w-full flex min-h-screen flex-col bg-gray-1">
     <ContentWrapper>
       <div>
+        <p
+          v-if="(authen.role === 'ADMIN')"
+          class="bg-blue-primary inline-block rounded-full px-4 text-white text-sm"
+        >
+          Admin
+        </p>
         <h1 className="text-black">บอร์ดจัดการเนื้อหาโพสต์ บทเรียน</h1>
         <p className="gray-4">
           คุณสามารถจัดการสรุปทั้งหมดของคุณได้จากบอร์ดจัดการเนื้อหา
@@ -55,7 +61,7 @@
         </div>
       </div>
       <h3 className="text-black mt-16 mb-8">
-        สถิติจำนวนผู้ที่ติดตามโพสต์ของคุณ
+        {{ authen.role === "ADMIN" ? "สถิติจำนวนผู้ที่ติดตามโพสต์ที่เกิดขึ้น" : "สถิติจำนวนผู้ที่ติดตามโพสต์ของคุณ"}}
       </h3>
       <line-chart :data="chartData"></line-chart>
     </ContentWrapper>
@@ -90,31 +96,35 @@ export default {
         {
           title: "จำนวนโพสต์ของคุณ",
           description: "โพสต์จากทุกวิชารวมกัน",
-          amount: 12,
+          amount: 0,
         },
         {
           title: "จำนวนบทเรียนของคุณ",
           description: "คำนวณจากทุกโพสต์ของคุณ",
-          amount: 18,
+          amount: 0,
         },
         {
           title: "จำนวนผู้ที่ติดตามทั้งหมด",
           description: "คำนวณจากทุกโพสต์ของคุณ",
-          amount: 42,
+          amount: 0,
         },
       ],
       moment: moment(),
     };
   },
   methods: {},
-  beforeMount() {
-    if (!this.getAuthen) {
-      this.$router.push("/");
-    }
-  },
   async created() {
     getMyPostsAmount().then((res) => {
       this.statistics[0].amount = res.data;
+
+      if (this.authen.role === "ADMIN") {
+        this.statistics[0].title = "จำนวนโพสต์ทั้งหมด";
+        this.statistics[0].description = "โพสต์จากทั้งระบบ";
+        this.statistics[1].title = "จำนวนบทเรียนทั้งหมด";
+        this.statistics[1].description = "คำนวณจากทุกโพสต์ของระบบ";
+        this.statistics[2].title = "จำนวนผู้ติดตามที่มีทั้งหมด";
+        this.statistics[2].description = "คำนวณจากทั้งระบบ";
+      }
     });
 
     getMyLessonsAmount().then((res) => {
@@ -122,7 +132,7 @@ export default {
     });
   },
   mounted() {
-    console.log();
+    
   },
   computed: mapState({
     authen: (state) => state.authen,

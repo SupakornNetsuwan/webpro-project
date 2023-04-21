@@ -1,5 +1,6 @@
 <template>
   <div
+    v-if="authen"
     className="bgwhite flex flex-col overflow-y-auto h-full"
     ref="sidebar-parent"
   >
@@ -150,6 +151,7 @@ export default {
       this.scrollAmount = event.target.scrollTop;
     },
   },
+  beforeMount() {},
   computed: {
     fadedBG() {
       return this.scrollAmount > 50 ? "opacity-0" : "opacity-100";

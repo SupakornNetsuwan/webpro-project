@@ -18,15 +18,37 @@ import MyPost from "../pages/MyPost.vue"
 // Layout
 import SummariesLayout from "../layouts/SummariesLayout.vue"
 
+// Vuex
+import { store } from "../main"
+
+
 const routes = [
-    { path: '/', name: "landing", component: Landing },
-    { path: '/home', name: "home", component: Home },
-    { path: '/profile', name: "profile", component: Profile },
     {
-        path: '/summary-manage', children: [{
+        path: '/', name: "landing",
+        component: Landing
+    },
+    {
+        path: '/home', name: "home",
+        meta: {
+            requiresAuth: true
+        },
+        component: Home
+    },
+    {
+        path: '/profile', name: "profile",
+        meta: {
+            requiresAuth: true
+        }, component: Profile
+    },
+    {
+        path: '/summary-manage',
+        meta: {
+            requiresAuth: true
+        },
+        children: [{
             path: '',
             name: "summaryManage",
-            component: SummaryManage
+            component: SummaryManage,
         }, {
             path: 'create-post',
             name: "createPost",
@@ -57,6 +79,9 @@ const routes = [
     {
         path: '/summaries',
         name: "summaries",
+        meta: {
+            requiresAuth: true
+        },
         component: SummariesLayout,
         children: [{
             path: '',
@@ -72,10 +97,24 @@ const routes = [
             }
         }]
     },
-    // { path: "/posts", name: "posts" },
-    { path: '/posts/:id', name: "post", component: Post },
-    { path: '/posts/:id/:lessonId', name: "lesson", component: Lesson },
-    { path: '/:pathMatch(.*)*', name: 'not found', component: Notfound },
+    {
+        path: '/posts/:id', name: "post",
+        meta: {
+            requiresAuth: true
+        }, component: Post
+    },
+    {
+        path: '/posts/:id/:lessonId', name: "lesson",
+        meta: {
+            requiresAuth: true
+        }, component: Lesson
+    },
+    {
+        path: '/:pathMatch(.*)*', name: 'not found',
+        meta: {
+            requiresAuth: true
+        }, component: Notfound
+    },
 
 ]
 
@@ -83,6 +122,22 @@ const router = createRouter({
     // 4. Provide the history implementation to use. We are using the hash history for simplicity here.
     history: createWebHashHistory(),
     routes, // short for `routes: routes`
+})
+
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        // this route requires auth, check if logged in
+        // if not, redirect to login page.
+        if (store.state.authen) {
+            next() // go to wherever I'm going
+            return
+        }
+
+        next({ name: 'landing' })
+
+    } else {
+        next() // does not require auth, make sure to always call next()!
+    }
 })
 
 export default router

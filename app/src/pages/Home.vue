@@ -81,9 +81,7 @@ export default {
   },
   methods: {},
   beforeMount() {
-    if (!this.authen) {
-      this.$router.push("/");
-    }
+    
   },
   mounted() {},
   computed: mapState({

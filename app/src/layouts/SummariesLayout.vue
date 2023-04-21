@@ -16,18 +16,13 @@ export default {
   data() {
     return {};
   },
-  beforeMount() {
-    if (!this.getAuthen) {
-      this.$router.push("/");
-    }
-  },
+  beforeMount() {},
   computed: mapState({
     authen: (state) => state.authen,
     // to access local state with `this`, a normal function must be used
     getAuthen(state) {
       return state.authen;
     },
-
   }),
 };
 </script>

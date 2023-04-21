@@ -164,10 +164,7 @@ export default {
     return {};
   },
   beforeMount() {
-    if (!this.getAuthen) {
-      this.$router.push("/");
-    }
-    console.log(this.$router.currentRoute)
+    
   },
   computed: mapState({
     authen: (state) => state.authen,

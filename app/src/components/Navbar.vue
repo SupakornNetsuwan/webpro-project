@@ -71,7 +71,7 @@ export default {
     async signIn({ credential }) {
       login(credential)
         .then((response) => {
-          console.log(response.data);
+          
           this.$store.commit("setAuthen", response.data.user);
           this.$router.push("/home");
         })
@@ -85,7 +85,7 @@ export default {
 
       logout()
         .then((response) => {
-          console.log(response.data);
+          
           this.$store.commit("setAuthen", false);
           this.$router.push("/");
         })

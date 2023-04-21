@@ -107,9 +107,7 @@ export default {
     };
   },
   beforeMount() {
-    if (!this.getAuthen) {
-      this.$router.push("/");
-    }
+    
   },
   computed: mapState({
     authen: (state) => state.authen,

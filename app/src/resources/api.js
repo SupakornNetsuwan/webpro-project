@@ -12,14 +12,14 @@ instance.interceptors.response.use(response => {
 }, async (error) => {
     if (error.response.status === 401) {
         alert(error.response.data + " โปรดเข้าสู่ระบบใหม่")
-        // await instance.post("/api/auth/logout")
-        // localStorage.removeItem("authen")
-        // location.replace("/")
+        await instance.post("/api/auth/logout")
+        localStorage.removeItem("authen")
+        location.replace("/")
 
         console.log("Auto logout")
     }
 
-    return error;
+    throw error;
 });
 
 export const getPosts = async () => {
@@ -36,6 +36,7 @@ export const login = async (credential) => {
 
 export const logout = async () => {
     const response = await instance.post("/api/auth/logout")
+    // localStorage.removeItem("authen")
     return response
 }
 
@@ -55,9 +56,19 @@ export const createPost = async (payload) => {
 }
 
 export const editPost = async (payload, postId) => {
-    const response = await instance.put(`/api/posts/edit-post/${postId}`, payload)
+    const response = await instance.put(`/api/posts/${postId}`, payload)
     return response
 }
+
+export const deletePost = async (postId) => {
+
+    const response = await instance.delete(`/api/posts/${postId}`)
+    console.log(response)
+
+
+    return response
+}
+
 
 export const getMyPosts = async () => {
     const response = await instance.get("/api/posts/myposts")
