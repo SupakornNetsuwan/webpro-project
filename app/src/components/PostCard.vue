@@ -5,20 +5,21 @@
   >
     <img
       class="object-cover h-40 w-full rounded-lg"
-      :src="postDetail.imgSrc"
+      :src="getImageFromUrl(postDetail.post_img)"
+      @error="handleImageNotFound($event)"
     />
     <div class="m-2">
       <div class="flex flex-row w-full justify-between">
-        <h4 class="truncate lg:max-w-[15em]">{{ postDetail.title }}</h4>
+        <h4 class="truncate lg:max-w-[15em]">{{ postDetail.post_title }}</h4>
         <div class="flex items-center">
           <h4 class="text-red-primary">อ่าน</h4>
           <ChevronRightIcon class="h-4 text-red-primary" />
         </div>
       </div>
       <p class="text-gray-3 published">
-        สร้างเมื่อวันที่ {{ postDetail.createdDate }}
+        สร้างเมื่อวันที่ {{ new Date(postDetail.create_date).toLocaleDateString() }}
       </p>
-      <div class="mt-2"><SubjectTag :subject="postDetail.subject" /></div>
+      <div class="mt-2"><SubjectTag :subject="postDetail.subject_name" /></div>
     </div>
   </div>
 </template>
@@ -26,6 +27,10 @@
 <script>
 import SubjectTag from "../components/SubjectTag.vue";
 import { ChevronRightIcon } from "@heroicons/vue/24/outline";
+import {
+  getImageFromUrl,
+  handleImageNotFound,
+} from "../lib/functions/imageManage";
 
 export default {
   name: "postCard",
@@ -38,8 +43,10 @@ export default {
   },
   methods: {
     route() {
-      this.$router.push(`/posts/${this.postDetail.id}`);
+      this.$router.push(`/posts/${this.postDetail.post_id}`);
     },
+    getImageFromUrl,
+    handleImageNotFound
   },
 };
 </script>

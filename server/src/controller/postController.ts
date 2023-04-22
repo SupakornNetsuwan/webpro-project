@@ -234,10 +234,12 @@ export const getFollowingPost = async (req: Request, res: Response) => {
     const userDetails = res.locals.userDetails
     const { email } = userDetails
 
-    //ต้องมีการ join กับตารางโพสต์ด้วย ลืมทำตรงนี้
     const followPost = await prisma.followPost.findMany({
         where: {
             email: email
+        },
+        include: {
+            post: true
         }
     })
 

@@ -15,7 +15,12 @@ import getErrorMessage from "../lib/functions/getErrorMessage";
 export const getAllLessonsFromPost = async (req: Request, res: Response) => {
     try {
         const postId = req.params.postId
-        // ...
+
+        const allLessons = await prisma.lesson.findMany({
+            where: {post_id: postId}
+        })
+
+        res.json(allLessons)
     } catch (err) {
         if (err instanceof Prisma.PrismaClientKnownRequestError) {
             switch (err.code) {
@@ -59,4 +64,16 @@ export const getMyLessonsAmount = async (req: Request, res: Response) => {
 
         return res.status(500).send(getErrorMessage(err))
     }
+}
+
+export const createLesson = async (req:Request, res: Response) => {
+    
+}
+
+export const editLesson = async (req:Request, res: Response) => {
+    
+}
+
+export const deleteLesson = async (req:Request, res: Response) => {
+    
 }
