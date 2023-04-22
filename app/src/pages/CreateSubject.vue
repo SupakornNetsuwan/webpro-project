@@ -57,7 +57,7 @@
         <div>
           <div class="h-[1px] bg-gray-2 my-8" />
           <button
-            @click="createPost"
+            @click="createSubject"
             className="flex items-center space-x-1 px-4 py-2 transition-all duration-300 bg-blue-primary border-blue-primary"
           >
             <PlusIcon class="w-6 h-6 text-white" />
@@ -73,7 +73,7 @@ import ContentWrapper from "../components/ContentWrapper.vue";
 import { ChevronLeftIcon, PlusIcon } from "@heroicons/vue/24/outline";
 import { mapState } from "vuex";
 import ComboBox from "../components/ComboBox.vue";
-// import { addSubject } from "../resources/api";
+import { createSubject } from "../resources/api";
 
 export default {
   components: {
@@ -93,41 +93,41 @@ export default {
   },
   mounted() {},
   methods: {
-    // async addSubject() {
-    //   if (!this.subjectName || !this.instructorName || !this.description) {
-    //     this.$store.commit("setIsModalOpen", {
-    //       isModalOpen: true,
-    //       content: "โปรดกรอกข้อมูลให้ครบถ้วน",
-    //       redirectTo: "",
-    //     });
+    async createSubject() {
+      if (!this.subjectName || !this.instructorName || !this.description) {
+        this.$store.commit("setIsModalOpen", {
+          isModalOpen: true,
+          content: "โปรดกรอกข้อมูลให้ครบถ้วน",
+          redirectTo: "",
+        });
 
-    //     return;
-    //   }
+        return;
+      }
 
-    //   try{
-    //     const formData = new FormData();
-    //     formData.append("subjectName", this.subjectName);
-    //     formData.append("instructorName", this.instructorName);
-    //     formData.append("description", this.description);
+      try{
+        const formData = new FormData();
+        formData.append("subject_name", this.subjectName);
+        formData.append("instructor_name", this.instructorName);
+        formData.append("description", this.description);
 
-    //     const response = await addSubject(formData);
-    //     console.log("Success")
-    //     // console.log(response.data)
+        const response = await createSubject(formData);
+        console.log("Success")
+        // console.log(response.data)
 
-    //     this.$store.commit("setIsModalOpen", {
-    //       isModalOpen: true,
-    //       content: "เพิ่มรายวิชาใหม่สำเร็จ 🌟",
-    //       redirectTo: "",
-    //     });
+        this.$store.commit("setIsModalOpen", {
+          isModalOpen: true,
+          content: "เพิ่มรายวิชาใหม่สำเร็จ 🌟",
+          redirectTo: "/summary-manage",
+        });
 
-    //   }catch(err){
-    //     this.$store.commit("setIsModalOpen", {
-    //       isModalOpen: true,
-    //       content: err.response.data,
-    //       redirectTo: "",
-    //     });
-    //   }
-    // },
+      }catch(err){
+        this.$store.commit("setIsModalOpen", {
+          isModalOpen: true,
+          content: err.response.data,
+          redirectTo: "",
+        });
+      }
+    },
   },
   watch: {},
   beforeMount() {

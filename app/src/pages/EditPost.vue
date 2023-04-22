@@ -157,7 +157,7 @@ export default {
         this.$store.commit("setIsModalOpen", {
           isModalOpen: true,
           content: "แก้ไขโพสต์การเรียนเรียบร้อย ⭐️",
-          redirectTo: "",
+          redirectTo: "/summary-manage/my-posts",
         });
 
       }catch(err){

@@ -104,7 +104,7 @@ export default {
       this.$store.commit("setIsModalOpen", {
         isModalOpen: true,
         content: "ทำการแก้ไขเนื้อหาบทเรียนเรียบร้อย ⭐️",
-        redirectTo: "/posts/1/1",
+        redirectTo: "/summary-manage/my-posts",
       });
     },
     textChange(e){

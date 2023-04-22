@@ -36,6 +36,7 @@ export const createSubject = async (req: Request, res: Response, next: NextFunct
     try {
         const { subject_name, description, instructor_name } = req.body
         const { role } = res.locals.userDetails;
+        console.log(req.body)
 
         if(role != "ADMIN"){
             return res.status(403).send("คุณไม่มีสิทธิ์ในการเพิ่มวิชา")
