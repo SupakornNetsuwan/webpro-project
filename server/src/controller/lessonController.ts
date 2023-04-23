@@ -66,6 +66,38 @@ export const getMyLessonsAmount = async (req: Request, res: Response) => {
     }
 }
 
+/**
+ * @route /api/posts/:postId/:lessonId
+ * @param postId รหัสของ post ที่เป็นเจ้าของ lesson
+ * @param lessonId รหัสของ lesson ที่ต้องการ
+ * @method GET
+ * @description ทำการดึงข้อมูล lesson ที่ต้องการโดย lessonId
+ */
+
+export const getLesson = async (req:Request, res: Response) => {
+    try {
+        const lessonId = req.params.lessonId
+
+        const lesson = await prisma.lesson.findUnique({
+            where: {lesson_id: lessonId}
+        })
+
+        if (!lesson) return res.status(400).send("ไม่พบบทเรียนที่ต้องการ")
+
+        res.json(lesson)
+
+    }catch (err){
+        if (err instanceof Prisma.PrismaClientKnownRequestError) {
+            switch (err.code) {
+                default:
+                    return res.status(500).send("เกิดข้อผิดพลาดในระบบ")
+            }
+        }
+
+        return res.status(500).send(getErrorMessage(err))
+    }
+}
+
 export const createLesson = async (req:Request, res: Response) => {
     
 }

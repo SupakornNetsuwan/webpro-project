@@ -88,7 +88,8 @@ export const getPost = async (req: Request, res: Response) => {
         const searchedPost = await prisma.post.findUnique({
             where: { post_id: postId },
             include: {
-                lessons: true
+                lessons: true,
+                author: true
             }
         })
 
