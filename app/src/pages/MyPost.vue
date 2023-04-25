@@ -14,7 +14,13 @@
       </h4>
       <div class="h-[1px] bg-gray-2 my-8" />
       <div class="grid gap-5">
-        <manage-post-card @removePost="removePost" v-for="p in mypost" :key="p.post_id" :post="p" />
+        <manage-post-card
+          @removeLesson="removeLesson"
+          @removePost="removePost"
+          v-for="p in mypost"
+          :key="p.post_id"
+          :post="p"
+        />
       </div>
     </content-wrapper>
   </div>
@@ -44,6 +50,7 @@ export default {
     try {
       getMyPosts().then((res) => {
         this.mypost = res.data;
+        console.log(JSON.parse(JSON.stringify(this.mypost)));
       });
     } catch (err) {
       console.log(err);
@@ -60,6 +67,21 @@ export default {
     removePost(post_id) {
       this.mypost = this.mypost.filter((p) => p.post_id != post_id);
     },
-  }
+    removeLesson(lesson_id) {
+      // Filter เอาอันที่ตรงกับ lesson_id ส่งมาออกไป
+      const newAllLessons = this.mypost
+        .map((post) => post.lessons)
+        .map((lessons) =>
+          lessons.filter((lesson) => {
+            return lesson.lesson_id != lesson_id;
+          })
+        );
+
+      this.mypost = this.mypost.map((post, index) => {
+        post.lessons = newAllLessons[index];
+        return post;
+      });
+    },
+  },
 };
 </script>

@@ -74,19 +74,19 @@ export const getMyLessonsAmount = async (req: Request, res: Response) => {
  * @description ทำการดึงข้อมูล lesson ที่ต้องการโดย lessonId
  */
 
-export const getLesson = async (req:Request, res: Response) => {
+export const getLesson = async (req: Request, res: Response) => {
     try {
         const lessonId = req.params.lessonId
 
         const lesson = await prisma.lesson.findUnique({
-            where: {lesson_id: lessonId}
+            where: { lesson_id: lessonId }
         })
 
         if (!lesson) return res.status(400).send("ไม่พบบทเรียนที่ต้องการ")
 
         res.json(lesson)
 
-    }catch (err){
+    } catch (err) {
         if (err instanceof Prisma.PrismaClientKnownRequestError) {
             switch (err.code) {
                 default:
@@ -113,8 +113,44 @@ export const getLesson = async (req:Request, res: Response) => {
  * }
  * ```
  */
-export const createLesson = async (req:Request, res: Response) => {
-    
+export const createLesson = async (req: Request, res: Response) => {
+
+    const { postId } = req.params
+    const { role, email } = res.locals.userDetails;
+
+    const { title, intro, content } = req.body
+
+    if (!title || !intro || !content) return res.status(400).send("กรุณากรอกข้อมูลให้ครบถ้วน")
+
+    // file เป็น optional ดังนั้นต้องมีการตรวจสอบว่ามีไฟล์ไหม
+    const { filename, path } = req.file || {}
+
+    console.log(filename, path)
+
+    try {
+        const newLesson = await prisma.lesson.create({
+            data: {
+                lesson_title: title,
+                lesson_content: content,
+                lesson_intro: intro,
+                post_id: postId,
+                ...(filename && { file_location: process.env.SERVER_PUBLIC_URL + "/" + filename }),
+            }
+        })
+
+        res.send(newLesson)
+
+    } catch (err) {
+        if (err instanceof Prisma.PrismaClientKnownRequestError) {
+            switch (err.code) {
+                default:
+                    console.log(err)
+                    return res.status(500).send("เกิดข้อผิดพลาดในระบบ")
+            }
+        }
+
+        return res.status(500).send(getErrorMessage(err))
+    }
 }
 
 export const editLesson = async (req: Request, res: Response) => {
@@ -122,5 +158,5 @@ export const editLesson = async (req: Request, res: Response) => {
 }
 
 export const deleteLesson = async (req: Request, res: Response) => {
-
+    res.send("hello")
 }

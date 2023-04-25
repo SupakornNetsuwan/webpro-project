@@ -85,6 +85,16 @@ export const getLesson = async (postId, lessonId) => {
     return response
 }
 
+export const createLesson = async (payload, postId) => {
+    const response = await instance.post("/api/lessons/" + postId, payload)
+    return response
+}
+
+export const deleteLesson = async (lessonId) => {
+    const response = await instance.delete(`/api/lessons/${lessonId}`)
+    return response
+}
+
 export const getMyPostsAmount = async () => {
     const response = await instance.get("/api/posts/myposts-amount")
     return response

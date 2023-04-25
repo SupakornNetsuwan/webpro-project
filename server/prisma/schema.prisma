@@ -49,8 +49,8 @@ model Lesson {
   lesson_id      String   @id @default(cuid())
   lesson_title   String
   lesson_content String   @db.LongText
+  lesson_intro   String
   file_location  String?
-  img_location   String?
   post_id        String
   post           Post     @relation(fields: [post_id], references: [post_id], onDelete: Cascade)
   created_date   DateTime @default(now())

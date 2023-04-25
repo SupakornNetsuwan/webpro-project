@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="w-full rounded-xl border border-solid border-gray-2">
-      <div class="flex flex-col lg:flex-row justify-between m-5 ml-10">
+      <div class="flex flex-col 2xl:flex-row justify-between m-5 ml-10">
         <div class="flex">
           <img
             class="w-36 h-20 object-cover rounded-lg"
@@ -10,7 +10,7 @@
           />
           <div class="flex flex-col p-2 ml-5">
             <h3
-              class="whitespace-nowrap text-ellipsis overflow-hidden w-[200px] md:w-[300px] 2xl:w-[500px] text-black"
+              class="bg-blue-soft self-start px-2 2xl:px-4 whitespace-nowrap text-ellipsis overflow-hidden text-black rounded"
               @click="routePost"
             >
               {{ post.post_title }}
@@ -22,7 +22,7 @@
           </div>
         </div>
         <div
-          class="flex flex-row gap-3 justify-between lg:justify-center items-center mt-4 lg:mt-0"
+          class="flex flex-row gap-3 justify-between items-center mt-4 2xl:mt-0"
         >
           <div class="flex items-center space-x-2">
             <button
@@ -48,38 +48,41 @@
             </button>
           </div>
           <div @click="isShowLesson = !isShowLesson">
-            <ChevronDownIcon
-              class="text-gray-4 h-6 cursor-pointer"
-            ></ChevronDownIcon>
+            <ChevronDownIcon :class="toggleShowLesson"></ChevronDownIcon>
           </div>
         </div>
       </div>
     </div>
     <div
       v-if="isShowLesson"
-      class="border border-solid border-gray-2 rounded-lg p-5"
+      class="border border-solid border-gray-2 rounded-lg p-5 mt-4"
     >
-      <h5 v-if="post.lessons.length == 0" className="text-gray-3 flex items-center justify-center">ยังไม่มีบทเรียนภายใต้โพสต์นี้</h5>
+      <h5
+        v-if="post.lessons.length == 0"
+        className="text-gray-3 flex items-center justify-center"
+      >
+        ยังไม่มีบทเรียนภายใต้โพสต์นี้
+      </h5>
       <div v-for="l in post.lessons" :key="l.id">
-        <div class="px-20 flex flex-row justify-between items-center">
+        <div class="flex justify-between items-center">
           <h4 class="text-blue-primary">{{ l.lesson_title }}</h4>
           <div class="flex flex-row gap-3 justify-center items-center">
             <button
-              class="border-solid border-blue-primary bg-white text-blue-primary flex items-center h-fit"
+              class="flex items-center border-solid border-blue-primary bg-white text-blue-primary"
               @click="
                 this.$router.push(
                   `/summary-manage/edit-post/${post.post_id}/${l.lesson_id}`
                 )
               "
             >
-              <PencilSquareIcon class="h-6" />
+              <PencilSquareIcon class="w-6 h-6" />
               <h4>&nbsp;แก้ไขบทเรียน</h4>
             </button>
             <button
-              class="border-solid border-red-primary bg-white text-red-primary flex items-center h-fit mr-10"
-              @click="openModal('ลบบทเรียนเรียบร้อย ⭐️')"
+              class="border-solid border-red-primary bg-white text-red-primary flex items-center"
+              @click="deleteLesson(l.lesson_id)"
             >
-              <TrashIcon class="h-6" />
+              <TrashIcon class="w-6 h-6" />
               <h4>&nbsp;ลบบทเรียน</h4>
             </button>
           </div>
@@ -105,11 +108,11 @@ import {
   getImageFromUrl,
   handleImageNotFound,
 } from "../lib/functions/imageManage";
-import { deletePost } from "../resources/api";
+import { deletePost, deleteLesson } from "../resources/api";
 
 export default {
   name: "ManagePostCard",
-  emits:["removePost"],
+  emits: ["removePost", "removeLesson"],
   components: {
     PencilSquareIcon,
     ChevronDownIcon,
@@ -125,9 +128,17 @@ export default {
       isShowLesson: false,
     };
   },
-  created() {
-    // console.log(this.post);
+  computed: {
+    toggleShowLesson() {
+      return {
+        "text-gray-4 h-6 cursor-pointer duration-200 ease-out":
+          this.isShowLesson,
+        "text-gray-4 h-6 cursor-pointer rotate-180 duration-200 ease-out":
+          !this.isShowLesson,
+      };
+    },
   },
+  created() {},
   setup() {},
   methods: {
     getImageFromUrl,
@@ -148,7 +159,7 @@ export default {
             redirectTo: "",
           });
 
-          this.$emit("removePost", this.post.post_id)
+          this.$emit("removePost", this.post.post_id);
         })
         .catch((err) => {
           this.$store.commit("setIsModalOpen", {
@@ -157,6 +168,22 @@ export default {
             redirectTo: "",
           });
         });
+    },
+    async deleteLesson(lesson_id) {
+      try {
+        const response = await deleteLesson(lesson_id);
+        console.log(response.data);
+
+        this.$emit("removeLesson", lesson_id);
+        
+        this.$store.commit("setIsModalOpen", {
+          isModalOpen: true,
+          content: response.data,
+          redirectTo: "",
+        });
+      } catch (err) {
+        console.log(err);
+      }
     },
     routeEditPost() {
       this.$router.push(`/summary-manage/edit-post/${this.post.post_id}`);

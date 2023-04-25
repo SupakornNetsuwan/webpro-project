@@ -25,7 +25,7 @@
         </div>
         <div>
           <h4 className="text-blue-primary mt-8">
-            เนื้อหาเพริ่น<span className="text-red-primary">*</span>
+            เนื้อหาเกริ่น<span className="text-red-primary">*</span>
           </h4>
           <input
             type="text"
@@ -54,14 +54,13 @@
         </div>
         <div>
           <h4 className="text-blue-primary mt-8">
-            ภาพประกอบ<span className="text-red-primary">*</span>
+            เอกสารประกอบ<span className="text-red-primary">*</span>
           </h4>
-          <p className="text-gray-3 w-full">
-            เลือกภาพประกอบสำหรับบทเรียนของคุณ
-          </p>
+          <p className="text-gray-3 w-full">เลือกเอกสารสำหรับบทเรียนของคุณ</p>
 
           <label class="block bg-blue-soft rounded p-2 mt-4">
             <input
+              @change="chooseLearningDocument"
               type="file"
               class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded file:text-sm file:font-semibold file:bg-white file:text-blue-primary file:border-blue-primary file:border-2 file:border-solid hover:file:bg-blue-soft hover:file:cursor-pointer"
             />
@@ -69,7 +68,7 @@
 
           <div class="h-[1px] bg-gray-2 my-8" />
           <button
-            @click="createLesson"
+            @click="createNewLesson"
             className="flex items-center space-x-1 px-4 py-2 transition-all duration-300 bg-blue-primary border-blue-primary"
           >
             <PlusIcon class="w-6 h-6 text-white" />
@@ -86,6 +85,7 @@ import { ChevronLeftIcon, PlusIcon } from "@heroicons/vue/24/outline";
 import { mapState } from "vuex";
 import { Quill } from "@vueup/vue-quill";
 import markdownToolbar from "quill-markdown-toolbar";
+import { createLesson } from "../resources/api";
 
 Quill.register("modules/quill-markdown-toolbar", markdownToolbar);
 
@@ -103,6 +103,7 @@ export default {
       title: "",
       intro: "",
       content: "",
+      learningDocument: null,
     };
   },
   beforeMount() {},
@@ -118,16 +119,34 @@ export default {
     },
   }),
   methods: {
-    createLesson() {
-      const { id } = this.$route.params;
+    chooseLearningDocument(e) {
+      this.learningDocument = e.target.files[0];
+    },
+    async createNewLesson() {
+      try {
+        const { id } = this.$route.params;
 
-      console.log(this.title, this.intro);
-      console.log(this.content);
-      // this.$store.commit("setIsModalOpen", {
-      //   isModalOpen: true,
-      //   content: "ทำการสร้างเนื้อหาบทเรียนใหม่เรียบร้อย ⭐️",
-      //   redirectTo: "/posts/1/1",
-      // });
+        const formData = new FormData();
+        formData.append("title", this.title);
+        formData.append("intro", this.intro);
+        formData.append("content", this.content);
+        formData.append("learningDocument", this.learningDocument || null);
+
+        const response = await createLesson(formData, id);
+        console.log(response.data);
+        this.$store.commit("setIsModalOpen", {
+          isModalOpen: true,
+          content: "ทำการสร้างเนื้อหาบทเรียนใหม่เรียบร้อย ⭐️",
+          redirectTo: "/posts/1/1",
+        });
+      } catch (err) {
+        console.log(err);
+        this.$store.commit("setIsModalOpen", {
+          isModalOpen: true,
+          content: err.response.data,
+          redirectTo: "",
+        });
+      }
     },
   },
 };
