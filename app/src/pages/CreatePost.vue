@@ -15,7 +15,7 @@
         สรุป
       </h4>
       <div class="h-[1px] bg-gray-2 my-8" />
-      <div className="md:max-w-[50%]">
+      <div className="xl:max-w-[50%]">
         <div>
           <h4 className="text-blue-primary ">
             หัวข้อโพสต์<span className="text-red-primary">*</span>
@@ -24,7 +24,7 @@
             type="text"
             id="post-topic"
             name="post-topic"
-            className="input w-full md:max-w-[70%]"
+            className="input w-full box-border xl:max-w-[70%]"
             v-model="title"
           />
         </div>
@@ -51,7 +51,7 @@
             name="post-intro"
             id="post-intro"
             rows="5"
-            className="w-full resize-none input"
+            className="w-full box-border resize-none input"
             v-model="intro"
           />
         </div>

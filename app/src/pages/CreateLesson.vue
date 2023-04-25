@@ -12,16 +12,25 @@
       <h1 className="text-black  mt-10">สร้างบทเรียน</h1>
       <h4 className="text-gray-3">สร้างบทเรียนใหม่ แบ่งปันเนื้อหา หรือสรุป</h4>
       <div class="h-[1px] bg-gray-2 my-8" />
-      <div className="md:max-w-[50%]">
+      <div className="xl:max-w-[50%]">
         <div>
           <h4 className="text-blue-primary ">
             หัวข้อบทเรียน<span className="text-red-primary">*</span>
           </h4>
           <input
             type="text"
-            id="post-topic"
-            name="post-topic"
-            className="input w-full md:max-w-[70%]"
+            v-model="title"
+            className="input w-full box-border xl:max-w-[70%]"
+          />
+        </div>
+        <div>
+          <h4 className="text-blue-primary mt-8">
+            เนื้อหาเพริ่น<span className="text-red-primary">*</span>
+          </h4>
+          <input
+            type="text"
+            v-model="intro"
+            className="input w-full box-border xl:max-w-[70%]"
           />
         </div>
         <div>
@@ -29,7 +38,13 @@
             เนื้อหา<span className="text-red-primary">*</span>
           </h4>
           <p className="text-gray-3 w-full">เนื้อหาในบทเรียนของคุณ</p>
-          <QuillEditor theme="snow" name="lesson-content" toolbar="minimal" />
+          <QuillEditor
+            :options="options"
+            contentType="html"
+            v-model:content="content"
+            name="lesson-content"
+          >
+          </QuillEditor>
           <!-- <textarea
               name="post-intro"
               id="post-intro"
@@ -54,7 +69,7 @@
 
           <div class="h-[1px] bg-gray-2 my-8" />
           <button
-            @click="openModal"
+            @click="createLesson"
             className="flex items-center space-x-1 px-4 py-2 transition-all duration-300 bg-blue-primary border-blue-primary"
           >
             <PlusIcon class="w-6 h-6 text-white" />
@@ -69,6 +84,10 @@
 import ContentWrapper from "../components/ContentWrapper.vue";
 import { ChevronLeftIcon, PlusIcon } from "@heroicons/vue/24/outline";
 import { mapState } from "vuex";
+import { Quill } from "@vueup/vue-quill";
+import markdownToolbar from "quill-markdown-toolbar";
+
+Quill.register("modules/quill-markdown-toolbar", markdownToolbar);
 
 export default {
   components: {
@@ -77,7 +96,14 @@ export default {
     PlusIcon,
   },
   data() {
-    return {};
+    return {
+      options: {
+        placeholder: "เนื้อหาบทเรียน...",
+      },
+      title: "",
+      intro: "",
+      content: "",
+    };
   },
   beforeMount() {},
   computed: mapState({
@@ -92,12 +118,16 @@ export default {
     },
   }),
   methods: {
-    openModal() {
-      this.$store.commit("setIsModalOpen", {
-        isModalOpen: true,
-        content: "ทำการสร้างเนื้อหาบทเรียนใหม่เรียบร้อย ⭐️",
-        redirectTo: "/posts/1/1",
-      });
+    createLesson() {
+      const { id } = this.$route.params;
+
+      console.log(this.title, this.intro);
+      console.log(this.content);
+      // this.$store.commit("setIsModalOpen", {
+      //   isModalOpen: true,
+      //   content: "ทำการสร้างเนื้อหาบทเรียนใหม่เรียบร้อย ⭐️",
+      //   redirectTo: "/posts/1/1",
+      // });
     },
   },
 };

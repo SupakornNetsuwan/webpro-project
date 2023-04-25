@@ -15,9 +15,24 @@ import Chartkick from 'vue-chartkick'
 import Chart from 'chart.js/auto';
 // Rich text editor (Quill)
 import { QuillEditor } from '@vueup/vue-quill'
+import markdownToolbar from 'quill-markdown-toolbar';
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 // Google Oauth 2.0
 import GoogleSignInPlugin from "vue3-google-signin"
+
+const globalOptions = {
+    modules: {
+        toolbar: [
+            { header: [1, 2, 3, 4, 5, 6, false] },
+            'bold',
+            'image',
+            'code-block',
+        ],
+    },
+    theme: 'snow'
+}
+
+QuillEditor.props.globalOptions.default = () => globalOptions
 
 // Create a new store instance.
 export const store = createStore({
