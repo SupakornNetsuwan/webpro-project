@@ -23,7 +23,6 @@
 <script>
 import ContentWrapper from "../components/ContentWrapper.vue";
 import ManagePostCard from "../components/ManagePostCard.vue";
-import postsApi from "../resources/postsApi.json";
 import { ChevronLeftIcon } from "@heroicons/vue/24/outline";
 import { mapState } from "vuex";
 import { getMyPosts } from "../resources/api";

@@ -18,17 +18,17 @@
       </div>
       <div class="flex justify-between mt-10 mx-4 md:mx-8 lg:mx-12">
         <h1 className="text-black">
-          {{ post.title }}
+          {{ post.post_title }}
         </h1>
-        <subject-tag :subject="post.subject" />
+        <subject-tag :subject="post.subject_name" />
       </div>
       <div class="flex my-2 mx-4 md:mx-8 lg:mx-12">
-        <h4 className="text-black">โดย {{ post.author }}</h4>
+        <h4 className="text-black">โดย {{ author.name }}</h4>
         <h4 class="text-gray-3">
-          &nbsp;• {{ post.authorEmail }} • {{ post.createdDate }}
+          &nbsp;• {{ post.author_email }} • {{ new Date(post.create_date).toLocaleDateString() }}
         </h4>
       </div>
-      <img :src="post.imgSrc" class="w-full h-96 object-cover my-5" />
+      <img v-if="post.post_img" :src="post.post_img" class="w-full h-96 object-cover my-5" />
       <p
         class="text-gray-4 mx-4 md:mx-8 lg:mx-12"
         style="font-weight: 400 !important"
@@ -47,7 +47,7 @@
             v-for="ls in post.lessons"
             class="my-2"
             :lessonDetail="ls"
-            :key="ls.id"
+            :key="ls.lesson_id"
           />
         </div>
       </div>
@@ -78,6 +78,7 @@ import SubjectTag from "../components/SubjectTag.vue";
 import { ChevronLeftIcon, StarIcon } from "@heroicons/vue/24/outline";
 /* --------------------- Mock API --------------------- */
 import postsApi from "../resources/postsApi.json";
+import { getPost } from "../resources/api";
 
 export default {
   name: "Post",
@@ -90,24 +91,33 @@ export default {
     StarIcon,
   },
   created() {
-    console.log(this.$route.params);
-    this.$watch(
-      () => this.$route.params,
-      (toParams, previousParams) => {
-        this.post = postsApi.find((post) => post.id == toParams.id);
-      }
-    );
+    // this.$watch(
+    //   () => this.$route.params,
+    //   (toParams, previousParams) => {
+    //     this.post = postsApi.find((post) => post.id == toParams.id);
+    //   }
+    // );
+
+    try {
+      getPost(this.$route.params.id).then((res) => {
+        this.post = res.data;
+        this.author = res.data.author
+      });
+    } catch (err) {
+      console.log(err);
+    }
   },
   data() {
     return {
-      post: postsApi.find(
-        (post) => post.id == this.$router.currentRoute.value.params.id
-      ),
+      post: {},
+      author: {},
       suggestPosts: postsApi.slice(0, 3),
     };
   },
   beforeMount() {
-    
+    if (!this.getAuthen) {
+      this.$router.push("/");
+    }
   },
   computed: mapState({
     authen: (state) => state.authen,

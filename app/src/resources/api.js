@@ -70,13 +70,18 @@ export const deletePost = async (postId) => {
     return response
 }
 
+export const getMyPosts = async () => {
+    const response = await instance.get("/api/posts/myposts")
+    return response
+}
+
 export const createSubject = async (payload) => {
     const response = await instance.post("/api/subjects", payload)
     return response
 }
 
-export const getMyPosts = async () => {
-    const response = await instance.get("/api/posts/myposts")
+export const getLesson = async (postId, lessonId) => {
+    const response = await instance.get(`/api/lessons/${postId}/${lessonId}`)
     return response
 }
 

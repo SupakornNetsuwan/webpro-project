@@ -54,7 +54,7 @@
       </div>
       <h3 className="text-black mt-16 mb-8">สถิติ</h3>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:flex ">
-        <div v-for="statistic in statistics">
+        <div v-for="statistic in statistics" :key="statistic.title">
           <Atropos class="my-atropos" :shadow="false">
             <div
               className="bg-white flex space-x-6 p-4 border-solid border border-gray-2 rounded-xl"
