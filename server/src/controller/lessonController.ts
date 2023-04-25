@@ -17,7 +17,7 @@ export const getAllLessonsFromPost = async (req: Request, res: Response) => {
         const postId = req.params.postId
 
         const allLessons = await prisma.lesson.findMany({
-            where: {post_id: postId}
+            where: { post_id: postId }
         })
 
         res.json(allLessons)
@@ -35,7 +35,7 @@ export const getAllLessonsFromPost = async (req: Request, res: Response) => {
 
 
 export const getMyLessonsAmount = async (req: Request, res: Response) => {
-    
+
     try {
         const { email, role } = res.locals.userDetails
 
@@ -66,14 +66,32 @@ export const getMyLessonsAmount = async (req: Request, res: Response) => {
     }
 }
 
-export const createLesson = async (req:Request, res: Response) => {
-    
+/**
+ * @route /api/lessons/:postId
+ * @param postId รหัสของ post ที่ต้องการสร้าง lesson ภายใต้
+ * @method POST
+ * @description ทำการสร้า lesson ใหม่เพิ่มเข้าไปภายใต้โพสต์นั้นๆ
+ * @payload
+ * ```
+ * {
+ *  title: string,
+ *  intro: string,
+ *  content: string,
+ *  file : File
+ * }
+ * ```
+ */
+
+export const createLesson = async (req: Request, res: Response) => {
+    const { postId } = req.params
+    const { role, email } = res.locals.userDetails;
+
 }
 
-export const editLesson = async (req:Request, res: Response) => {
-    
+export const editLesson = async (req: Request, res: Response) => {
+
 }
 
-export const deleteLesson = async (req:Request, res: Response) => {
-    
+export const deleteLesson = async (req: Request, res: Response) => {
+
 }
