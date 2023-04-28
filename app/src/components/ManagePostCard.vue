@@ -10,7 +10,7 @@
           />
           <div class="flex flex-col p-2 ml-5">
             <h3
-              class="bg-blue-soft self-start px-2 2xl:px-4 whitespace-nowrap text-ellipsis overflow-hidden text-black rounded"
+              class="bg-blue-soft self-start px-2 2xl:px-4 whitespace-nowrap text-ellipsis overflow-hidden text-black rounded cursor-pointer"
               @click="routePost"
             >
               {{ post.post_title }}
@@ -65,7 +65,7 @@
       </h5>
       <div v-for="l in post.lessons" :key="l.id">
         <div class="flex justify-between items-center">
-          <h4 class="text-blue-primary">{{ l.lesson_title }}</h4>
+          <h4 class="text-blue-primary cursor-pointer" @click="this.$router.push(`/posts/${post.post_id}/${l.lesson_id}`)">{{ l.lesson_title }}</h4>
           <div class="flex flex-row gap-3 justify-center items-center">
             <button
               class="flex items-center border-solid border-blue-primary bg-white text-blue-primary"

@@ -137,7 +137,7 @@ export default {
         this.$store.commit("setIsModalOpen", {
           isModalOpen: true,
           content: "ทำการสร้างเนื้อหาบทเรียนใหม่เรียบร้อย ⭐️",
-          redirectTo: "/posts/1/1",
+          redirectTo: `/posts/${this.$route.params.id}/${response.data.lesson_id}`,
         });
       } catch (err) {
         console.log(err);

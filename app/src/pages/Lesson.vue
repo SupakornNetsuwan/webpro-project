@@ -19,19 +19,13 @@
       </div>
       <hr class="my-6 text-gray-2" />
       <button
+        v-if="lesson.file_location"
         class="w-full space-x-2 flex items-center justify-center bg-white hover:bg-blue-soft text-blue-primary border-blue-primary mb-6 transition-all duration-150"
       >
         <CloudArrowDownIcon class="h-6 text-blue-primary" />
         <h4>ดาวน์โหลดเอกสาร</h4>
       </button>
-      <p class="text-gray-4 leading-loose">
-        {{ lesson.lesson_content }}
-      </p>
-      <div class="flex items-center justify-center my-10">
-        <img class="h-80" src="../assets/kacha2.jpg" />
-      </div>
-      <p class="text-gray-4 leading-loose">
-        {{ lesson.lesson_content }}
+      <p class="text-gray-4 leading-loose" v-html="lesson.lesson_content">
       </p>
     </content-wrapper>
   </div>

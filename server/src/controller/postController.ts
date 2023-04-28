@@ -89,8 +89,13 @@ export const getPost = async (req: Request, res: Response) => {
             where: { post_id: postId },
             include: {
                 lessons: true,
-                author: true
-            }
+                author: {
+                    select: {
+                        name: true,
+                        email: true,
+                    }
+                }
+            },
         })
 
         if (!searchedPost) return res.status(400).send("ไม่พบโพสต์ที่ต้องการ")
@@ -275,6 +280,46 @@ export const followPost = async (req: Request, res: Response) => {
             switch (err.code) {
                 case "P2025":
                     return res.status(400).send("ไม่พบโพสต์ที่ต้องการติดตาม")
+                default:
+                    return res.status(500).send("เกิดข้อผิดพลาดในระบบ")
+            }
+        }
+
+        return res.status(500).send(getErrorMessage(err))
+    }
+
+}
+
+/**
+ * @route /api/posts/follow/:postId
+ * @param postId รหัสของโพสต์ที่ต้องการติดตาม
+ * @method DELETE
+ * @description ผู้ใช้ทำการกดยกเลิกติดตามโพสต์ใหม่
+ */
+
+export const unFollowPost = async (req: Request, res: Response) => {
+    //insert post_id and email to follow_post table when click follow button
+    const postId = req.params.postId
+    const { email } = res.locals.userDetails
+
+    try {
+        //ลบข้อมูลการติดตามโพส
+        const unFollow = await prisma.followPost.delete({
+            where: {
+                email_post_id: {
+                    email: email,
+                    post_id: postId
+                }
+            }
+        })
+
+        res.send("ยกเลิกการติดตามโพสต์เรียบร้อย")
+
+    } catch (err) {
+        if (err instanceof Prisma.PrismaClientKnownRequestError) {
+            switch (err.code) {
+                case "P2025":
+                    return res.status(400).send("ไม่พบโพสต์ที่ต้องการยกเลิกติดตาม")
                 default:
                     return res.status(500).send("เกิดข้อผิดพลาดในระบบ")
             }

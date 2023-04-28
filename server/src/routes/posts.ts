@@ -4,7 +4,7 @@ import checkJWTMiddleware from "../lib/middlewares/jwt/checkJWTMiddleware";
 import upload from "../lib/middlewares/multerMiddleware";
 
 // From controllers
-import { createPost, getPosts, getPost, deletePost, followPost, getFollowingPost, getMyPosts, getMyPostsAmount, editPost } from "../controller/postController";
+import { createPost, getPosts, getPost, deletePost, followPost, getFollowingPost, getMyPosts, getMyPostsAmount, editPost, unFollowPost } from "../controller/postController";
 
 /**
  * @desciption จัดการเกี่ยวกับ Post
@@ -24,6 +24,7 @@ router.get('/following', checkJWTMiddleware, getFollowingPost)
 
 router.post('/follow/:postId', checkJWTMiddleware, followPost)
 
+router.delete('/follow/:postId', checkJWTMiddleware, unFollowPost)
 
 // ลำดับของ route สำคัญเพราะมันอาจจะไปเข้า /:postId ได้
 
