@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="w-full rounded-xl border border-solid border-gray-2">
+    <div  class="w-full rounded-xl border border-solid border-gray-2">
       <div class="flex flex-col 2xl:flex-row justify-between m-5 ml-10">
         <div class="flex">
           <img
@@ -47,7 +47,10 @@
               <h4 class="hidden 2xl:block">&nbsp;ลบโพสต์</h4>
             </button>
           </div>
-          <div @click="isShowLesson = !isShowLesson">
+          <div
+            @click="isShowLesson = !isShowLesson"
+            class="rounded-full bg-blue-soft self-end flex p-1"
+          >
             <ChevronDownIcon :class="toggleShowLesson"></ChevronDownIcon>
           </div>
         </div>
@@ -65,7 +68,12 @@
       </h5>
       <div v-for="l in post.lessons" :key="l.id">
         <div class="flex justify-between items-center">
-          <h4 class="text-blue-primary cursor-pointer" @click="this.$router.push(`/posts/${post.post_id}/${l.lesson_id}`)">{{ l.lesson_title }}</h4>
+          <h4
+            class="text-blue-primary cursor-pointer"
+            @click="this.$router.push(`/posts/${post.post_id}/${l.lesson_id}`)"
+          >
+            {{ l.lesson_title }}
+          </h4>
           <div class="flex flex-row gap-3 justify-center items-center">
             <button
               class="flex items-center border-solid border-blue-primary bg-white text-blue-primary"
@@ -131,16 +139,16 @@ export default {
   computed: {
     toggleShowLesson() {
       return {
-        "text-gray-4 h-6 cursor-pointer duration-200 ease-out":
-          this.isShowLesson,
-        "text-gray-4 h-6 cursor-pointer rotate-180 duration-200 ease-out":
-          !this.isShowLesson,
+        " cursor-pointer -rotate-180": this.isShowLesson,
+        " cursor-pointer ": !this.isShowLesson,
+        "text-blue-primary h-6 duration-200 ease-out": true,
       };
     },
   },
   created() {},
   setup() {},
   methods: {
+
     getImageFromUrl,
     handleImageNotFound,
     openModal(txt) {
@@ -175,7 +183,7 @@ export default {
         console.log(response.data);
 
         this.$emit("removeLesson", lesson_id);
-        
+
         this.$store.commit("setIsModalOpen", {
           isModalOpen: true,
           content: response.data,

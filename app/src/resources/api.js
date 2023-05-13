@@ -90,6 +90,11 @@ export const createLesson = async (payload, postId) => {
     return response
 }
 
+export const editLesson = async (payload, postId, lessonId) => {
+    const response = await instance.put(`/api/lessons/${postId}/${lessonId}`, payload)
+    return response
+}
+
 export const deleteLesson = async (lessonId) => {
     const response = await instance.delete(`/api/lessons/${lessonId}`)
     return response
@@ -107,4 +112,9 @@ export const getMyLessonsAmount = async () => {
 
 export const getImageFile = async (fileName) => {
     const response = await instance.get("")
+}
+
+export const getLearningDocument = async (lessonId) => {
+    const response = await instance.get(`/api/lessons/${lessonId}/learning-document`)
+    return response
 }

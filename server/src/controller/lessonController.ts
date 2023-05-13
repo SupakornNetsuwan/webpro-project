@@ -102,7 +102,7 @@ export const getLesson = async (req: Request, res: Response) => {
  * @route /api/lessons/:postId
  * @param postId รหัสของ post ที่ต้องการสร้าง lesson ภายใต้
  * @method POST
- * @description ทำการสร้า lesson ใหม่เพิ่มเข้าไปภายใต้โพสต์นั้นๆ
+ * @description ทำการสร้าง lesson ใหม่เพิ่มเข้าไปภายใต้โพสต์นั้นๆ
  * @payload
  * ```
  * {
@@ -153,10 +153,73 @@ export const createLesson = async (req: Request, res: Response) => {
     }
 }
 
-export const editLesson = async (req: Request, res: Response) => {
+/**
+ * @route /api/lessons/:postId
+ * @param postId รหัสของ post ที่ต้องการแก้ข lesson
+ * @param lessonId รหัสของ lesson ที่จะถูกแก้ไข
+ * @method PUT
+ * @description ทำการแก้ไข lesson
+ * @payload
+ * ```
+ * {
+ *  title: string,
+ *  intro: string,
+ *  content: string,
+ *  file : File
+ * }
+ * ```
+ */
 
+export const editLesson = async (req: Request, res: Response) => {
+    const { lessonId, postId } = req.params;
+
+    const { title, intro, content } = req.body
+
+    if (!title || !intro || !content) return res.status(400).send("กรุณากรอกข้อมูลให้ครบถ้วน")
+
+    // file เป็น optional ดังนั้นต้องมีการตรวจสอบว่ามีไฟล์ไหม
+    const { filename, path } = req.file || {}
+
+    console.log(filename || "ไม่มีไฟล์")
+
+    try {
+        const newLesson = await prisma.lesson.update({
+            where: { lesson_id: lessonId },
+            data: {
+                lesson_title: title,
+                lesson_content: content,
+                lesson_intro: intro,
+                post_id: postId,
+                ...(filename && { file_location: process.env.SERVER_PUBLIC_URL + "/" + filename }),
+            }
+        })
+
+        res.send(newLesson)
+
+    } catch (err) {
+        if (err instanceof Prisma.PrismaClientKnownRequestError) {
+            switch (err.code) {
+                default:
+                    console.log(err)
+                    return res.status(500).send("เกิดข้อผิดพลาดในระบบ")
+            }
+        }
+
+        return res.status(500).send(getErrorMessage(err))
+    }
 }
 
 export const deleteLesson = async (req: Request, res: Response) => {
-    res.send("hello")
+    res.send("Hello")
+}
+
+/**
+ * @route /api/:lessonId/learning-document
+ * @param lessonId รหัสของบทเรียนโหลดเอกสาร
+ * @method POST
+ * @description ทำการดาวน์โหลดเอกสาร learning document
+ * */
+
+export const getLearningDocument = async (req: Request, res : Response) => {
+    res.download("../public/uploads/learningDocument-1683990794168.pdf")
 }

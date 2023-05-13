@@ -81,3 +81,9 @@
     }
   }
 }
+
+@layer utilities{
+  pre{
+    @apply bg-blue-soft p-4 font-mono text-blue-primary rounded;
+  }
+}
