@@ -4,10 +4,10 @@
   >
     <div>
       <h3 class="text-blue-primary">
-        {{ lessonDetail.title }}
+        {{ lessonDetail.lesson_title }}
       </h3>
       <h5 class="text-gray-3 mt-1">
-        สร้างเมื่อวันที่ {{ lessonDetail.createdDate }}
+        สร้างเมื่อวันที่ {{ new Date(lessonDetail.created_date).toLocaleDateString() }}
       </h5>
     </div>
     <div class="m-2">
@@ -38,7 +38,7 @@ export default {
   methods: {
     route() {
       this.$router.push(
-        `${this.$router.currentRoute.value.fullPath}/${this.lessonDetail.id}`
+        `${this.$router.currentRoute.value.fullPath}/${this.lessonDetail.lesson_id}`
       );
     },
   },

@@ -30,7 +30,7 @@
           <div class="flex flex-row justify-between">
             <h5>เข้าร่วมเมื่อวันที่</h5>
             <h5 class="text-blue-primary">
-              {{ new Date(authen.createdAt).toLocaleDateString() }}
+              {{ new Date(authen.created_date).toLocaleDateString() }}
             </h5>
           </div>
         </div>
@@ -54,17 +54,13 @@ export default {
   setup(props) {},
   methods: {},
   beforeMount() {
-    if (!this.authen) {
-      this.$router.push("/");
-    }
-
-    axios.get("/api/protect").then(data => console.log(data.data)).catch(err => console.log(err.response.data))
+    
   },
   computed: {
     ...mapState({
       authen: (state) => state.authen,
       // to access local state with `this`, a normal function must be used
     }),
-  },
+  }
 };
 </script>

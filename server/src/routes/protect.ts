@@ -1,6 +1,10 @@
 import express, { Request, Response, NextFunction } from "express";
 import checkJWTMiddleware from "../lib/middlewares/jwt/checkJWTMiddleware"
 
+/**
+ * @description หน้าทดสบการ Authentication
+ */
+
 const router = express.Router()
 
 router.get("/", checkJWTMiddleware, (req: Request, res: Response, next: NextFunction,) => {

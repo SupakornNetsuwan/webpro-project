@@ -112,24 +112,15 @@ export default {
     PostCard,
   },
   setup(props) {},
-  mounted() {
-    
-  },
+  mounted() {},
   data() {
     return {};
   },
   methods: {},
-  beforeMount() {
-    if (this.getAuthen) {
-      this.$router.push("/home");
-    }
-  },
+  beforeMount() {},
   computed: mapState({
     authen: (state) => state.authen,
     // to access local state with `this`, a normal function must be used
-    getAuthen(state) {
-      return state.authen;
-    },
   }),
 };
 </script>

@@ -1,4 +1,4 @@
-import express, { Response, Request } from "express";
+import { Response, Request } from "express";
 import jwt_decode from "jwt-decode"
 import { GoogleUserPayload } from "../types/types";
 import getErrorMessage from "../lib/functions/getErrorMessage"
@@ -6,17 +6,16 @@ import { createAccessToken, createRefreshToken } from "../lib/functions/jwt/encr
 import getUser from "../lib/functions/user/getUser"
 import createUser from "../lib/functions/user/createUser"
 import updateUserRefreshToken from "../lib/functions/user/updateUserRefreshToken"
-import readJWTMiddleware from "../lib/middlewares/jwt/readJWTMiddleware";
 import prisma from "../lib/connection/prisma"
 import { User } from "@prisma/client";
 
-const app = express();
+/**
+ * @route /api/auth/logout
+ * @method POST
+ * @description ทำการออกจากระบบ
+ */
 
-app.get("/", (req: Request, res: Response) => {
-    res.json({ message: "Oh, login is working now 🟢" })
-})
-
-app.post("/logout", readJWTMiddleware, async (req, res) => {
+export const logout = async (req: Request, res: Response) => {
     const userDetails = res.locals.userDetails
     const { email } = userDetails
     await prisma.user.update({
@@ -36,10 +35,15 @@ app.post("/logout", readJWTMiddleware, async (req, res) => {
         status: 200,
         message: "Logout complete"
     })
+}
 
-})
+/**
+ * @route /api/auth/login
+ * @method POST
+ * @description ทำการเข้าสู่ระบบ
+ */
 
-app.post("/login", async (req, res) => {
+export const login = async (req: Request, res: Response) => {
     const { credential }: { credential: string } = req.body || null;
     try {
         // อ่าน Payload จาก Goole authen เพื่อนำ payload มาใช้ต่อ
@@ -92,6 +96,4 @@ app.post("/login", async (req, res) => {
 
         res.status(500).send("Some unknown error occured")
     }
-})
-
-export default app;
+}

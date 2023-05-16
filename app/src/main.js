@@ -15,17 +15,27 @@ import Chartkick from 'vue-chartkick'
 import Chart from 'chart.js/auto';
 // Rich text editor (Quill)
 import { QuillEditor } from '@vueup/vue-quill'
+import markdownToolbar from 'quill-markdown-toolbar';
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 // Google Oauth 2.0
 import GoogleSignInPlugin from "vue3-google-signin"
-import axios from "axios";
 
-// ทำ custom server path
-axios.defaults.baseURL = import.meta.env.VITE_SERVER_URL
-axios.defaults.withCredentials = true
+const globalOptions = {
+    modules: {
+        toolbar: [
+            { header: [1, 2, 3, 4, 5, 6, false] },
+            'bold',
+            'image',
+            'code-block',
+        ],
+    },
+    theme: 'snow'
+}
+
+QuillEditor.props.globalOptions.default = () => globalOptions
 
 // Create a new store instance.
-const store = createStore({
+export const store = createStore({
     state() {
         return {
             authen: JSON.parse(localStorage.getItem('authen') || "null"), // ถ้าหากว่ามี user object อยู่ใน localstorage

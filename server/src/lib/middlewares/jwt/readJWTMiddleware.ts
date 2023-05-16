@@ -28,7 +28,7 @@ const readJWTMiddleware = (req : Request, res : Response, next : NextFunction) =
         return next() 
     }catch(err){
         const message = getErrorMessage(err);
-        return res.json({ status: 400, message: message });
+        return res.status(400).send(message );
     }
 }
 

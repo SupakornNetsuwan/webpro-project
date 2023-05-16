@@ -30,6 +30,7 @@ const checkJWTMiddleware = (req: Request, res: Response, next: NextFunction) => 
             // หมดอายุ ก็ลองทำ Refresh ดู
             try {
                 const { jwt_token, new_refresh_token } = await refreshToken(refresh_token);
+
                 // เปลี่ยน Access Token , Refresh Token เป็นอันใหม่
                 res.cookie('refresh_token', new_refresh_token, { httpOnly: true, secure: true });
                 res.cookie('jwt_token', jwt_token, { httpOnly: true, secure: true });

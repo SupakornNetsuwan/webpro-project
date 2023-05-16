@@ -1,106 +1,112 @@
 <template>
-    <div className="w-full flex min-h-screen flex-col bg-gray-1">
-      <ContentWrapper>
-        <button
-          @click="($event) => $router.go(-1)"
-          class="flex items-center cursor-pointer border-none bg-transparent pl-0"
-        >
-          <ChevronLeftIcon class="h-5 w-5 text-red-primary" />
-          <h4 class="text-red-primary">กลับ</h4>
-        </button>
-  
-        <h1 className="text-black  mt-10">
-          สร้างบทเรียน
-        </h1>
-        <h4 className="text-gray-3">
-          เลือกวิชาที่ต้องการสร้างโพสต์ และ ลงบทเรียน เพื่อแบ่งปันเนื้อหา หรือ
-          สรุป
-        </h4>
-        <div class="h-[1px] bg-gray-2 my-8" />
-        <div className="md:max-w-[50%]">
-          <div>
-            <h4 className="text-blue-primary ">
-              หัวข้อบทเรียน<span className="text-red-primary">*</span>
-            </h4>
-            <input
-              type="text"
-              id="post-topic"
-              name="post-topic"
-              className="input w-full md:max-w-[70%]"
-            />
-          </div>
-          <div>
-            <h4 className="text-blue-primary mt-8">
-              โพสต์<span className="text-red-primary">*</span>
-            </h4>
-            <input
-              type="text"
-              id="post-topic"
-              name="post-topic"
-              className="input w-full md:max-w-[70%]"
-            />
-          </div>
-          <div>
-            <h4 className="text-blue-primary mt-8">
-              เนื้อหา<span className="text-red-primary">*</span>
-            </h4>
-            <p className="text-gray-3 w-full">
-              เนื้อหานำสำหรับบทเรียนของคุณ
-              ลองอธิบายว่าโพสต์ของคุณจะมีการแนะนำเนื้อหาใดบ้างในอนาคต
-            </p>
-            <!-- <QuillEditor theme="snow" toolbar="minimal"/> -->
-            <textarea
+  <div className="w-full flex min-h-screen flex-col bg-gray-1">
+    <ContentWrapper>
+      <button
+        @click="($event) => $router.go(-1)"
+        class="flex items-center cursor-pointer border-none bg-transparent pl-0"
+      >
+        <ChevronLeftIcon class="h-5 w-5 text-red-primary" />
+        <h4 class="text-red-primary">กลับ</h4>
+      </button>
+
+      <h1 className="text-black  mt-10">สร้างบทเรียน</h1>
+      <h4 className="text-gray-3">สร้างบทเรียนใหม่ แบ่งปันเนื้อหา หรือสรุป</h4>
+      <div class="h-[1px] bg-gray-2 my-8" />
+      <div className="xl:max-w-[50%]">
+        <div>
+          <h4 className="text-blue-primary ">
+            หัวข้อบทเรียน<span className="text-red-primary">*</span>
+          </h4>
+          <input
+            type="text"
+            v-model="title"
+            className="input w-full box-border xl:max-w-[70%]"
+          />
+        </div>
+        <div>
+          <h4 className="text-blue-primary mt-8">
+            เนื้อหาเกริ่น<span className="text-red-primary">*</span>
+          </h4>
+          <input
+            type="text"
+            v-model="intro"
+            className="input w-full box-border xl:max-w-[70%]"
+          />
+        </div>
+        <div>
+          <h4 className="text-blue-primary mt-8">
+            เนื้อหา<span className="text-red-primary">*</span>
+          </h4>
+          <p className="text-gray-3 w-full">เนื้อหาในบทเรียนของคุณ</p>
+          <QuillEditor
+            :options="options"
+            contentType="html"
+            v-model:content="content"
+            name="lesson-content"
+          >
+          </QuillEditor>
+          <!-- <textarea
               name="post-intro"
               id="post-intro"
               rows="5"
               className="w-full resize-none input"
-            />
-          </div>
-          <div>
-            <h4 className="text-blue-primary mt-8">
-              ภาพประกอบ<span className="text-red-primary">*</span>
-            </h4>
-            <p className="text-gray-3 w-full">เลือกภาพประกอบสำหรับบทเรียนของคุณ</p>
-  
-            <label class="block bg-blue-soft rounded p-2 mt-4">
-              <input
-                type="file"
-                class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded file:text-sm file:font-semibold file:bg-white file:text-blue-primary file:border-blue-primary file:border-2 file:border-solid hover:file:bg-blue-soft hover:file:cursor-pointer"
-              />
-            </label>
-  
-            <div class="h-[1px] bg-gray-2 my-8" />
-            <button
-              @click="openModal"
-              className="flex items-center space-x-1 px-4 py-2 transition-all duration-300 bg-blue-primary border-blue-primary"
-            >
-              <PlusIcon class="w-6 h-6 text-white" />
-              <h5 class="text-white">สร้างบทเรียน</h5>
-            </button>
-          </div>
+            /> -->
         </div>
-      </ContentWrapper>
-    </div>
-  </template>
-  <script>
-  import ContentWrapper from "../components/ContentWrapper.vue";
-  import { ChevronLeftIcon, PlusIcon } from "@heroicons/vue/24/outline";
-  import { mapState } from "vuex";
+        <div>
+          <h4 className="text-blue-primary mt-8">
+            เอกสารประกอบ<span className="text-red-primary">*</span>
+          </h4>
+          <p className="text-gray-3 w-full">เลือกเอกสารสำหรับบทเรียนของคุณ</p>
 
-  export default {
-    components: {
-      ContentWrapper,
-      ChevronLeftIcon,
-      PlusIcon,
-    },
-    data() {
-      return {};
-    },
-    beforeMount() {
-    if (!this.getAuthen) {
-      this.$router.push("/");
-    }
+          <label class="block bg-blue-soft rounded p-2 mt-4">
+            <input
+              @change="chooseLearningDocument"
+              type="file"
+              class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded file:text-sm file:font-semibold file:bg-white file:text-blue-primary file:border-blue-primary file:border-2 file:border-solid hover:file:bg-blue-soft hover:file:cursor-pointer"
+            />
+          </label>
+
+          <div class="h-[1px] bg-gray-2 my-8" />
+          <button
+            @click="createNewLesson"
+            className="flex items-center space-x-1 px-4 py-2 transition-all duration-300 bg-blue-primary border-blue-primary"
+          >
+            <PlusIcon class="w-6 h-6 text-white" />
+            <h5 class="text-white">สร้างบทเรียน</h5>
+          </button>
+        </div>
+      </div>
+    </ContentWrapper>
+  </div>
+</template>
+<script>
+import ContentWrapper from "../components/ContentWrapper.vue";
+import { ChevronLeftIcon, PlusIcon } from "@heroicons/vue/24/outline";
+import { mapState } from "vuex";
+import { Quill } from "@vueup/vue-quill";
+import markdownToolbar from "quill-markdown-toolbar";
+import { createLesson } from "../resources/api";
+
+Quill.register("modules/quill-markdown-toolbar", markdownToolbar);
+
+export default {
+  components: {
+    ContentWrapper,
+    ChevronLeftIcon,
+    PlusIcon,
   },
+  data() {
+    return {
+      options: {
+        placeholder: "เนื้อหาบทเรียน...",
+      },
+      title: "",
+      intro: "",
+      content: "",
+      learningDocument: null,
+    };
+  },
+  beforeMount() {},
   computed: mapState({
     authen: (state) => state.authen,
     // to access local state with `this`, a normal function must be used
@@ -112,15 +118,36 @@
       return date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear();
     },
   }),
-    methods: {
-      openModal() {
+  methods: {
+    chooseLearningDocument(e) {
+      this.learningDocument = e.target.files[0];
+    },
+    async createNewLesson() {
+      try {
+        const { id } = this.$route.params;
+
+        const formData = new FormData();
+        formData.append("title", this.title);
+        formData.append("intro", this.intro);
+        formData.append("content", this.content);
+        formData.append("learningDocument", this.learningDocument || null);
+
+        const response = await createLesson(formData, id);
+        console.log(response.data);
         this.$store.commit("setIsModalOpen", {
           isModalOpen: true,
           content: "ทำการสร้างเนื้อหาบทเรียนใหม่เรียบร้อย ⭐️",
-          redirectTo: "/posts/1/1",
+          redirectTo: `/posts/${this.$route.params.id}/${response.data.lesson_id}`,
         });
-      },
+      } catch (err) {
+        console.log(err);
+        this.$store.commit("setIsModalOpen", {
+          isModalOpen: true,
+          content: err.response.data,
+          redirectTo: "",
+        });
+      }
     },
-  };
-  </script>
-  
+  },
+};
+</script>

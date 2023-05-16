@@ -32,9 +32,6 @@ export default {
   computed: mapState({
     // arrow functions can make the code very succinct!
     isNavHide: (state) => state.count,
-    getIsNavHide(state) {
-      return state.isNavHide;
-    },
   }),
   computed: {
     isSidebarDisplay() {
