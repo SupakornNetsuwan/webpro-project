@@ -10,8 +10,11 @@
 | ยลรดี ประยูรพันธุ์รัตน์ | 64070089 |
 | ศุภกร เนตรสุวรรณ | 64070108 |
 
-![supakorn_img](https://sv1.picz.in.th/images/2023/05/16/FNvxXE.webp)
-![supakorn_img](https://sv1.picz.in.th/images/2023/05/16/FNGI79.png)
+
+<img alt="yolradee_img" src="https://i.ibb.co/hW6cV12/IMG-1973.png" width="280px" />
+
+<img alt="supakorn_img" src="https://sv1.picz.in.th/images/2023/05/16/FNvxXE.webp" width="300px" />
+
 
 ---
 
@@ -21,6 +24,8 @@
 2. Express + Typescript (Node.js runtume for webserver)
 3. Prisma (ORM)
 4. MySQL
+
+[ดูข้อมูล Visualize จาก Github action](https://mango-dune-07a8b7110.1.azurestaticapps.net/?repo=SupakornNetsuwan%2Fwebpro-project)
 
 ---
 
