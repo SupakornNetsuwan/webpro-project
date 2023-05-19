@@ -237,8 +237,7 @@ export const deletePost = async (req: Request, res: Response) => {
 
 export const getFollowingPost = async (req: Request, res: Response) => {
     //select post เฉพาะที่ user ติดตามเอาไว้
-    const userDetails = res.locals.userDetails
-    const { email } = userDetails
+    const { email } = res.locals.userDetails
 
     const followPost = await prisma.followPost.findMany({
         where: {
@@ -273,11 +272,13 @@ export const followPost = async (req: Request, res: Response) => {
             }
         })
 
-        res.send("ติดตามโพสต์เรียบร้อย")
+        res.status(200).send("ติดตามโพสต์เรียบร้อย")
 
     } catch (err) {
         if (err instanceof Prisma.PrismaClientKnownRequestError) {
             switch (err.code) {
+                case "P2002":
+                    return res.status(400).send("คุณได้ติดตามโพสนี้ไว้แล้ว")
                 case "P2025":
                     return res.status(400).send("ไม่พบโพสต์ที่ต้องการติดตาม")
                 default:
@@ -298,7 +299,7 @@ export const followPost = async (req: Request, res: Response) => {
  */
 
 export const unFollowPost = async (req: Request, res: Response) => {
-    //insert post_id and email to follow_post table when click follow button
+    //delete post_id and email to follow_post table when click follow button
     const postId = req.params.postId
     const { email } = res.locals.userDetails
 
@@ -319,7 +320,7 @@ export const unFollowPost = async (req: Request, res: Response) => {
         if (err instanceof Prisma.PrismaClientKnownRequestError) {
             switch (err.code) {
                 case "P2025":
-                    return res.status(400).send("ไม่พบโพสต์ที่ต้องการยกเลิกติดตาม")
+                    return res.status(400).send("ไม่พบการติดตามที่ต้องการยกเลิกติดตาม")
                 default:
                     return res.status(500).send("เกิดข้อผิดพลาดในระบบ")
             }

@@ -70,6 +70,21 @@ export const deletePost = async (postId) => {
     return response
 }
 
+export const followPost = async (postId) => {
+    const response = await instance.post(`/api/posts/follow/${postId}`)
+    return response
+}
+
+export const unFollowPost = async (postId) => {
+    const response = await instance.delete(`/api/posts/follow/${postId}`)
+    return response
+}
+
+export const getFollowingPost = async () => {
+    const response = await instance.get("/api/posts/following")
+    return response
+}
+
 export const getMyPosts = async () => {
     const response = await instance.get("/api/posts/myposts")
     return response
