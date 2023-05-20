@@ -10,7 +10,10 @@
     />
     <div class="m-2">
       <div class="flex flex-row w-full justify-between">
-        <h4 class="truncate lg:max-w-[15em]">{{ postDetail.post_title }}</h4>
+        <div class="flex items-center space-x-2">
+          <h4 :class="['truncate lg:max-w-[15em]', postDetail?.follow_post.length > 0 ? 'text-blue-primary' : '']">{{ postDetail.post_title }}</h4>
+          <StarIcon v-if="postDetail?.follow_post.length > 0" class="h-3 aspect-square text-blue-primary bg-blue-soft p-1 rounded"/>
+        </div>
         <div class="flex items-center">
           <h4 class="text-red-primary">อ่าน</h4>
           <ChevronRightIcon class="h-4 text-red-primary" />
@@ -27,6 +30,8 @@
 <script>
 import SubjectTag from "../components/SubjectTag.vue";
 import { ChevronRightIcon } from "@heroicons/vue/24/outline";
+import { StarIcon } from "@heroicons/vue/24/solid";
+
 import {
   getImageFromUrl,
   handleImageNotFound,
@@ -40,6 +45,7 @@ export default {
   components: {
     SubjectTag,
     ChevronRightIcon,
+    StarIcon
   },
   methods: {
     route() {

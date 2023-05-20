@@ -77,7 +77,7 @@
         <PostCard
           v-for="post in suggestPosts"
           :postDetail="post"
-          :key="post.id"
+          :key="post.post_id"
         />
       </div>
     </content-wrapper>
@@ -188,6 +188,7 @@ export default {
           this.isFollow = !!getFollowingPostRes.data.find(
             (post) => post.post_id == this.$route.params.id
           );
+            
           this.suggestPosts = getSuggestPostsRes.data;
         });
       } catch (err) {

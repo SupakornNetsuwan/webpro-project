@@ -76,11 +76,25 @@ export const createPost = async (req: Request, res: Response) => {
  * @route /api/posts
  * @method GET
  * @description ทำการดึง post ทั้งหมดที่มีอยู่
+ * @remind จำเป็นต้องมีการ join กับ post table เพื่อหา follow_post field ส่งไปเป็น ฟพพฟั
  */
 
 export const getPosts = async (req: Request, res: Response) => {
     try {
-        const subjectPost = await prisma.post.findMany()
+        const subjectPost = await prisma.post.findMany({
+            include: {
+                follow_post: {
+                    where: {
+                        email: res.locals.userDetails.email
+                    }
+                }
+
+            },
+            orderBy: {
+                create_date: 'desc'
+            }
+        })
+
         res.json(subjectPost)
     } catch (err) {
         return res.status(500).send(getErrorMessage(err))
@@ -276,7 +290,7 @@ export const getFollowingPosts = async (req: Request, res: Response) => {
         }
     })
 
-    res.send(followPost)
+    res.send(followPost.map((followPost) => ({ ...followPost.post, follow_post: [{ codeSmell: 'so hard' }] })))
 }
 
 /**
@@ -493,6 +507,7 @@ export const getMyPosts = async (req: Request, res: Response) => {
  * @route /api/posts/suggest-posts
  * @method GET
  * @description ดึงโพสต์ที่แนะนำ
+ * @remind จำเป็นต้องมีการ join กับ post table เพื่อหา follow_post field ส่งไปเป็น ฟพพฟั
  */
 
 export const getSuggestPosts = async (req: Request, res: Response) => {
@@ -507,7 +522,7 @@ export const getSuggestPosts = async (req: Request, res: Response) => {
         params[key] = value
     })
 
-    if(isNaN(Number(params.take))) {
+    if (isNaN(Number(params.take))) {
         return res.status(400).send("take ต้องเป็นตัวเลขเท่านั้น")
     }
 
@@ -532,10 +547,17 @@ export const getSuggestPosts = async (req: Request, res: Response) => {
         // โพสต์ที่แนะนำ
         const suggestPosts = await prisma.post.findMany({
             where: {
-                subject_name: suggestSubject
+                subject_name: suggestSubject,
+            },
+            include: {
+                follow_post: {
+                    where: {
+                        email: res.locals.userDetails.email
+                    }
+                }
             },
             orderBy: {
-                create_date: "desc"
+                create_date: 'desc'
             },
             take: Number(params.take)
         })
