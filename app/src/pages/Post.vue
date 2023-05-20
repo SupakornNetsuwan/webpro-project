@@ -94,7 +94,7 @@ export default {
       });
       //เช็คว่าโพสนี้ถูกฟอลอยู่หรือไม่
       getFollowingPost().then((res) => {
-        this.isFollow = !!res.data.filter(post => post.post_id == this.$route.params.id)[0]
+        this.isFollow = !!res.data.find(post => post.post_id == this.$route.params.id)
       })
     } catch (err) {
       console.log(err);
