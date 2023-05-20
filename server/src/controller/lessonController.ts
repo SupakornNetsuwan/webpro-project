@@ -210,7 +210,43 @@ export const editLesson = async (req: Request, res: Response) => {
 }
 
 export const deleteLesson = async (req: Request, res: Response) => {
-    res.send("Hello")
+    const { userDetails: { email, role } } = res.locals
+    const { lessonId, postId } = req.params
+
+    // ดึงข้อมูลอีเมลเข้าของของโพสต์ที่มีบทเรียนนี้อยู่ว่าตรงกันมั้ย
+    const postOfLesson = await prisma.lesson.findFirst({
+        where: {
+            lesson_id: lessonId,
+        },
+        select: {
+            post: {
+                select: {
+                    author_email: true
+                }
+            }
+        }
+    })
+
+
+    if (role === "ADMIN" || postOfLesson?.post.author_email === email) {
+        try {
+            await prisma.lesson.delete({where: { lesson_id: lessonId }})
+
+            return res.send("ลบบทเรียนสำร็จ")
+        } catch (err) {
+            if (err instanceof Prisma.PrismaClientKnownRequestError) {
+                switch (err.code) {
+                    default:
+                        console.log(err)
+                        return res.status(500).send("เกิดข้อผิดพลาดในระบบ")
+                }
+            }
+
+            return res.status(500).send(getErrorMessage(err))
+        }
+    }
+
+    return res.status(403).send("คุณไม่มีสิทธิ์ในการลบบทเรียนนี้")
 }
 
 /**
@@ -220,6 +256,6 @@ export const deleteLesson = async (req: Request, res: Response) => {
  * @description ทำการดาวน์โหลดเอกสาร learning document
  * */
 
-export const getLearningDocument = async (req: Request, res : Response) => {
+export const getLearningDocument = async (req: Request, res: Response) => {
     res.download("../public/uploads/learningDocument-1683990794168.pdf")
 }

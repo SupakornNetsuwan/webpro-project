@@ -489,6 +489,76 @@ export const getMyPosts = async (req: Request, res: Response) => {
     res.send(myPosts)
 }
 
+/**
+ * @route /api/posts/suggest-posts
+ * @method GET
+ * @description ดึงโพสต์ที่แนะนำ
+ */
+
+export const getSuggestPosts = async (req: Request, res: Response) => {
+    const { email, role } = res.locals.userDetails;
+
+    const params: { [key: string]: any } = {
+        take: 5
+    }
+
+    // ถ้ามี query params ที่ส่งมาให้ทำการเพิ่มเข้าไปใน params / เขียนทับค่าเดิม
+    Object.entries(req.query).forEach(([key, value]) => {
+        params[key] = value
+    })
+
+    if(isNaN(Number(params.take))) {
+        return res.status(400).send("take ต้องเป็นตัวเลขเท่านั้น")
+    }
+
+    try {
+        const followingPosts: { amount: bigint, subject_name: string }[] = await prisma.$queryRaw`
+            SELECT COUNT(fp.post_id) AS amount, p.subject_name
+            FROM FollowPost fp
+            JOIN Post p ON p.post_id = fp.post_id
+            WHERE email = ${email}
+            GROUP BY p.subject_name
+        `
+
+        if (followingPosts.length === 0) {
+            throw new Error("ไม่ได้ติดตามโพสต์ใดๆ")
+        }
+
+        // sort ผลลัพธ์ตามลำดับที่ติดตาม
+        const sortedFollowingPosts = followingPosts.map(post => ({ ...post, amount: Number(post.amount) })).sort((a, b) => b.amount - a.amount)
+        // วิชาที่ติดตามมากที่สุด
+        const suggestSubject = sortedFollowingPosts[0].subject_name
+
+        // โพสต์ที่แนะนำ
+        const suggestPosts = await prisma.post.findMany({
+            where: {
+                subject_name: suggestSubject
+            },
+            orderBy: {
+                create_date: "desc"
+            },
+            take: Number(params.take)
+        })
+
+        res.send(suggestPosts)
+    } catch (err) {
+        if (err instanceof Prisma.PrismaClientKnownRequestError) {
+            switch (err.code) {
+                default:
+                    return res.status(500).send("เกิดข้อผิดพลาดในระบบ")
+            }
+        }
+
+        if (getErrorMessage(err) === "ไม่ได้ติดตามโพสต์ใดๆ") {
+            // ส่งแบบปกติไปโลด
+            const normalPosts = await prisma.post.findMany({ take: Number(params.take) })
+            return res.send(normalPosts)
+        }
+
+        return res.status(500).send(getErrorMessage(err))
+    }
+}
+
 
 /**
  * @route /api/posts/myposts-amount
@@ -499,18 +569,32 @@ export const getMyPosts = async (req: Request, res: Response) => {
 export const getMyPostsAmount = async (req: Request, res: Response) => {
     const { email, role } = res.locals.userDetails;
 
-    if (role === "ADMIN") {
-        // Admin เข้าถึงได้ทุก post
-        const allPostsAmount = await prisma.post.count()
+    try {
 
-        return res.send(allPostsAmount.toString())
+
+        if (role === "ADMIN") {
+            // Admin เข้าถึงได้ทุก post
+            const allPostsAmount = await prisma.post.count()
+
+            return res.send(allPostsAmount.toString())
+        }
+
+        const myPostsAmount = await prisma.post.count({
+            where: {
+                author_email: email
+            }
+        })
+
+        res.send(myPostsAmount.toString())
+    } catch (err) {
+        if (err instanceof Prisma.PrismaClientKnownRequestError) {
+            switch (err.code) {
+                default:
+                    return res.status(500).send("เกิดข้อผิดพลาดในระบบ")
+            }
+        }
+
+        return res.status(500).send(getErrorMessage(err))
     }
 
-    const myPostsAmount = await prisma.post.count({
-        where: {
-            author_email: email
-        }
-    })
-
-    res.send(myPostsAmount.toString())
 }
