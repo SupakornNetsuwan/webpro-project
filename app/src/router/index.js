@@ -26,6 +26,9 @@ import { store } from "../main"
 const routes = [
     {
         path: '/', name: "landing",
+        meta: {
+            mustNotAuth: true
+        },
         component: Landing
     },
     {
@@ -77,9 +80,7 @@ const routes = [
         },]
     },
     {
-        path: '/suggest', name: "suggest", component: Suggest, props: {
-            xxxx: "EARTH"
-        }
+        path: '/suggest', name: "suggest", component: Suggest
     },
     {
         path: '/summaries',
@@ -140,6 +141,12 @@ router.beforeEach((to, from, next) => {
 
         next({ name: 'landing' })
 
+    } else if (to.matched.some(record => record.meta.mustNotAuth)) {
+        if (store.state.authen) {
+            next({ name: 'home' })
+            return
+        }
+        next()
     } else {
         next() // does not require auth, make sure to always call next()!
     }

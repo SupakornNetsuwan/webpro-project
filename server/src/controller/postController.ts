@@ -507,7 +507,7 @@ export const getMyPosts = async (req: Request, res: Response) => {
  * @route /api/posts/suggest-posts
  * @method GET
  * @description ดึงโพสต์ที่แนะนำ
- * @remind จำเป็นต้องมีการ join กับ post table เพื่อหา follow_post field ส่งไปเป็น ฟพพฟั
+ * @remind จำเป็นต้องมีการ join กับ post table เพื่อหา follow_post field ส่งไปเป็น array
  */
 
 export const getSuggestPosts = async (req: Request, res: Response) => {
