@@ -5,7 +5,7 @@
       <h5 className="text-gray-3">คุณสามารถเข้าถึงสรุปของแต่ละวิชาที่ติดตามได้จากที่นี่</h5>
     </div>
     <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-4">
-      <PostCard v-for="post in posts.concat(posts)" :postDetail="post" />
+      <PostCard v-for="p in posts" :key="p.post_id" :postDetail="p.post" />
     </div>
   </ContentWrapperVue>
 </template>
@@ -13,8 +13,7 @@
 <script>
 import ContentWrapperVue from "../components/ContentWrapper.vue";
 import PostCard from "../components/PostCard.vue";
-/* --------------------- Mock API --------------------- */
-import postsApi from "../resources/postsApi.json"
+import { getFollowingPost } from "../resources/api";
 
 export default {
   name: "SummariesFollowing",
@@ -24,8 +23,18 @@ export default {
   },
   data() {
     return {
-      posts: postsApi
+      posts: []
     };
+  },
+  async created() {
+    try {
+      getFollowingPost().then((res) => {
+        this.posts = res.data
+      }
+      )
+    } catch (err) {
+      console.log(err.response)
+    }
   },
 };
 </script>
