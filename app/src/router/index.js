@@ -26,7 +26,9 @@ import { store } from "../main"
 const routes = [
     {
         path: '/', name: "landing",
-      
+        meta: {
+            mustNotAuth: true
+        },
         component: Landing
     },
     {

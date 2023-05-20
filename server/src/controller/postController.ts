@@ -539,6 +539,8 @@ export const getSuggestPosts = async (req: Request, res: Response) => {
             throw new Error("ไม่ได้ติดตามโพสต์ใดๆ")
         }
 
+
+
         // sort ผลลัพธ์ตามลำดับที่ติดตาม
         const sortedFollowingPosts = followingPosts.map(post => ({ ...post, amount: Number(post.amount) })).sort((a, b) => b.amount - a.amount)
         // วิชาที่ติดตามมากที่สุด
@@ -573,7 +575,21 @@ export const getSuggestPosts = async (req: Request, res: Response) => {
 
         if (getErrorMessage(err) === "ไม่ได้ติดตามโพสต์ใดๆ") {
             // ส่งแบบปกติไปโลด
-            const normalPosts = await prisma.post.findMany({ take: Number(params.take) })
+
+            const normalPosts = await prisma.post.findMany({
+                include: {
+                    follow_post: {
+                        where: {
+                            email: res.locals.userDetails.email
+                        }
+                    }
+                },
+                orderBy: {
+                    create_date: 'desc'
+                }, take: Number(params.take)
+            })
+
+
             return res.send(normalPosts)
         }
 
