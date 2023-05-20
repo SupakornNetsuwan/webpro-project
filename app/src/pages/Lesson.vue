@@ -1,8 +1,10 @@
 <template>
   <div class="w-full flex min-h-screen flex-col bg-gray-1">
     <content-wrapper>
-      <button @click="($event) => $router.go(-1)"
-        class="flex items-center cursor-pointer border-none bg-transparent pl-0">
+      <button
+        @click="($event) => $router.go(-1)"
+        class="flex items-center cursor-pointer border-none bg-transparent pl-0"
+      >
         <ChevronLeftIcon class="h-5 w-5 text-red-primary" />
         <h4 class="text-red-primary">กลับ</h4>
       </button>
@@ -10,7 +12,7 @@
         <h1 class="text-blue-primary">{{ lesson.lesson_title }}</h1>
         <subject-tag :subject="post.subject_name" />
       </div>
-      <p class="my-2">{{ post.post_title }}</p>
+      <p class="my-2 text-gray-500">จากโพสต์ {{ post.post_title }}</p>
       <div class="flex my-2">
         <h4>โดย {{ author.name }}</h4>
         <h4 class="text-gray-3">
@@ -18,13 +20,17 @@
           {{ new Date(lesson.created_date).toLocaleDateString() }}
         </h4>
       </div>
-      <hr class="my-6 text-gray-2" />
-      <button @click="downloadFile(lesson.lesson_id)" v-if="lesson.file_location"
-        class="w-full space-x-2 flex items-center justify-center bg-white hover:bg-blue-soft text-blue-primary border-blue-primary mb-6 transition-all duration-150">
+      <hr class="my-3 text-gray-2" />
+      <p class="my-6 text-gray-400">{{ lesson.lesson_intro }}</p>
+      <button
+        @click="downloadFile(lesson.file_location)"
+        v-if="lesson.file_location"
+        class="w-full space-x-2 flex items-center justify-center bg-white hover:bg-blue-soft text-blue-primary border-blue-primary mb-6 transition-all duration-150"
+      >
         <CloudArrowDownIcon class="h-6 text-blue-primary" />
         <h4>ดาวน์โหลดเอกสาร</h4>
       </button>
-      <div class="html-template" v-html="lesson.lesson_content"></div>
+      <div class="v-html-template" v-html="lesson.lesson_content"></div>
     </content-wrapper>
   </div>
 </template>
@@ -35,8 +41,7 @@ import { ChevronLeftIcon } from "@heroicons/vue/24/outline";
 import { CloudArrowDownIcon } from "@heroicons/vue/24/outline";
 
 /* --------------------- API --------------------- */
-import { getLesson, getPost} from "../resources/api";
-
+import { getLesson, getPost } from "../resources/api";
 
 export default {
   name: "Lesson",
@@ -73,14 +78,17 @@ export default {
     }
   },
   methods: {
-    downloadFile: (lessonId) => {
-      const uri = `http://localhost:3001/api/lessons/${lessonId}/learning-document`
-      const downloadLink = document.createElement('a');
-      downloadLink.href = uri;
-      downloadLink.setAttribute('download', '');
-      downloadLink.target = 'downloadIframe';
-      downloadLink.click();
-    }
+    downloadFile: (fileLocatiob) => {
+      window.open(fileLocatiob, "_blank");
+
+      // วิธีของเฟส
+      // const uri = `http://localhost:3001/api/lessons/${lessonId}/learning-document`
+      // const downloadLink = document.createElement('a');
+      // downloadLink.href = uri;
+      // downloadLink.setAttribute('download', '');
+      // downloadLink.target = 'downloadIframe';
+      // downloadLink.click();
+    },
   },
   computed: mapState({
     authen: (state) => state.authen,
