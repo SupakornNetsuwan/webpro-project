@@ -28,7 +28,7 @@
         <div>
           <h3>วิชา {{ chosenSubject }}</h3>
           <h5 className="text-blue-primary">
-            ผลลัพธ์ {{ this.posts.length }} รายการ
+            ผลลัพธ์ {{ filteredPosts.length }} รายการ
           </h5>
         </div>
         <div
@@ -110,10 +110,9 @@ export default {
   },
   computed: {
     filteredPosts() {
-      return this.posts.filter(
-        (post) => post.subject_name == this.chosenSubject
-      );
-    },
+
+      return this.posts.filter((post) => post.subject_name == this.chosenSubject && post.post_title.toLowerCase().includes(this.filterPosts.toLowerCase()))
+
   },
 };
 </script>
