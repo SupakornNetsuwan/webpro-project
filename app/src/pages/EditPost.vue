@@ -152,6 +152,7 @@ export default {
 
       try{
         const formData = new FormData();
+
         formData.append("title", this.title);
         formData.append("intro", this.intro);
         formData.append("subjectName", this.chosenSubject);
