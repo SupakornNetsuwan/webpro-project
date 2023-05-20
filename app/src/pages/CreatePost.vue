@@ -20,7 +20,7 @@
           </h4>
           <input type="text" id="post-topic" name="post-topic" className="input w-full box-border xl:max-w-[70%]"
             v-model="title" />
-          <p v-if="title.length < 5" class="text-red-primary mt-2">หัวข้อโพสต์ต้องมีความยาวอย่างน้อย 5 ตัวอักษร</p>
+          <p v-if="!v$.title.minLength.$response" class="text-red-primary mt-2">หัวข้อโพสต์ต้องมีความยาวอย่างน้อย 5 ตัวอักษร</p>
         </div>
         <div>
           <h4 className="text-blue-primary mt-8">
@@ -39,7 +39,7 @@
           <!-- <QuillEditor theme="snow" toolbar="minimal"/> -->
           <textarea name="post-intro" id="post-intro" rows="5" className="w-full box-border resize-none input"
             v-model="intro" />
-          <p v-if="intro.length < 10" class="text-red-primary mt-2">เนื้อหาเกริ่นต้องมีความยาวอย่างน้อย 10 ตัวอักษร</p>
+          <p v-if="!v$.intro.minLength.$response" class="text-red-primary mt-2">เนื้อหาเกริ่นต้องมีความยาวอย่างน้อย 10 ตัวอักษร</p>
         </div>
         <div>
           <h4 className="text-blue-primary mt-8">
