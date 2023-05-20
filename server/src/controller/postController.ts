@@ -167,7 +167,7 @@ export const editPost = async (req: Request, res: Response) => {
             return res.status(400).send("โปรดกรอกข้อมูลให้ครบถ้วน")
         }
 
-        if (title.lenght() < 5 || intro.lenght() < 10) {
+        if (title.length < 5 || intro.length < 10) {
             return res.status(400).send("หัวข้อโพสต์ หรือเนื้อหาเกริ่นสั้นเกินไป")
         }
 
