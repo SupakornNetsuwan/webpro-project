@@ -8,43 +8,28 @@
       </h5>
     </div>
     <div
-      className="relative w-full flex justify-center items-center min-h-[18em] bg-gradient-to-br from-purple-soft to-blue-soft"
-    >
-      <img
-        src="../assets/boy-girl-book.png"
-        alt="boy-girl-book"
-        className="absolute bottom-2 h-[90%] left-12 lg:left-24 opacity-50 lg:opacity-100 pointer-events-none"
-      />
+      className="relative w-full flex justify-center items-center min-h-[18em] bg-gradient-to-br from-purple-soft to-blue-soft">
+      <img src="../assets/boy-girl-book.png" alt="boy-girl-book"
+        className="absolute bottom-2 h-[90%] left-12 lg:left-24 opacity-50 lg:opacity-100 pointer-events-none" />
       <div>
-        <ComboBox
-              :list="subjectList"
-              :chosenListItem="chosenSubject"
-              @changeList="changeList"
-            />
+        <ComboBox :list="subjectList" :chosenListItem="chosenSubject" @changeList="changeList" />
       </div>
     </div>
     <div className="p-4 md:p-8 lg:p-12">
       <div className="flex justify-between items-end">
         <div>
-          <h3>วิชา {{ selectedSubject }}</h3>
+          <h3>วิชา {{ chosenSubject }}</h3>
           <h5 className="text-blue-primary">
             ผลลัพธ์ {{ filteredPosts.length }} รายการ
           </h5>
         </div>
-        <div
-          className="flex relative border border-gray-2 border-solid rounded-md overflow-hidden"
-        >
+        <div className="flex relative border border-gray-2 border-solid rounded-md overflow-hidden">
           <label for="fitlerSubject" className="flex text-gray-3 p-2">
             <MagnifyingGlassIcon class="w-6 h-6 self-center" />
             <div class="w-[1px] bg-gray-2 ml-2" />
           </label>
-          <input
-            type="text"
-            name="fitlerSubject"
-            id="fitlerSubject"
-            v-model="filterPosts"
-            className="pr-3 py-2  outline-none border-none text-[14px] 2xl:text-[16px] font-normal "
-          />
+          <input type="text" name="fitlerSubject" id="fitlerSubject" v-model="filterPosts"
+            className="pr-3 py-2  outline-none border-none text-[14px] 2xl:text-[16px] font-normal " />
         </div>
       </div>
       <div className="w-full h-0.5 bg-gray-2 mt-4" />
@@ -61,7 +46,7 @@ import {
   ChevronUpDownIcon,
 } from "@heroicons/vue/24/outline";
 import PostCard from "../components/PostCard.vue";
-/* --------------------- Mock API --------------------- */
+/* --------------------- API --------------------- */
 import { getPosts, getSubjects } from "../resources/api";
 import ComboBox from "../components/ComboBox.vue";
 
@@ -74,7 +59,7 @@ export default {
     PostCard,
     ComboBox,
   },
-  beforeMount() {},
+  beforeMount() { },
   data() {
     return {
       filterPosts: "", // ส่วนของช่อง Filter โพสต์เท่านั้น
@@ -84,11 +69,11 @@ export default {
       posts: [],
     };
   },
-  async created () {
+  async created() {
     try {
-      getPosts().then(res => {
-        this.posts = res.data
-      })
+      getPosts().then((res) => {
+        this.posts = res.data;
+      });
       const { data } = await getSubjects();
       this.subjectList = data.map((subject) => subject.subject_name);
       this.chosenSubject = this.subjectList[0];
@@ -106,8 +91,10 @@ export default {
   },
   computed: {
     filteredPosts() {
+
       return this.posts.filter((post) => post.subject_name == this.chosenSubject && post.post_title.toLowerCase().includes(this.filterPosts.toLowerCase()))
-    }
-  },
+
+    },
+  }
 };
 </script>

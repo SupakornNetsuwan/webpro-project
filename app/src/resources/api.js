@@ -85,6 +85,16 @@ export const getFollowingPost = async () => {
     return response
 }
 
+export const getFollowersAmount = async () => {
+    const response = await instance.get("/api/posts/followers-amount")
+    return response
+}
+
+export const getFollowersStatistic = async () => {
+    const response = await instance.get("/api/posts/followers-statistic")
+    return response
+}
+
 export const getMyPosts = async () => {
     const response = await instance.get("/api/posts/myposts")
     return response

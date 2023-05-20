@@ -262,7 +262,7 @@ export const deletePost = async (req: Request, res: Response) => {
  * @description ทำการดึง post เฉพาะที่ผู้ใช้ติดตามเอาไว้
  */
 
-export const getFollowingPost = async (req: Request, res: Response) => {
+export const getFollowingPosts = async (req: Request, res: Response) => {
     //select post เฉพาะที่ user ติดตามเอาไว้
     const { email } = res.locals.userDetails
 
@@ -276,6 +276,104 @@ export const getFollowingPost = async (req: Request, res: Response) => {
     })
 
     res.send(followPost)
+}
+
+/**
+ * @route /api/posts/followers-statistic
+ * @method GET
+ * @description ทำการดึงข้อมูลสถิติผู้ติดตามย้อนหลังไป 7 วัน
+ * @response
+ * ```
+ * {
+ *  amount: number,
+ *  roundedDate: date
+ * }[]
+ * ```
+ */
+
+export const getFollowersStatistic = async (req: Request, res: Response) => {
+    const { userDetails: { email, role } } = res.locals;
+
+    let statistic: { amount: bigint, roundedDate: Date }[] = [];
+    try {
+        if (role === "ADMIN") {
+            // ถ้าเป็น Admin
+            statistic = await prisma.$queryRaw`
+                SELECT
+                COUNT(fp.post_id) AS amount,
+                CAST(fp.follow_date AS DATE) AS roundedDate FROM FollowPost fp
+                JOIN Post p ON p.post_id = fp.post_id
+                WHERE fp.follow_date >= DATE(NOW() - INTERVAL 6 DAY)
+                GROUP BY roundedDate
+            `
+        } else {
+            // User ทั่วไป
+            statistic = await prisma.$queryRaw`
+             SELECT
+             COUNT(fp.post_id) AS amount,
+             CAST(fp.follow_date AS DATE) AS roundedDate FROM FollowPost fp
+             JOIN Post p ON p.post_id = fp.post_id
+             WHERE fp.follow_date >= DATE(NOW() - INTERVAL 6 DAY)
+             AND p.author_email = ${email}
+             GROUP BY roundedDate
+            `
+        }
+
+        res.send(statistic.map(record => ({
+            ...record,
+            amount: Number(record.amount)
+        })))
+
+    } catch (err) {
+        console.log(err);
+        if (err instanceof Prisma.PrismaClientKnownRequestError) {
+            switch (err.code) {
+                default:
+                    return res.status(500).send("เกิดข้อผิดพลาดในระบบ")
+            }
+        }
+
+        return res.status(500).send(getErrorMessage(err))
+    }
+}
+/**
+ * @route /api/posts/followers-amount
+ * @method GET
+ * @description ทำการดึงจำนวนผู้ที่ติดตามเราอยู่
+ */
+
+export const getFollowersAmount = async (req: Request, res: Response) => {
+    const { userDetails: { email, role } } = res.locals;
+
+    try {
+        let followersAmount = 0;
+        if (role === "ADMIN") {
+            // ถ้าเป็น Admin
+            followersAmount = await prisma.followPost.count();
+        } else {
+            // User ทั่วไป
+            followersAmount = await prisma.followPost.count({
+                where: {
+                    post: {
+                        author_email: email
+                    }
+                }
+            });
+        }
+
+
+        res.send(String(followersAmount))
+    } catch (err) {
+        console.log(err);
+        if (err instanceof Prisma.PrismaClientKnownRequestError) {
+            switch (err.code) {
+                default:
+                    return res.status(500).send("เกิดข้อผิดพลาดในระบบ")
+            }
+        }
+
+        return res.status(500).send(getErrorMessage(err))
+    }
 }
 
 /**

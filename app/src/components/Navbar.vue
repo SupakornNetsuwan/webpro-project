@@ -71,7 +71,6 @@ export default {
     async signIn({ credential }) {
       login(credential)
         .then((response) => {
-          
           this.$store.commit("setAuthen", response.data.user);
           this.$router.push("/home");
         })

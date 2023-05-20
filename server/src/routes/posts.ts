@@ -4,7 +4,7 @@ import checkJWTMiddleware from "../lib/middlewares/jwt/checkJWTMiddleware";
 import upload from "../lib/middlewares/multerMiddleware";
 
 // From controllers
-import { createPost, getPosts, getPost, deletePost, followPost, getFollowingPost, getMyPosts, getMyPostsAmount, editPost, unFollowPost } from "../controller/postController";
+import { createPost, getPosts, getPost, deletePost, followPost, getFollowersAmount, getFollowingPosts, getFollowersStatistic, getMyPosts, getMyPostsAmount, editPost, unFollowPost } from "../controller/postController";
 
 /**
  * @desciption จัดการเกี่ยวกับ Post
@@ -20,7 +20,13 @@ router.get("/myposts", checkJWTMiddleware, getMyPosts)
 
 router.get("/myposts-amount", checkJWTMiddleware, getMyPostsAmount)
 
-router.get('/following', checkJWTMiddleware, getFollowingPost)
+// การติดตาม
+
+router.get('/followers-amount', checkJWTMiddleware, getFollowersAmount)
+
+router.get('/followers-statistic', checkJWTMiddleware, getFollowersStatistic)
+
+router.get('/following', checkJWTMiddleware, getFollowingPosts)
 
 router.post('/follow/:postId', checkJWTMiddleware, followPost)
 
