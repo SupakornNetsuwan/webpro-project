@@ -77,7 +77,7 @@
 <script>
 import ContentWrapper from "../components/ContentWrapper.vue";
 import { ChevronLeftIcon, PencilSquareIcon } from "@heroicons/vue/24/outline";
-import { getLesson, editLesson, getLearningDocument} from "../resources/api";
+import { getLesson, editLesson, getLearningDocument } from "../resources/api";
 
 export default {
   components: {
@@ -102,11 +102,11 @@ export default {
       console.log(err);
     }
 
-    try{
-      const {data} = await getLearningDocument(lessonId);
-      console.log(data)
-    }catch(err){
-      console.log(err)
+    try {
+      const { data } = await getLearningDocument(lessonId);
+      console.log(data);
+    } catch (err) {
+      console.log(err);
     }
   },
   data() {
@@ -123,7 +123,7 @@ export default {
   mounted() {},
   methods: {
     chooseLearningDocument(e) {
-      this.learningDocument = e.target.files[0]
+      this.learningDocument = e.target.files[0];
     },
     async updateLesson(e) {
       const { id: postId, lessonId } = this.$route.params;

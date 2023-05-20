@@ -22,7 +22,7 @@
       </div>
       <hr class="my-6 text-gray-2" />
       <button
-        @click="downloadFile"
+        @click="downloadFile(lesson)"
         v-if="lesson.file_location"
         class="w-full space-x-2 flex items-center justify-center bg-white hover:bg-blue-soft text-blue-primary border-blue-primary mb-6 transition-all duration-150"
       >
@@ -77,8 +77,8 @@ export default {
     }
   },
   methods: {
-    downloadFile: () => {
-      console.log("download file");
+    downloadFile: (lesson) => {
+      window.open(lesson.file_location)
     },
   },
   computed: mapState({
