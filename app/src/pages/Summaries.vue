@@ -17,16 +17,16 @@
       />
       <div>
         <ComboBox
-              :list="subjectList"
-              :chosenListItem="chosenSubject"
-              @changeList="changeList"
-            />
+          :list="subjectList"
+          :chosenListItem="chosenSubject"
+          @changeList="changeList"
+        />
       </div>
     </div>
     <div className="p-4 md:p-8 lg:p-12">
       <div className="flex justify-between items-end">
         <div>
-          <h3>วิชา {{ selectedSubject }}</h3>
+          <h3>วิชา {{ chosenSubject }}</h3>
           <h5 className="text-blue-primary">
             ผลลัพธ์ {{ this.posts.length }} รายการ
           </h5>
@@ -49,7 +49,11 @@
       </div>
       <div className="w-full h-0.5 bg-gray-2 mt-4" />
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-4 mt-8">
-        <PostCard v-for="post in filteredPosts" :key="post.post_id" :postDetail="post" />
+        <PostCard
+          v-for="post in filteredPosts"
+          :key="post.post_id"
+          :postDetail="post"
+        />
       </div>
     </div>
   </ContentWrapper>
@@ -61,7 +65,7 @@ import {
   ChevronUpDownIcon,
 } from "@heroicons/vue/24/outline";
 import PostCard from "../components/PostCard.vue";
-/* --------------------- Mock API --------------------- */
+/* --------------------- API --------------------- */
 import { getPosts, getSubjects } from "../resources/api";
 import ComboBox from "../components/ComboBox.vue";
 
@@ -84,11 +88,11 @@ export default {
       posts: [],
     };
   },
-  async created () {
+  async created() {
     try {
-      getPosts().then(res => {
-        this.posts = res.data
-      })
+      getPosts().then((res) => {
+        this.posts = res.data;
+      });
       const { data } = await getSubjects();
       this.subjectList = data.map((subject) => subject.subject_name);
       this.chosenSubject = this.subjectList[0];
@@ -106,8 +110,10 @@ export default {
   },
   computed: {
     filteredPosts() {
-      return this.posts.filter((post) => post.subject_name == this.chosenSubject)
-    }
+      return this.posts.filter(
+        (post) => post.subject_name == this.chosenSubject
+      );
+    },
   },
 };
 </script>

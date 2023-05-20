@@ -13,6 +13,7 @@ import jwt_decode from "jwt-decode"
  */
 const checkJWTMiddleware = (req: Request, res: Response, next: NextFunction) => {
     const { jwt_token, refresh_token }: { jwt_token: string, refresh_token: string } = req.cookies
+    
 
     if (!jwt_token) return res.status(403).send("No token provided.")
 
@@ -32,13 +33,13 @@ const checkJWTMiddleware = (req: Request, res: Response, next: NextFunction) => 
                 const { jwt_token, new_refresh_token } = await refreshToken(refresh_token);
 
                 // เปลี่ยน Access Token , Refresh Token เป็นอันใหม่
-                res.cookie('refresh_token', new_refresh_token, { httpOnly: true, secure: true });
-                res.cookie('jwt_token', jwt_token, { httpOnly: true, secure: true });
+                res.cookie('refresh_token', new_refresh_token, { httpOnly: false, secure: false });
+                res.cookie('jwt_token', jwt_token, { httpOnly: false, secure: false });
                 // ทำการอ่านข้อมูลเพื่อเก็บใน res.locals.userDetails
                 const decoded = jwt_decode(jwt_token.split(" ")[1]);
                 res.locals.userDetails = decoded;
 
-                console.log("Refreshed a token 🐕")
+                console.log("Refreshed a token 🐕", "เวลา :",new Date().toLocaleTimeString("th"))
                 return next();
             } catch (err) {
                 // ถ้่าไม่สามารถ Refresh Token ได้ก็แสดงว่า invalid refresh_token

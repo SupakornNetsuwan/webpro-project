@@ -75,7 +75,7 @@ export default {
   },
   watch: {
     list(e) {
-      console.log(e);
+      // console.log(e);
     },
   },
   computed: {
