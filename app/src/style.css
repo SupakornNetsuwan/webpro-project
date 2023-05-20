@@ -87,6 +87,13 @@
     @apply bg-blue-soft p-4 font-mono text-blue-primary rounded;
   }
 
+  .is-circle{
+    @apply bg-gray-2/50 !important
+  }
+  .is-circle:hover{
+    @apply bg-gray-2 !important
+  }
+
   .v-html-template p:has(img) {
     @apply md:p-2 bg-slate-50 rounded;
   }
