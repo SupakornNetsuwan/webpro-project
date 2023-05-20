@@ -73,7 +73,12 @@ export default {
   },
   methods: {
     downloadFile: (lessonId) => {
-      getLearningDocument(lessonId)
+      const uri = `http://localhost:3001/api/lessons/${lessonId}/learning-document`
+      const downloadLink = document.createElement('a');
+      downloadLink.href = uri;
+      downloadLink.setAttribute('download', '');
+      downloadLink.target = 'downloadIframe';
+      downloadLink.click();
     }
   },
   computed: mapState({
