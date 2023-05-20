@@ -1,6 +1,7 @@
 <template>
   <div
-    class="flex justify-between border border-solid border-gray-3 p-4 px-5 rounded-lg bg-white"
+    class="flex justify-between border border-solid border-gray-3 p-4 px-5 rounded-lg bg-white :hover cursor-pointer"
+    @click="route"
   >
     <div>
       <h3 class="text-blue-primary">
@@ -12,7 +13,6 @@
     </div>
     <div class="m-2">
       <button
-        @click="route"
         class="border-none flex justify-center items-center bg-blue-soft hover:bg-[#E5EEF8] h-full aspect-square"
       >
         <ChevronRightIcon class="text-blue-primary w-6 h-6" />
