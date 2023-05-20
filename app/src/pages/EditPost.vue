@@ -26,6 +26,7 @@
             className="input w-full md:max-w-[70%]"
             v-model="title"
           />
+          <p v-if="title.length < 5" class="text-red-primary mt-2">หัวข้อโพสต์ต้องมีความยาวอย่างน้อย 5 ตัวอักษร</p>
         </div>
         <div>
           <h4 className="text-blue-primary mt-8">
@@ -53,6 +54,7 @@
             className="w-full resize-none input"
             v-model="intro"
           />
+          <p v-if="intro.length < 10" class="text-red-primary mt-2">เนื้อหาเกริ่นต้องมีความยาวอย่างน้อย 10 ตัวอักษร</p>
         </div>
         <div>
           <h4 className="text-blue-primary mt-8">
@@ -70,8 +72,8 @@
 
           <div class="h-[1px] bg-gray-2 my-8" />
           <button
-            @click="editPost"
-            className="flex items-center space-x-1 px-4 py-2 transition-all duration-300 bg-blue-primary border-blue-primary"
+            @click="editPost" :disabled="v$.$invalid"
+            className="flex items-center space-x-1 px-4 py-2 transition-all duration-300 bg-blue-primary border-blue-primary disabled:bg-blue-primary/50 border-blue-primary/5"
           >
             <PencilSquareIcon class="w-6 h-6 text-white" />
             <h5 class="text-white">แก้ไขโพสต์</h5>
@@ -88,8 +90,13 @@ import { mapState } from "vuex";
 import postsApi from "../resources/postsApi.json";
 import { getPost, getSubjects, editPost } from '../resources/api';
 import ComboBox from "../components/ComboBox.vue";
+import { useVuelidate } from '@vuelidate/core'
+import { required, minLength } from "@vuelidate/validators"
 
 export default {
+  setup () {
+    return { v$: useVuelidate() }
+  },
   components: {
     ContentWrapper,
     ChevronLeftIcon,
@@ -113,9 +120,9 @@ export default {
   data() {
     return {
       post: null,
-      title: null,
+      title: '',
       subject: null,
-      intro: null,
+      intro: '',
       img: null,
       subjectList: [],
       chosenSubject: null,
@@ -177,6 +184,13 @@ export default {
       this.img = files[0];
     },
   },
+  validations() {
+    return {
+      title: { required, minLength: minLength(5) },
+      intro: { required, minLength: minLength(10)},
+      chosenSubject: { required },
+    }
+  }
 };
 </script>
   

@@ -26,6 +26,7 @@
             className="input w-full md:max-w-[70%]"
             v-model="subjectName"
           />
+          <p v-if="subjectName.length > 10" class="text-red-primary mt-2">ชื่อวิชาต้องมีความยาวไม่เกิน 10 ตัวอักษร</p>
         </div>
         <div>
           <h4 className="text-blue-primary mt-8">
@@ -57,8 +58,8 @@
         <div>
           <div class="h-[1px] bg-gray-2 my-8" />
           <button
-            @click="createSubject"
-            className="flex items-center space-x-1 px-4 py-2 transition-all duration-300 bg-blue-primary border-blue-primary"
+            @click="createSubject" :disabled="v$.$invalid"
+            className="flex items-center space-x-1 px-4 py-2 transition-all duration-300 bg-blue-primary border-blue-primary disabled:bg-blue-primary/50 border-blue-primary/5"
           >
             <PlusIcon class="w-6 h-6 text-white" />
             <h5 class="text-white">เพิ่มวิชา</h5>
@@ -74,8 +75,15 @@ import { ChevronLeftIcon, PlusIcon } from "@heroicons/vue/24/outline";
 import { mapState } from "vuex";
 import ComboBox from "../components/ComboBox.vue";
 import { createSubject } from "../resources/api";
+import { useVuelidate } from '@vuelidate/core'
+import { required, maxLength } from "@vuelidate/validators"
 
 export default {
+  setup () {
+    const v$ = useVuelidate();
+
+    return { v$ };
+  },
   components: {
     ContentWrapper,
     ChevronLeftIcon,
@@ -142,5 +150,12 @@ export default {
       return state.authen;
     },
   }),
+  validations() {
+    return {
+      subjectName: { required, maxLength: maxLength(10) },
+      instructorName: { required },
+      description: { required },
+    }
+  }
 };
 </script>

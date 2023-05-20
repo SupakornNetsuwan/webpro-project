@@ -26,10 +26,25 @@ export const createPost = async (req: Request, res: Response) => {
         const { title, intro, subjectName } = req.body
         const { email: authorEmail } = res.locals.userDetails
 
-        if (!title || !intro || !authorEmail || !subjectName) {
+        if (!title || !intro || !authorEmail) {
             // ตรวจสอบว่าครบมั้ย
-            return res.status(400).send("โปรดกรอกข้อมูให้ครบถ้วน")
+            return res.status(400).send("โปรดกรอกข้อมูลให้ครบถ้วน")
         }
+
+        if (title.lenght < 5 || intro.lenght < 10){
+            return res.status(400).send("หัวข้อโพสต์ หรือเนื้อหาเกริ่นสั้นเกินไป")
+        }
+
+        //เช็คว่า subjectName เป็นวิชาที่มีอยู่ใน database มั้ย
+        const hasSubject = await prisma.subject.findUnique({
+            where: {
+                subject_name: subjectName
+            }
+        })
+        if (!hasSubject){
+            return res.status(400).send("ไม่พบวิชาที่เลือกในฐานข้อมูล")
+        }
+
 
         // file เป็น optional ดังนั้นต้องมีการตรวจสอบว่ามีไฟล์ไหม
         const { filename, path } = req.file || {}
@@ -48,8 +63,6 @@ export const createPost = async (req: Request, res: Response) => {
     } catch (err) {
         if (err instanceof Prisma.PrismaClientKnownRequestError) {
             switch (err.code) {
-                case "P2003":
-                    return res.status(400).send("ไม่พบวิชาที่ต้องการ")
                 default:
                     return res.status(500).send("เกิดข้อผิดพลาดในระบบ")
             }
@@ -148,9 +161,23 @@ export const editPost = async (req: Request, res: Response) => {
             }
         }
 
-        if (!title || !intro || !userEmail || !subjectName) {
+        if (!title || !intro || !userEmail) {
             // ตรวจสอบว่าครบมั้ย
-            return res.status(400).send("โปรดกรอกข้อมูให้ครบถ้วน")
+            return res.status(400).send("โปรดกรอกข้อมูลให้ครบถ้วน")
+        }
+
+        if (title.lenght() < 5 || intro.lenght() < 10){
+            return res.status(400).send("หัวข้อโพสต์ หรือเนื้อหาเกริ่นสั้นเกินไป")
+        }
+
+        //เช็คว่า subjectName เป็นวิชาที่มีอยู่ใน database มั้ย
+        const hasSubject = await prisma.subject.findUnique({
+            where: {
+                subject_name: subjectName
+            }
+        })
+        if (!hasSubject){
+            return res.status(400).send("ไม่พบวิชาที่เลือกในฐานข้อมูล")
         }
 
         await prisma.post.update({

@@ -43,6 +43,7 @@ export const createSubject = async (req: Request, res: Response, next: NextFunct
         }
 
         if (!subject_name || !description || !instructor_name) return res.status(400).send({ message: "โปรดกรอกข้อมูลให้ครบถ้วน" })
+        if (subject_name.lenght > 10) return res.status(400).send("ชื่อวิชายาวเกิน 10 ตัวอักษร")
 
         const subject = await prisma.subject.create({
             data: {
