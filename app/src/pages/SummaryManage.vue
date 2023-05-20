@@ -3,7 +3,7 @@
     <ContentWrapper>
       <div>
         <p
-          v-if="(authen.role === 'ADMIN')"
+          v-if="authen.role === 'ADMIN'"
           class="bg-blue-primary inline-block rounded-full px-4 text-white text-sm"
         >
           Admin
@@ -41,8 +41,10 @@
           </div>
         </div>
         <div
-          v-if="(authen.role === 'ADMIN')"
-          @click="$router.push($router.currentRoute.value.path + '/create-subject')"
+          v-if="authen.role === 'ADMIN'"
+          @click="
+            $router.push($router.currentRoute.value.path + '/create-subject')
+          "
           className="flex space-x-2 p-6 bg-blue-soft rounded-2xl cursor-pointer border-blue-soft hover:border-blue-primary border-solid border-2 transition-all duration-150"
         >
           <PlusCircleIcon class="w-10 h-10 text-blue-primary mt-1" />
@@ -72,7 +74,11 @@
         </div>
       </div>
       <h3 className="text-black mt-16 mb-8">
-        {{ authen.role === "ADMIN" ? "สถิติจำนวนผู้ที่ติดตามโพสต์ที่เกิดขึ้น" : "สถิติจำนวนผู้ที่ติดตามโพสต์ของคุณ"}}
+        {{
+          authen.role === "ADMIN"
+            ? "สถิติจำนวนผู้ที่ติดตามโพสต์ที่เกิดขึ้น"
+            : "สถิติจำนวนผู้ที่ติดตามโพสต์ของคุณ"
+        }}
       </h3>
       <line-chart :data="chartData"></line-chart>
     </ContentWrapper>
@@ -82,9 +88,20 @@
 <script>
 import Navbar from "../components/Navbar.vue";
 import ContentWrapper from "../components/ContentWrapper.vue";
-import { DocumentPlusIcon, Cog6ToothIcon, PlusCircleIcon } from "@heroicons/vue/24/outline";
+import {
+  DocumentPlusIcon,
+  Cog6ToothIcon,
+  PlusCircleIcon,
+} from "@heroicons/vue/24/outline";
 import { mapState } from "vuex";
-import { getMyPostsAmount, getMyLessonsAmount } from "../resources/api";
+import {
+  getMyPostsAmount,
+  getMyLessonsAmount,
+  getFollowersAmount,
+  getFollowersStatistic,
+} from "../resources/api";
+// Functions
+import formatFollowersStatistic from "../lib/functions/formatFollowersStatistic";
 // Atropos
 import Atropos from "atropos/vue";
 import "atropos/css/min";
@@ -122,48 +139,47 @@ export default {
         },
       ],
       moment: moment(),
+      chartData:[]
     };
   },
   methods: {},
   async created() {
-    getMyPostsAmount().then((res) => {
-      this.statistics[0].amount = res.data;
+    if (this.authen.role === "ADMIN") {
+      this.statistics[0].title = "จำนวนโพสต์ทั้งหมด";
+      this.statistics[0].description = "โพสต์จากทั้งระบบ";
+      this.statistics[1].title = "จำนวนบทเรียนทั้งหมด";
+      this.statistics[1].description = "คำนวณจากทุกโพสต์ของระบบ";
+      this.statistics[2].title = "จำนวนผู้ติดตามที่มีทั้งหมด";
+      this.statistics[2].description = "คำนวณจากทั้งระบบ";
+    }
 
-      if (this.authen.role === "ADMIN") {
-        this.statistics[0].title = "จำนวนโพสต์ทั้งหมด";
-        this.statistics[0].description = "โพสต์จากทั้งระบบ";
-        this.statistics[1].title = "จำนวนบทเรียนทั้งหมด";
-        this.statistics[1].description = "คำนวณจากทุกโพสต์ของระบบ";
-        this.statistics[2].title = "จำนวนผู้ติดตามที่มีทั้งหมด";
-        this.statistics[2].description = "คำนวณจากทั้งระบบ";
+    Promise.all([
+      getMyPostsAmount(),
+      getMyLessonsAmount(),
+      getFollowersAmount(),
+      getFollowersStatistic(),
+    ]).then(
+      ([
+        postsAmountRes,
+        lessonsAmountRes,
+        followersAmountRes,
+        followersStatistic,
+      ]) => {
+        this.statistics[0].amount = postsAmountRes.data;
+        this.statistics[1].amount = lessonsAmountRes.data;
+        this.statistics[2].amount = followersAmountRes.data;
+        const formatResult = formatFollowersStatistic(followersStatistic.data);
+        this.chartData = formatResult
       }
-    });
-
-    getMyLessonsAmount().then((res) => {
-      this.statistics[1].amount = res.data;
-    });
+    );
   },
-  mounted() {
-    
-  },
+  mounted() {},
   computed: mapState({
     authen: (state) => state.authen,
     // to access local state with `this`, a normal function must be used
     getAuthen(state) {
       return state.authen;
-    },
-    chartData() {
-      return [
-        [this.moment.subtract(-7, "days").format("DD/MM/YYYY"), 24],
-        [this.moment.subtract(-6, "days").format("DD/MM/YYYY"), 12],
-        [this.moment.subtract(-5, "days").format("DD/MM/YYYY"), 44],
-        [this.moment.subtract(-4, "days").format("DD/MM/YYYY"), 24],
-        [this.moment.subtract(-3, "days").format("DD/MM/YYYY"), 74],
-        [this.moment.subtract(-2, "days").format("DD/MM/YYYY"), 90],
-        [this.moment.subtract(-1, "days").format("DD/MM/YYYY"), 34],
-        [this.moment.subtract(0, "days").format("DD/MM/YYYY"), 22],
-      ];
-    },
+    }
   }),
 };
 </script>

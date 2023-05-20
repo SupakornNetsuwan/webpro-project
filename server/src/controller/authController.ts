@@ -28,8 +28,8 @@ export const logout = async (req: Request, res: Response) => {
     })
 
     //Clear cookie 
-    res.cookie('refresh_token', null, { httpOnly: true, secure: true });
-    res.cookie('jwt_token', null, { httpOnly: true, secure: true });
+    res.cookie('refresh_token', null, { httpOnly: false, secure: false });
+    res.cookie('jwt_token', null, { httpOnly: false, secure: false });
 
     res.send({
         status: 200,
@@ -68,8 +68,8 @@ export const login = async (req: Request, res: Response) => {
         }
 
         //set header เก็บ token ลงไปใน Cookie
-        res.cookie('refresh_token', refresh_token, { httpOnly: true, secure:true });
-        res.cookie('jwt_token', jwt_token, { httpOnly: true, secure:true });
+        res.cookie('refresh_token', refresh_token, { httpOnly: false, secure: false });
+        res.cookie('jwt_token', jwt_token, { httpOnly: false, secure: false });
 
         res.json({
             status: 200,
