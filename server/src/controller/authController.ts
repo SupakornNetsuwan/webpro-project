@@ -56,7 +56,7 @@ export const login = async (req: Request, res: Response) => {
         if (user === null) {
             // สร้างผู้ใช้ใหม่
             newUser = true;
-            user = await createUser({ email, picture, name, given_name, family_name }, { getRefreshToken: false });
+            user = await createUser({ email, picture, name: name || "-", given_name: email || "-", family_name: family_name || "-" }, { getRefreshToken: false });
         }
 
         const jwt_token = createAccessToken<User>(user) // create token from newUser data
