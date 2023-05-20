@@ -4,6 +4,7 @@ import prisma from "../lib/connection/prisma"
 import checkJWTMiddleware from "../lib/middlewares/jwt/checkJWTMiddleware";
 import upload from "../lib/middlewares/multerMiddleware";
 import getErrorMessage from "../lib/functions/getErrorMessage";
+import path from "path";
 
 /**
  * @route /api/lessons/:postId
@@ -121,6 +122,8 @@ export const createLesson = async (req: Request, res: Response) => {
     const { title, intro, content } = req.body
 
     if (!title || !intro || !content) return res.status(400).send("กรุณากรอกข้อมูลให้ครบถ้วน")
+    if (content.length > 1000000) return res.status(400).send("ภาพใน content มีขนาดใหญ่เกินไป")
+    if (title.length < 5) return res.status(400).send("หัวข้อบทเรียนต้องมีความยาวอย่างน้อย 5 ตัวอักษร")
 
     // file เป็น optional ดังนั้นต้องมีการตรวจสอบว่ามีไฟล์ไหม
     const { filename, path } = req.file || {}
@@ -154,7 +157,7 @@ export const createLesson = async (req: Request, res: Response) => {
 }
 
 /**
- * @route /api/lessons/:postId
+ * @route /api/lessons/:postId/:lessonId
  * @param postId รหัสของ post ที่ต้องการแก้ข lesson
  * @param lessonId รหัสของ lesson ที่จะถูกแก้ไข
  * @method PUT
@@ -172,10 +175,28 @@ export const createLesson = async (req: Request, res: Response) => {
 
 export const editLesson = async (req: Request, res: Response) => {
     const { lessonId, postId } = req.params;
-
     const { title, intro, content } = req.body
+    const { email: userEmail, role } = res.locals.userDetails
+
+    if (role != "ADMIN") {
+        //ตรวจสอบว่าเป็นเจ้าของโพสต์มั้ย โดยเช็คจากข้อมูลผู้เขียนของโพสต์นั้น ยกเว้นแอดมิน
+        const postAuthor = await prisma.post.findUnique({
+            where: {
+                post_id: postId,
+            },
+            select: {
+                author_email: true
+            }
+        })
+
+        if (userEmail != postAuthor?.author_email) {
+            return res.status(403).send("คุณไม่ใช่เจ้าของโพสต์")
+        }
+    }
 
     if (!title || !intro || !content) return res.status(400).send("กรุณากรอกข้อมูลให้ครบถ้วน")
+    if (content.length > 1000000) return res.status(400).send("ภาพใน content มีขนาดใหญ่เกินไป")
+    if (title.length < 5) return res.status(400).send("หัวข้อบทเรียนต้องมีความยาวอย่างน้อย 5 ตัวอักษร")
 
     // file เป็น optional ดังนั้นต้องมีการตรวจสอบว่ามีไฟล์ไหม
     const { filename, path } = req.file || {}
@@ -209,7 +230,16 @@ export const editLesson = async (req: Request, res: Response) => {
     }
 }
 
+/**
+ * @route /api/lessons/:postId/:lessonId
+ * @param postId รหัสของ post ของ lesson
+ * @param lessonId รหัสของ lesson ต้องการลบ
+ * @method DELETE
+ * @description ทำการลบ lesson
+ */
+
 export const deleteLesson = async (req: Request, res: Response) => {
+
     const { userDetails: { email, role } } = res.locals
     const { lessonId, postId } = req.params
 
@@ -247,15 +277,48 @@ export const deleteLesson = async (req: Request, res: Response) => {
     }
 
     return res.status(403).send("คุณไม่มีสิทธิ์ในการลบบทเรียนนี้")
+
 }
 
 /**
- * @route /api/:lessonId/learning-document
- * @param lessonId รหัสของบทเรียนโหลดเอกสาร
- * @method POST
+ * @route /api/lessons/:lessonId/learning-document
+ * @param lessonId รหัสของบทเรียนที่ต้องการโหลดเอกสาร
+ * @method GET
  * @description ทำการดาวน์โหลดเอกสาร learning document
  * */
 
 export const getLearningDocument = async (req: Request, res: Response) => {
-    res.download("../public/uploads/learningDocument-1683990794168.pdf")
+
+    try {
+    const {lessonId} = req.params
+
+    const lesson = await prisma.lesson.findUnique({
+        where: {
+            lesson_id: lessonId
+        }
+    })
+
+    if (!lesson) {
+        return res.status(404).send("ไม่พบบทเรียนที่ต้องการโหลดเอกสาร")
+    }
+
+    if (!lesson?.file_location){
+        return res.status(400).send("บทเรียนนี้ไม่มีเอกสาร")
+    }
+
+    const downloadPath = "../server/src/public" + lesson?.file_location?.substr(21)
+
+    return res.download(downloadPath)
+
+    }catch(err){
+        if (err instanceof Prisma.PrismaClientKnownRequestError) {
+            switch (err.code) {
+                default:
+                    return res.status(500).send("เกิดข้อผิดพลาดในระบบ")
+            }
+        }
+
+        return res.status(500).send(getErrorMessage(err))
+    }
+
 }

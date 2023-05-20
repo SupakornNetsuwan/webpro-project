@@ -22,6 +22,9 @@
             v-model="title"
             className="input w-full box-border xl:max-w-[70%]"
           />
+          <p v-if="!v$.title.minLength.$response" class="text-red-primary mt-2">
+            หัวข้อบทเรียนต้องมีความยาวอย่างน้อย 5 ตัวอักษร
+          </p>
         </div>
         <div>
           <h4 className="text-blue-primary mt-8">
@@ -45,6 +48,9 @@
             name="lesson-content"
           >
           </QuillEditor>
+          <p v-if="!v$.content.maxLength.$response" class="text-red-primary mt-2">
+            ภาพมีขนาดใหญ่เกินไป
+          </p>
           <!-- <textarea
               name="post-intro"
               id="post-intro"
@@ -54,7 +60,7 @@
         </div>
         <div>
           <h4 className="text-blue-primary mt-8">
-            เอกสารประกอบ<span className="text-red-primary">*</span>
+            เอกสารประกอบ
           </h4>
           <p className="text-gray-3 w-full">เลือกเอกสารสำหรับบทเรียนของคุณ</p>
 
@@ -68,8 +74,8 @@
 
           <div class="h-[1px] bg-gray-2 my-8" />
           <button
-            @click="createNewLesson"
-            className="flex items-center space-x-1 px-4 py-2 transition-all duration-300 bg-blue-primary border-blue-primary"
+            @click="createNewLesson" :disabled="v$.$invalid"
+            className="flex items-center space-x-1 px-4 py-2 transition-all duration-300 bg-blue-primary border-blue-primary disabled:bg-blue-primary/50 border-blue-primary/5"
           >
             <PlusIcon class="w-6 h-6 text-white" />
             <h5 class="text-white">สร้างบทเรียน</h5>
@@ -86,10 +92,17 @@ import { mapState } from "vuex";
 import { Quill } from "@vueup/vue-quill";
 import markdownToolbar from "quill-markdown-toolbar";
 import { createLesson } from "../resources/api";
+import { useVuelidate } from "@vuelidate/core";
+import { required, minLength, maxLength } from "@vuelidate/validators";
 
 Quill.register("modules/quill-markdown-toolbar", markdownToolbar);
 
 export default {
+  setup () {
+    const v$ = useVuelidate();
+
+    return { v$ };
+  },
   components: {
     ContentWrapper,
     ChevronLeftIcon,
@@ -149,5 +162,12 @@ export default {
       }
     },
   },
+  validations () {
+    return {
+      title: {required, minLength: minLength(5)},
+      intro: {required},
+      content: { required, maxLength: maxLength(1000000)}
+    }
+  }
 };
 </script>

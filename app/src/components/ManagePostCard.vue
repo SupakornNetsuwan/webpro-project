@@ -178,7 +178,9 @@ export default {
     },
     async deleteLesson(lesson_id) {
       try {
+
         const response = await deleteLesson(this.post.post_id, lesson_id);
+
         console.log(response.data);
 
         this.$emit("removeLesson", lesson_id);
