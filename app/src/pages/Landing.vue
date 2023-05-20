@@ -117,7 +117,6 @@ export default {
     return {};
   },
   methods: {},
-  beforeMount() {},
   computed: mapState({
     authen: (state) => state.authen,
     // to access local state with `this`, a normal function must be used
