@@ -56,8 +56,8 @@
   }
 
   @layer components {
-    .input{
-      @apply outline-none p-2 px-3 bg-gray-50/50 rounded mt-2 text-lg text-black border border-gray-3 border-solid ;
+    .input {
+      @apply outline-none p-2 px-3 bg-gray-50/50 rounded mt-2 text-lg text-black border border-gray-3 border-solid;
     }
 
     .current-active-route {
@@ -82,8 +82,16 @@
   }
 }
 
-@layer utilities{
-  pre{
+@layer utilities {
+  pre {
     @apply bg-blue-soft p-4 font-mono text-blue-primary rounded;
+  }
+
+  .v-html-template p:has(img) {
+    @apply md:p-2 bg-slate-50 rounded;
+  }
+
+  .v-html-template img {
+    @apply w-full lg:w-2/3 mx-auto block;
   }
 }
