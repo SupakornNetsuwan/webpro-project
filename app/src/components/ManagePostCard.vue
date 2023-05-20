@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div  class="w-full rounded-xl border border-solid border-gray-2">
+    <div class="w-full rounded-xl border border-solid border-gray-2">
       <div class="flex flex-col 2xl:flex-row justify-between m-5 ml-10">
         <div class="flex">
           <img
@@ -148,7 +148,6 @@ export default {
   created() {},
   setup() {},
   methods: {
-
     getImageFromUrl,
     handleImageNotFound,
     openModal(txt) {
@@ -179,11 +178,10 @@ export default {
     },
     async deleteLesson(lesson_id) {
       try {
-        const response = await deleteLesson(lesson_id);
+        const response = await deleteLesson(this.post.post_id, lesson_id);
         console.log(response.data);
 
         this.$emit("removeLesson", lesson_id);
-
         this.$store.commit("setIsModalOpen", {
           isModalOpen: true,
           content: response.data,

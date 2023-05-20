@@ -29,7 +29,7 @@
         <CloudArrowDownIcon class="h-6 text-blue-primary" />
         <h4>ดาวน์โหลดเอกสาร</h4>
       </button>
-      <div v-html="lesson.lesson_content"></div>
+      <div class="html-template" v-html="lesson.lesson_content"></div>
     </content-wrapper>
   </div>
 </template>

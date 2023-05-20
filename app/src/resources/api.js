@@ -125,8 +125,8 @@ export const editLesson = async (payload, postId, lessonId) => {
     return response
 }
 
-export const deleteLesson = async (lessonId) => {
-    const response = await instance.delete(`/api/lessons/${lessonId}`)
+export const deleteLesson = async (postId, lessonId) => {
+    const response = await instance.delete(`/api/lessons/${postId}/${lessonId}`)
     return response
 }
 
