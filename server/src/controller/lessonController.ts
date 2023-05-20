@@ -239,46 +239,45 @@ export const editLesson = async (req: Request, res: Response) => {
  */
 
 export const deleteLesson = async (req: Request, res: Response) => {
-    try {
-        const { postId, lessonId } = req.params
-        const { email: userEmail, role } = res.locals.userDetails
 
-        if (role != "ADMIN") {
-            //ตรวจสอบว่าเป็นเจ้าของโพสต์มั้ย โดยเช็คจากข้อมูลผู้เขียนของโพสต์นั้น ยกเว้นแอดมิน
-            const postAuthor = await prisma.post.findUnique({
-                where: {
-                    post_id: postId,
-                },
+    const { userDetails: { email, role } } = res.locals
+    const { lessonId, postId } = req.params
+
+    // ดึงข้อมูลอีเมลเข้าของของโพสต์ที่มีบทเรียนนี้อยู่ว่าตรงกันมั้ย
+    const postOfLesson = await prisma.lesson.findFirst({
+        where: {
+            lesson_id: lessonId,
+        },
+        select: {
+            post: {
                 select: {
                     author_email: true
                 }
-            })
-
-            if (userEmail != postAuthor?.author_email) {
-                return res.status(403).send("คุณไม่ใช่เจ้าของโพสต์")
             }
         }
+    })
 
-        await prisma.lesson.delete({
-            where: {
-                lesson_id: lessonId
+
+    if (role === "ADMIN" || postOfLesson?.post.author_email === email) {
+        try {
+            await prisma.lesson.delete({where: { lesson_id: lessonId }})
+
+            return res.send("ลบบทเรียนสำร็จ")
+        } catch (err) {
+            if (err instanceof Prisma.PrismaClientKnownRequestError) {
+                switch (err.code) {
+                    default:
+                        console.log(err)
+                        return res.status(500).send("เกิดข้อผิดพลาดในระบบ")
+                }
             }
-        })
 
-        res.send("ลบบทเรียนสำเร็จ")
-
-    } catch (err) {
-        if (err instanceof Prisma.PrismaClientKnownRequestError) {
-            switch (err.code) {
-                case "P2025":
-                    return res.status(400).send("ไม่พบบทเรียนที่ต้องการลบ")
-                default:
-                    return res.status(500).send("เกิดข้อผิดพลาดในระบบ")
-            }
+            return res.status(500).send(getErrorMessage(err))
         }
-
-        return res.status(500).send(getErrorMessage(err))
     }
+
+    return res.status(403).send("คุณไม่มีสิทธิ์ในการลบบทเรียนนี้")
+
 }
 
 /**
@@ -289,6 +288,7 @@ export const deleteLesson = async (req: Request, res: Response) => {
  * */
 
 export const getLearningDocument = async (req: Request, res: Response) => {
+
     try {
     const {lessonId} = req.params
 
@@ -320,4 +320,5 @@ export const getLearningDocument = async (req: Request, res: Response) => {
 
         return res.status(500).send(getErrorMessage(err))
     }
+
 }

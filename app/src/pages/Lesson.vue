@@ -24,7 +24,7 @@
         <CloudArrowDownIcon class="h-6 text-blue-primary" />
         <h4>ดาวน์โหลดเอกสาร</h4>
       </button>
-      <div v-html="lesson.lesson_content"></div>
+      <div class="html-template" v-html="lesson.lesson_content"></div>
     </content-wrapper>
   </div>
 </template>
@@ -33,9 +33,10 @@ import { mapState } from "vuex";
 import ContentWrapper from "../components/ContentWrapper.vue";
 import { ChevronLeftIcon } from "@heroicons/vue/24/outline";
 import { CloudArrowDownIcon } from "@heroicons/vue/24/outline";
-/* --------------------- Mock API --------------------- */
-import postsApi from "../resources/postsApi.json";
-import { getLearningDocument, getLesson, getPost } from "../resources/api";
+
+/* --------------------- API --------------------- */
+import { getLesson, getPost} from "../resources/api";
+
 
 export default {
   name: "Lesson",
