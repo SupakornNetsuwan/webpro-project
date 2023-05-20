@@ -31,7 +31,7 @@ export const createPost = async (req: Request, res: Response) => {
             return res.status(400).send("โปรดกรอกข้อมูลให้ครบถ้วน")
         }
 
-        if (title.lenght < 5 || intro.lenght < 10){
+        if (title.length < 5 || intro.length < 10) {
             return res.status(400).send("หัวข้อโพสต์ หรือเนื้อหาเกริ่นสั้นเกินไป")
         }
 
@@ -41,7 +41,7 @@ export const createPost = async (req: Request, res: Response) => {
                 subject_name: subjectName
             }
         })
-        if (!hasSubject){
+        if (!hasSubject) {
             return res.status(400).send("ไม่พบวิชาที่เลือกในฐานข้อมูล")
         }
 
@@ -136,6 +136,7 @@ export const getPost = async (req: Request, res: Response) => {
  */
 
 export const editPost = async (req: Request, res: Response) => {
+
     try {
         const { postId } = req.params
         const { title, intro, subjectName } = req.body
@@ -166,7 +167,7 @@ export const editPost = async (req: Request, res: Response) => {
             return res.status(400).send("โปรดกรอกข้อมูลให้ครบถ้วน")
         }
 
-        if (title.lenght() < 5 || intro.lenght() < 10){
+        if (title.length < 5 || intro.length < 10) {
             return res.status(400).send("หัวข้อโพสต์ หรือเนื้อหาเกริ่นสั้นเกินไป")
         }
 
@@ -176,7 +177,7 @@ export const editPost = async (req: Request, res: Response) => {
                 subject_name: subjectName
             }
         })
-        if (!hasSubject){
+        if (!hasSubject) {
             return res.status(400).send("ไม่พบวิชาที่เลือกในฐานข้อมูล")
         }
 
