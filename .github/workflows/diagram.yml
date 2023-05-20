@@ -1,6 +1,9 @@
 name: Create diagram
-run-name: "${{ github.actor }} กำลังสร้าง Visualize สุดเท่อยู่ ✨"
-on: [push]
+on:
+  workflow_dispatch: {}
+  push:
+    branches:
+      - main
 jobs:
   get_data:
     runs-on: ubuntu-latest
