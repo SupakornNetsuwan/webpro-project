@@ -129,7 +129,7 @@ export default {
   mounted() {},
   methods: {
     async createPost() {
-      if (v$.$invalid) {
+      if (this.v$.$invalid) {
         this.$store.commit("setIsModalOpen", {
           isModalOpen: true,
           content: "โปรดกรอกข้อมูลให้ครบถ้วน",
@@ -153,7 +153,7 @@ export default {
         this.$store.commit("setIsModalOpen", {
           isModalOpen: true,
           content: "สร้างโพสต์สำเร็จ 🌟",
-          redirectTo: "",
+          redirectTo: `/posts/${response.data.post_id}`,
         });
       } catch (err) {
         this.$store.commit("setIsModalOpen", {
