@@ -23,6 +23,9 @@
             v-model="title"
             className="input w-full box-border xl:max-w-[70%]"
           />
+          <p v-if="!v$.title.minLength.$response" class="text-red-primary mt-2">
+            หัวข้อบทเรียนต้องมีความยาวอย่างน้อย 5 ตัวอักษร
+          </p>
         </div>
         <div>
           <h4 className="text-blue-primary mt-8">
@@ -46,6 +49,9 @@
             name="lesson-content"
           >
           </QuillEditor>
+          <p v-if="!v$.content.maxLength.$response" class="text-red-primary mt-2">
+            ภาพมีขนาดใหญ่เกินไป
+          </p>
         </div>
         <div>
           <h4 className="text-blue-primary mt-8">
@@ -65,8 +71,8 @@
 
       <div class="h-[1px] bg-gray-2 my-8" />
       <button
-        @click="updateLesson"
-        className="flex items-center space-x-1 px-4 py-2 transition-all duration-300 bg-blue-primary border-blue-primary"
+        @click="updateLesson" :disabled="v$.$invalid"
+        className="flex items-center space-x-1 px-4 py-2 transition-all duration-300 bg-blue-primary border-blue-primary disabled:bg-blue-primary/50 border-blue-primary/5"
       >
         <PencilSquareIcon class="w-6 h-6 text-white" />
         <h5 class="text-white">แก้ไขบทเรียน</h5>
@@ -78,8 +84,15 @@
 import ContentWrapper from "../components/ContentWrapper.vue";
 import { ChevronLeftIcon, PencilSquareIcon } from "@heroicons/vue/24/outline";
 import { getLesson, editLesson, getLearningDocument } from "../resources/api";
+import { useVuelidate } from "@vuelidate/core";
+import { required, minLength, maxLength } from "@vuelidate/validators";
 
 export default {
+  setup () {
+    const v$ = useVuelidate();
+
+    return { v$ };
+  },
   components: {
     ContentWrapper,
     ChevronLeftIcon,
@@ -127,13 +140,6 @@ export default {
     },
     async updateLesson(e) {
       const { id: postId, lessonId } = this.$route.params;
-      if (!this.title || !this.intro || !this.content) {
-        this.$store.commit("setIsModalOpen", {
-          isModalOpen: true,
-          content: "กรุณากรอกข้อมูลให้ครบทุกช่อง",
-        });
-        return;
-      }
 
       try {
         const payload = new FormData();
@@ -160,5 +166,12 @@ export default {
     },
   },
   watch: {},
+  validations () {
+    return {
+      title: {required, minLength: minLength(5)},
+      intro: {required},
+      content: { required, maxLength: maxLength(1000000)}
+    }
+  }
 };
 </script>

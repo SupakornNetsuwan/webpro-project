@@ -1,10 +1,8 @@
 <template>
   <div class="w-full flex min-h-screen flex-col bg-gray-1">
     <content-wrapper>
-      <button
-        @click="($event) => $router.go(-1)"
-        class="flex items-center cursor-pointer border-none bg-transparent pl-0"
-      >
+      <button @click="($event) => $router.go(-1)"
+        class="flex items-center cursor-pointer border-none bg-transparent pl-0">
         <ChevronLeftIcon class="h-5 w-5 text-red-primary" />
         <h4 class="text-red-primary">กลับ</h4>
       </button>
@@ -21,11 +19,8 @@
         </h4>
       </div>
       <hr class="my-6 text-gray-2" />
-      <button
-        @click="downloadFile(lesson)"
-        v-if="lesson.file_location"
-        class="w-full space-x-2 flex items-center justify-center bg-white hover:bg-blue-soft text-blue-primary border-blue-primary mb-6 transition-all duration-150"
-      >
+      <button @click="downloadFile(lesson.lesson_id)" v-if="lesson.file_location"
+        class="w-full space-x-2 flex items-center justify-center bg-white hover:bg-blue-soft text-blue-primary border-blue-primary mb-6 transition-all duration-150">
         <CloudArrowDownIcon class="h-6 text-blue-primary" />
         <h4>ดาวน์โหลดเอกสาร</h4>
       </button>
@@ -40,7 +35,7 @@ import { ChevronLeftIcon } from "@heroicons/vue/24/outline";
 import { CloudArrowDownIcon } from "@heroicons/vue/24/outline";
 /* --------------------- Mock API --------------------- */
 import postsApi from "../resources/postsApi.json";
-import { getLesson, getPost } from "../resources/api";
+import { getLearningDocument, getLesson, getPost } from "../resources/api";
 
 export default {
   name: "Lesson",
@@ -77,9 +72,9 @@ export default {
     }
   },
   methods: {
-    downloadFile: (lesson) => {
-      window.open(lesson.file_location)
-    },
+    downloadFile: (lessonId) => {
+      getLearningDocument(lessonId)
+    }
   },
   computed: mapState({
     authen: (state) => state.authen,

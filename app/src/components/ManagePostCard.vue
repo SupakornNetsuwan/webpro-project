@@ -179,7 +179,7 @@ export default {
     },
     async deleteLesson(lesson_id) {
       try {
-        const response = await deleteLesson(lesson_id);
+        const response = await deleteLesson(lesson_id, this.post.post_id);
         console.log(response.data);
 
         this.$emit("removeLesson", lesson_id);
