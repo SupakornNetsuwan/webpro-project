@@ -100,6 +100,11 @@ export const getMyPosts = async () => {
     return response
 }
 
+export const getSuggestPosts = async (take) => {
+    const response = await instance.get(`/api/posts/suggest-posts?take=${take}`)
+    return response
+}
+
 export const createSubject = async (payload) => {
     const response = await instance.post("/api/subjects", payload)
     return response

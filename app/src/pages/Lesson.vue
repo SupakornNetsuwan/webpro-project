@@ -38,9 +38,8 @@ import { mapState } from "vuex";
 import ContentWrapper from "../components/ContentWrapper.vue";
 import { ChevronLeftIcon } from "@heroicons/vue/24/outline";
 import { CloudArrowDownIcon } from "@heroicons/vue/24/outline";
-/* --------------------- Mock API --------------------- */
-import postsApi from "../resources/postsApi.json";
-import { getLesson, getPost } from "../resources/api";
+/* --------------------- API --------------------- */
+import { getLesson, getPost} from "../resources/api";
 
 export default {
   name: "Lesson",
