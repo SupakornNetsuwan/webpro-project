@@ -124,6 +124,9 @@ export const createLesson = async (req: Request, res: Response) => {
     if (!title || !intro || !content) return res.status(400).send("กรุณากรอกข้อมูลให้ครบถ้วน")
     if (content.length > 1000000) return res.status(400).send("ภาพใน content มีขนาดใหญ่เกินไป")
     if (title.length < 5) return res.status(400).send("หัวข้อบทเรียนต้องมีความยาวอย่างน้อย 5 ตัวอักษร")
+    if (title.length > 100 || intro.length > 1000) {
+        return res.status(400).send("หัวข้อโพสต์ หรือเนื้อหาเกริ่นยาวเกินไป")
+    }
 
     // file เป็น optional ดังนั้นต้องมีการตรวจสอบว่ามีไฟล์ไหม
     const { filename, path } = req.file || {}
@@ -197,6 +200,9 @@ export const editLesson = async (req: Request, res: Response) => {
     if (!title || !intro || !content) return res.status(400).send("กรุณากรอกข้อมูลให้ครบถ้วน")
     if (content.length > 1000000) return res.status(400).send("ภาพใน content มีขนาดใหญ่เกินไป")
     if (title.length < 5) return res.status(400).send("หัวข้อบทเรียนต้องมีความยาวอย่างน้อย 5 ตัวอักษร")
+    if (title.length > 100 || intro.length > 1000) {
+        return res.status(400).send("หัวข้อโพสต์ หรือเนื้อหาเกริ่นยาวเกินไป")
+    }
 
     // file เป็น optional ดังนั้นต้องมีการตรวจสอบว่ามีไฟล์ไหม
     const { filename, path } = req.file || {}

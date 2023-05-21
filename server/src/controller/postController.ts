@@ -35,6 +35,10 @@ export const createPost = async (req: Request, res: Response) => {
             return res.status(400).send("หัวข้อโพสต์ หรือเนื้อหาเกริ่นสั้นเกินไป")
         }
 
+        if (title.length > 100 || intro.length > 30000) {
+            return res.status(400).send("หัวข้อโพสต์ หรือเนื้อหาเกริ่นยาวเกินไป")
+        }
+
         //เช็คว่า subjectName เป็นวิชาที่มีอยู่ใน database มั้ย
         const hasSubject = await prisma.subject.findUnique({
             where: {
@@ -183,6 +187,10 @@ export const editPost = async (req: Request, res: Response) => {
 
         if (title.length < 5 || intro.length < 10) {
             return res.status(400).send("หัวข้อโพสต์ หรือเนื้อหาเกริ่นสั้นเกินไป")
+        }
+
+        if (title.length > 100 || intro.length > 30000) {
+            return res.status(400).send("หัวข้อโพสต์ หรือเนื้อหาเกริ่นยาวเกินไป")
         }
 
         //เช็คว่า subjectName เป็นวิชาที่มีอยู่ใน database มั้ย

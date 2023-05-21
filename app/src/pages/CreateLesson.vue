@@ -25,6 +25,9 @@
           <p v-if="!v$.title.minLength.$response" class="text-red-primary mt-2">
             หัวข้อบทเรียนต้องมีความยาวอย่างน้อย 5 ตัวอักษร
           </p>
+          <p v-if="!v$.title.maxLength.$response" class="text-red-primary mt-2">
+            หัวข้อบทเรียนมีความยาวได้ไม่เกิน 100 ตัวอักษร
+          </p>
         </div>
         <div>
           <h4 className="text-blue-primary mt-8">
@@ -35,6 +38,9 @@
             v-model="intro"
             className="input w-full box-border xl:max-w-[70%]"
           />
+          <p v-if="!v$.intro.maxLength.$response" class="text-red-primary mt-2">
+            เนื้อหาเกริ่นบทเรียนมีความยาวได้ไม่เกิน 1000 ตัวอักษร
+          </p>
         </div>
         <div>
           <h4 className="text-blue-primary mt-8">
@@ -164,8 +170,8 @@ export default {
   },
   validations () {
     return {
-      title: {required, minLength: minLength(5)},
-      intro: {required},
+      title: {required, minLength: minLength(5), maxLength: maxLength(100)},
+      intro: {required, maxLength: maxLength(1000)},
       content: { required, maxLength: maxLength(1000000)}
     }
   }
