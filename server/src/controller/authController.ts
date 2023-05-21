@@ -27,6 +27,8 @@ export const logout = async (req: Request, res: Response) => {
         res.cookie('refresh_token', null, { httpOnly: false, secure: false });
         res.cookie('jwt_token', null, { httpOnly: false, secure: false });
 
+        console.log("ผู้ใช้ทำการออกจากระบบ 🟠 เวลา :", new Date().toLocaleTimeString("th"))
+        
         res.send({
             status: 200,
             message: "Logout complete"
@@ -69,6 +71,8 @@ export const login = async (req: Request, res: Response) => {
         //set header เก็บ token ลงไปใน Cookie
         res.cookie('refresh_token', refresh_token, { httpOnly: false, secure: false });
         res.cookie('jwt_token', jwt_token, { httpOnly: false, secure: false });
+
+        console.log("ผู้ใช้ทำเข้าสู่ระบบ 🟠 เวลา :", new Date().toLocaleTimeString("th"))
 
         return res.json({
             status: 200,

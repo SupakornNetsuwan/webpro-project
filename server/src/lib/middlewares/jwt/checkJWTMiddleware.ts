@@ -31,9 +31,8 @@ const checkJWTMiddleware = (req: Request, res: Response, next: NextFunction) => 
         if (message === "jwt expired") {
             // หมดอายุ ก็ลองทำ Refresh ดู
             try {
-                const newTokens = await refreshToken(refresh_token);
-                const { jwt_token, new_refresh_token } = newTokens;
-
+                const { jwt_token, new_refresh_token } = await refreshToken(refresh_token)
+                
                 // เปลี่ยน Access Token , Refresh Token เป็นอันใหม่
                 res.cookie('refresh_token', new_refresh_token, { httpOnly: false, secure: false });
                 res.cookie('jwt_token', jwt_token, { httpOnly: false, secure: false });
@@ -42,13 +41,12 @@ const checkJWTMiddleware = (req: Request, res: Response, next: NextFunction) => 
                 const decoded = jwt_decode(jwt_token.split(" ")[1]);
                 res.locals.userDetails = decoded;
 
-                console.log("Refreshed Token 🐕", "เวลา :", new Date().toLocaleTimeString("th"))
+                console.log("Refreshed Token 🟢🔃", "เวลา :", new Date().toLocaleTimeString("th"))
                 return next();
             } catch (err) {
                 // ถ้่าไม่สามารถ Refresh Token ได้ก็แสดงว่า invalid refresh_token
                 const message = getErrorMessage(err);
-                console.log(message + " เวลา :", new Date().toLocaleTimeString("th"))
-
+                console.log(message + " 🔴 เวลา :", new Date().toLocaleTimeString("th"))
                 return res.status(401).send(message)
             }
         }
