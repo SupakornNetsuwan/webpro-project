@@ -79,6 +79,7 @@ import {
   LightBulbIcon,
   UserCircleIcon,
   FolderIcon,
+  MagnifyingGlassIcon
 } from "@heroicons/vue/24/outline";
 import { mapState } from "vuex";
 
@@ -89,6 +90,7 @@ export default {
     Squares2X2Icon,
     UserCircleIcon,
     FolderIcon,
+    MagnifyingGlassIcon,
   },
   data() {
     return {
@@ -107,10 +109,10 @@ export default {
           icon: Squares2X2Icon,
         },
         {
-          title: "แนะนำพิเศษ",
-          name: "suggest",
-          path: "/suggest",
-          icon: LightBulbIcon,
+          title: "ค้นหา",
+          name: "searchPosts",
+          path: "/search-posts",
+          icon: MagnifyingGlassIcon,
         },
       ],
       privateRoutes: [
