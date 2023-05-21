@@ -28,17 +28,11 @@ instance.interceptors.response.use(response => {
     });
 
     return delayRetryRequest.then(() => axios(config)).catch(async error => {
-        console.log(error, ": ปัญหาที่ Axios instance");
-
-
-        alert(error.response.data + " โปรดเข้าสู่ระบบใหม่")
+        console.log(error, ": ปัญหาที่ Axios instance ทำการออกจากระบบ");
+        alert(error.response.data + " : โปรดเข้าสู่ระบบใหม่")
         await instance.post("/api/auth/logout")
         localStorage.removeItem("authen")
         location.replace("/")
-
-        console.log("Auto logout")
-
-        throw error;
     });
 
 });

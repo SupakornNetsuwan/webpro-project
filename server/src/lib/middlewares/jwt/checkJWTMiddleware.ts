@@ -37,21 +37,22 @@ const checkJWTMiddleware = (req: Request, res: Response, next: NextFunction) => 
                 // เปลี่ยน Access Token , Refresh Token เป็นอันใหม่
                 res.cookie('refresh_token', new_refresh_token, { httpOnly: false, secure: false });
                 res.cookie('jwt_token', jwt_token, { httpOnly: false, secure: false });
-                
+
                 // ทำการอ่านข้อมูลเพื่อเก็บใน res.locals.userDetails
                 const decoded = jwt_decode(jwt_token.split(" ")[1]);
                 res.locals.userDetails = decoded;
 
-                console.log("Refreshed a token 🐕", "เวลา :", new Date().toLocaleTimeString("th"))
+                console.log("Refreshed Token 🐕", "เวลา :", new Date().toLocaleTimeString("th"))
                 return next();
             } catch (err) {
                 // ถ้่าไม่สามารถ Refresh Token ได้ก็แสดงว่า invalid refresh_token
                 const message = getErrorMessage(err);
-                console.log(message, "Error: ไม่สามารถ Refresh token ได้ 😭");
+                console.log(message + " เวลา :", new Date().toLocaleTimeString("th"))
+
                 return res.status(401).send(message)
             }
         }
-        
+
         // Unknown error 🔴
         return res.status(500).send(message)
     })

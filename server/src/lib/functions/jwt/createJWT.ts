@@ -20,7 +20,7 @@ import { User } from "@prisma/client";
 
 export const createAccessToken = <T extends User>({ email, picture, name, firstname, lastname, role, ...options }: T): string => {
     const token = jwt.sign({ email, picture, name, firstname, lastname, role }, process.env.JWT_PRIVATEKEY as string, {
-        expiresIn: "15s"
+        expiresIn: "30m"
     });
 
     return "Bearer " + token
@@ -46,7 +46,7 @@ export const createAccessToken = <T extends User>({ email, picture, name, firstn
 
 export const createRefreshToken = <T extends User>({ email, picture, name, firstname, lastname, role, ...options }: T): string => {
     const token = jwt.sign({ email, picture, name, firstname, lastname, role }, process.env.REFRESHTOKEN_PRIVATEKEY as string, {
-        expiresIn: "12h"
+        expiresIn: "1d"
     });
 
     return "Bearer " + token;
