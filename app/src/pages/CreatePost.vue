@@ -30,6 +30,9 @@
           <p v-if="!v$.title.minLength.$response" class="text-red-primary mt-2">
             หัวข้อโพสต์ต้องมีความยาวอย่างน้อย 5 ตัวอักษร
           </p>
+          <p v-if="!v$.title.maxLength.$response" class="text-red-primary mt-2">
+            หัวข้อโพสต์มีความยาวได้ไม่เกิน 100 ตัวอักษร
+          </p>
         </div>
         <div>
           <h4 className="text-blue-primary mt-8">
@@ -59,6 +62,9 @@
           />
           <p v-if="!v$.intro.minLength.$response" class="text-red-primary mt-2">
             เนื้อหาเกริ่นต้องมีความยาวอย่างน้อย 10 ตัวอักษร
+          </p>
+          <p v-if="!v$.intro.maxLength.$response" class="text-red-primary mt-2">
+            เนื้อหาเกริ่นมีความยาวได้ไม่เกิน 30000 ตัวอักษร
           </p>
         </div>
         <div>
@@ -96,7 +102,7 @@ import { mapState } from "vuex";
 import ComboBox from "../components/ComboBox.vue";
 import { getSubjects, createPost } from "../resources/api";
 import { useVuelidate } from "@vuelidate/core";
-import { required, minLength } from "@vuelidate/validators";
+import { required, minLength, maxLength } from "@vuelidate/validators";
 
 export default {
   setup() {
@@ -191,8 +197,8 @@ export default {
   }),
   validations() {
     return {
-      title: { required, minLength: minLength(5) },
-      intro: { required, minLength: minLength(10) },
+      title: { required, minLength: minLength(5), maxLength: maxLength(100) },
+      intro: { required, minLength: minLength(10), maxLength: maxLength(30000)},
       chosenSubject: { required },
     };
   },
