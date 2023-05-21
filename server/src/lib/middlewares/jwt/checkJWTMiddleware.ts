@@ -52,7 +52,7 @@ const checkJWTMiddleware = (req: Request, res: Response, next: NextFunction) => 
         }
 
         // Unknown error 🔴
-        return res.status(500).send(message)
+        return res.status(401).send(message)
     })
 }
 
