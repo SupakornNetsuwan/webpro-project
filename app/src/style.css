@@ -99,7 +99,7 @@
   }
 
   .v-html-template img {
-    @apply w-full lg:w-2/3 mx-auto block;
+    @apply w-full lg:w-2/3 mx-auto object-contain block;
   }
 
   .v-html-template ul li,
