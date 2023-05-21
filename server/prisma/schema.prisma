@@ -17,7 +17,6 @@ model User {
   lastname      String
   name          String
   picture       String
-  refresh_token String?      @db.LongText
   role          Role         @default(USER)
   posts         Post[]
   follow_post   FollowPost[]

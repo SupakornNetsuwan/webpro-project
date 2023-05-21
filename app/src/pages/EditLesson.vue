@@ -89,7 +89,7 @@
 <script>
 import ContentWrapper from "../components/ContentWrapper.vue";
 import { ChevronLeftIcon, PencilSquareIcon } from "@heroicons/vue/24/outline";
-import { getLesson, editLesson, getLearningDocument } from "../resources/api";
+import { getLesson, editLesson } from "../resources/api";
 import { useVuelidate } from "@vuelidate/core";
 import { required, minLength, maxLength } from "@vuelidate/validators";
 
@@ -117,13 +117,6 @@ export default {
       this.content = lesson_content;
       this.intro = lesson_intro;
       this.title = lesson_title;
-    } catch (err) {
-      console.log(err);
-    }
-
-    try {
-      const { data } = await getLearningDocument(lessonId);
-      console.log(data);
     } catch (err) {
       console.log(err);
     }

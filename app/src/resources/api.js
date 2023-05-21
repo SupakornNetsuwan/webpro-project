@@ -10,16 +10,37 @@ const instance = axios.create({
 instance.interceptors.response.use(response => {
     return response;
 }, async (error) => {
-    if (error.response.status === 401) {
+    const { config } = error;
+
+    /**
+     *  ลองส่ง Reqeust ใหม่เผื่อว่าเคสที่ Token หมดอายุต้องมีการสร้าง Request token ใหม่
+     *  แต่เราส่ง Request ไปหลายๆ Request ทีเดียวทำให้ใน Request แรกมีการเปลี่ยน
+     *  1. Refresh token
+     *  2. Access token
+     *  ทีนี้ Request อื่นๆ ที่ตามมาแบบ Asynchronous จะไม่ได้จะพยายามสร้าง Access token ใหม่
+     *  แต่เมื่อเทียบ refresh token มันไม่ตรงเลยถูก Reject ด้วย status code 401
+     */
+    const delayRetryRequest = new Promise((resolve) => {
+        setTimeout(() => {
+            console.log("พยายามส่ง Request ใหม่ :", config.url);
+            resolve();
+        }, 100);
+    });
+
+    return delayRetryRequest.then(() => axios(config)).catch(async error => {
+        console.log(error, ": ปัญหาที่ Axios instance");
+
+
         alert(error.response.data + " โปรดเข้าสู่ระบบใหม่")
         await instance.post("/api/auth/logout")
         localStorage.removeItem("authen")
         location.replace("/")
 
         console.log("Auto logout")
-    }
 
-    throw error;
+        throw error;
+    });
+
 });
 
 export const getPosts = async () => {

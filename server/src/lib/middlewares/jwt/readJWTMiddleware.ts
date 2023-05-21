@@ -24,7 +24,7 @@ const readJWTMiddleware = (req : Request, res : Response, next : NextFunction) =
         const decoded = jwt_decode(jwt_token.split(" ")[1]);
         
         res.locals.userDetails = decoded;
-
+        
         return next() 
     }catch(err){
         const message = getErrorMessage(err);
