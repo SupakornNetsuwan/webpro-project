@@ -80,7 +80,11 @@ const routes = [
         },]
     },
     {
-        path: '/search-posts', name: "searchPosts", component: SearchPosts
+        path: '/search-posts',
+        name: "searchPosts",
+        meta: {
+            requiresAuth: true
+        }, component: SearchPosts
     },
     {
         path: '/summaries',
