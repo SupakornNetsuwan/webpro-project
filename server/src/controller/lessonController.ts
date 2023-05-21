@@ -34,6 +34,11 @@ export const getAllLessonsFromPost = async (req: Request, res: Response) => {
     }
 }
 
+/**
+ * @route /api/lessons//mylessons-amount
+ * @method GET
+ * @description ทำการดึงข้อมูลจำนวน lesson ที่ผู้ใช้สร้าง ยกเว้น Admin จะดึงจำนวน lesson ทั้งหมดที่มีในระบบ
+ */
 
 export const getMyLessonsAmount = async (req: Request, res: Response) => {
 
@@ -161,7 +166,7 @@ export const createLesson = async (req: Request, res: Response) => {
 
 /**
  * @route /api/lessons/:postId/:lessonId
- * @param postId รหัสของ post ที่ต้องการแก้ข lesson
+ * @param postId รหัสของ post ที่เป็นเจ้าของ lesson ที่ต้องการแก้ไข
  * @param lessonId รหัสของ lesson ที่จะถูกแก้ไข
  * @method PUT
  * @description ทำการแก้ไข lesson

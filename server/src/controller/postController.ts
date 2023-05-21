@@ -362,7 +362,7 @@ export const getFollowersStatistic = async (req: Request, res: Response) => {
 /**
  * @route /api/posts/followers-amount
  * @method GET
- * @description ทำการดึงจำนวนผู้ที่ติดตามเราอยู่
+ * @description ทำการดึงจำนวนผู้ที่ติดตามโพสต์ของเราอยู่
  */
 
 export const getFollowersAmount = async (req: Request, res: Response) => {

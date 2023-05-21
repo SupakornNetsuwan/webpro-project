@@ -2,6 +2,7 @@ import { Response, Request, NextFunction } from "express";
 import { Prisma } from "@prisma/client"
 import prisma from "../lib/connection/prisma"
 import getErrorMessage from "../lib/functions/getErrorMessage";
+
 /**
  * @route /api/subjects
  * @method GET
