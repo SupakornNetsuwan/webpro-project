@@ -5,6 +5,7 @@ services:
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
+      TZ: "Asia/Bangkok"
       MYSQL_ROOT_PASSWORD: "password"
       MYSQL_DATABASE: "webpro"
     ports:
