@@ -8,9 +8,9 @@
         <ChevronLeftIcon class="h-5 w-5 text-red-primary" />
         <h4 class="text-red-primary">กลับ</h4>
       </button>
-      <h1 className="text-black mt-10">โพสต์ของคุณ</h1>
+      <h1 className="text-black mt-10">{{ authen.role === 'ADMIN' ? "โพสต์ทั้งหมดในระบบ":"โพสต์ของคุณ" }}</h1>
       <h4 className="text-gray-3">
-        ทั้งหมดนี่คือโพสต์ที่คุณสร้างไว้ สามารถจัดการ แก้ไข ลบ โพสต์ได้
+        {{ authen.role === 'ADMIN' ? "นี่คือโพสต์ทั้งหมดที่มีอยู่ในระบบ สามารถจัดการ สร้างบทเรียน แก้ไข ลบ โพสต์และบทเรียนได้":"ทั้งหมดนี่คือโพสต์ที่คุณสร้างไว้ สามารถจัดการสร้างบทเรียน แก้ไข ลบ โพสต์และบทเรียนได้" }}
       </h4>
       <div class="h-[1px] bg-gray-2 my-8" />
       <div class="grid gap-5">
