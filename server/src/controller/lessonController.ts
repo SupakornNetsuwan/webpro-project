@@ -35,7 +35,7 @@ export const getAllLessonsFromPost = async (req: Request, res: Response) => {
 }
 
 /**
- * @route /api/lessons//mylessons-amount
+ * @route /api/lessons/mylessons-amount
  * @method GET
  * @description ทำการดึงข้อมูลจำนวน lesson ที่ผู้ใช้สร้าง ยกเว้น Admin จะดึงจำนวน lesson ทั้งหมดที่มีในระบบ
  */
