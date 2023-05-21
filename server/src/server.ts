@@ -4,7 +4,6 @@ import express from "express";
 import cors from "cors";
 import cookieParser from 'cookie-parser';
 import path from 'path'
-
 /* routes */
 import router from "./routes"
 

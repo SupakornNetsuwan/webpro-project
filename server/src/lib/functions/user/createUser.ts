@@ -9,19 +9,15 @@ interface CreateUserProps {
     family_name: string
 }
 
-interface CreateUserOptionProps {
-    getRefreshToken: boolean
-}
-
 /**
  * 
  * @description สร้างผู้ใช้ใหม่ โดยการที่เรารับข้อมูลของเขา และ Return ผู้ใช้คนนั้นออกมา
  */
 const createUser = async (
     { email, picture, name, given_name, family_name }: CreateUserProps,
-    { getRefreshToken }: CreateUserOptionProps
 ): Promise<User> => {
-    const newUser = await prisma.user.create({
+    
+    let newUser = await prisma.user.create({
         data: {
             email,
             picture,
@@ -36,8 +32,7 @@ const createUser = async (
             name: true,
             picture: true,
             role: true,
-            created_date: true,
-            refresh_token: getRefreshToken ? true : false
+            created_date: true
         }
     })
 
