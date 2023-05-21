@@ -6,11 +6,11 @@ import updateUserRefreshToken from "../user/updateUserRefreshToken"
 import getUserRefreshToken from "../user/getUserRefreshToken";
 import getErrorMessage from "../getErrorMessage";
 /**
- * @description  สามารถ ตรวจสอบ Refresh token ที่แนบมาว่าเหมือนกันหรือไม่ โดยการเอา Refresh token ที่แนบมาไปเทียบกับ Refresh token ที่เก็บไว้ใน DB
-    หากเหมือนกัน ให้สร้าง JWT token ใหม่ และ Refresh token ใหม่ และอัพเดท Refresh token ใหม่ลงใน DB
+ * @description  สามารถ ตรวจสอบ Refresh token ที่แนบมาว่าเหมือนกันหรือไม่ โดยการเอา Refresh token ที่แนบมาไปเทียบกับ Refresh token ที่เก็บไว้ใน Redis
+    หากเหมือนกัน ให้สร้าง JWT token ใหม่ และ Refresh token ใหม่ และอัพเดท Refresh token ใหม่ลงใน Redis
     หากไม่เหมือนกัน ให้ส่ง Error กลับไป
-    
-    ทีนี้เรา return เป็น Object เมื่อสำเร็จ
+
+    @return เป็น Object ที่เป็น jwt_token และ new_refresh_token เมื่อสำเร็จ
  */
 
 const refreshToken = async (refresh_token: string): Promise<{ jwt_token: string, new_refresh_token: string }> => {
