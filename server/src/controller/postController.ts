@@ -85,21 +85,46 @@ export const createPost = async (req: Request, res: Response) => {
 
 export const getPosts = async (req: Request, res: Response) => {
     try {
-        const subjectPost = await prisma.post.findMany({
-            include: {
-                follow_post: {
-                    where: {
-                        email: res.locals.userDetails.email
+        //เช็คว่ามี query string ส่งมามั้ย
+        const search = req.query.search || null
+
+        if (search) {
+            //ถ้ามี search
+            const subjectPost = await prisma.post.findMany({
+                include: {
+                    follow_post: {
+                        where: {
+                            email: res.locals.userDetails.email
+                        }
                     }
+                },
+                where: {
+                    post_title: {
+                        contains: search.toString(),
+                    }
+                },
+                orderBy: {
+                    create_date: 'desc'
                 }
+            })
+            res.status(200).json(subjectPost)
+        } else {
+            //ถ้าไม่มีให้ส่งทั้งหมด
+            const subjectPost = await prisma.post.findMany({
+                include: {
+                    follow_post: {
+                        where: {
+                            email: res.locals.userDetails.email
+                        }
+                    }
 
-            },
-            orderBy: {
-                create_date: 'desc'
-            }
-        })
-
-        res.json(subjectPost)
+                },
+                orderBy: {
+                    create_date: 'desc',
+                }
+            })
+            res.status(200).json(subjectPost)
+        }
     } catch (err) {
         return res.status(500).send(getErrorMessage(err))
     }

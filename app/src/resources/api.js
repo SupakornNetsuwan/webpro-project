@@ -37,8 +37,15 @@ instance.interceptors.response.use(response => {
 
 });
 
-export const getPosts = async () => {
-    const response = instance.get("http://localhost:3001/api/posts")
+export const getPosts = async (query = null) => {
+    let response
+    if (!query){
+        console.log(query)
+        response = instance.get("http://localhost:3001/api/posts")
+    }
+    else {
+        response = instance.get(`http://localhost:3001/api/posts?search=${query}`)
+    }
     return response
 }
 

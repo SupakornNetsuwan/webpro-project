@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory } from "vue-router"
 import Home from "../pages/Home.vue"
 import Landing from "../pages/Landing.vue"
-import Suggest from "../pages/Suggest.vue"
+import SearchPosts from "../pages/SearchPosts.vue"
 import Summaries from "../pages/Summaries.vue"
 import SummariesFollowing from "../pages/SummariesFollowing.vue"
 import Notfound from "../pages/NotFound.vue"
@@ -80,7 +80,11 @@ const routes = [
         },]
     },
     {
-        path: '/suggest', name: "suggest", component: Suggest
+        path: '/search-posts',
+        name: "searchPosts",
+        meta: {
+            requiresAuth: true
+        }, component: SearchPosts
     },
     {
         path: '/summaries',
