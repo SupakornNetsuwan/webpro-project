@@ -49,7 +49,6 @@
       >
         {{ post.intro }}
       </p>
-      <div class="w-[1px] bg-gray-2 ml-2" />
       <div class="h-[1px] bg-gray-2 mx-4 my-8 md:mx-8 lg:mx-12" />
       <div class="mx-4 md:mx-8 lg:mx-12 pb-4 md:pb-8 lg:pb-12">
         <h2 class="text-black">บทเรียนต่างๆ</h2>
