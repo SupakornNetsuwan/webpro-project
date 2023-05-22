@@ -13,7 +13,7 @@
           {{authen.role === 'ADMIN' ? "แอดมินสามารถจัดการสรุปทั้งหมดในระบบได้จากบอร์ดจัดการเนื้อหา" :"คุณสามารถจัดการสรุปทั้งหมดของคุณได้จากบอร์ดจัดการเนื้อหา"}}
         </p>
       </div>
-      <div className="w-full h-0.5 bg-gray-2 my-8" />
+      <div className="w-full h-[1px] bg-gray-2 my-8" />
       <h3 className="text-black">การจัดการ</h3>
       <div
         className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4  mt-4 "

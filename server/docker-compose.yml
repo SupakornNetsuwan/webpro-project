@@ -21,5 +21,16 @@ services:
       PMA_HOST: mysql
     depends_on:
       - mysql
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+  redisinsight:
+    image: redislabs/redisinsight:latest
+    ports:
+      - "8081:8001"
 volumes:
   webpro-volume:
+networks:
+  backend-bridge:
+    driver: bridge

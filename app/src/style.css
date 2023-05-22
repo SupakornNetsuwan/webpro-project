@@ -87,11 +87,11 @@
     @apply bg-blue-soft p-4 font-mono text-blue-primary rounded;
   }
 
-  .is-circle{
-    @apply bg-gray-2/50 !important
+  .is-circle {
+    @apply bg-gray-2/50 !important;
   }
-  .is-circle:hover{
-    @apply bg-gray-2 !important
+  .is-circle:hover {
+    @apply bg-gray-2 !important;
   }
 
   .v-html-template p:has(img) {
@@ -99,6 +99,11 @@
   }
 
   .v-html-template img {
-    @apply w-full lg:w-2/3 mx-auto block;
+    @apply w-full lg:w-2/3 mx-auto object-contain block;
+  }
+
+  .v-html-template ul li,
+  .v-html-template ol li {
+    @apply list-decimal my-4 ml-4;
   }
 }
