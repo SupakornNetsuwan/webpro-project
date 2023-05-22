@@ -1,101 +1,64 @@
 <template>
-  <div className="w-full min-h-[100vh]">
+  <div
+    class="bg-blue-soft border-b-2 border-t-0 border-r-0 border-l-0 border-blue-primary border-dotted"
+  >
     <div
-      className="w-full h-96 bg-slate-100 flex items-center justify-center"
-    ></div>
-    <div class="animate-pulse mt-12">
-      <div
-        class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 max-w-[640px] mb-2.5 mx-auto"
-      ></div>
-      <div
-        class="h-2.5 mx-auto bg-gray-300 rounded-full dark:bg-gray-700 max-w-[540px]"
-      ></div>
-      <div class="flex items-center justify-center mt-4">
-        <svg
-          class="w-10 h-10 mr-2 text-gray-200 dark:text-gray-700"
-          aria-hidden="true"
-          fill="currentColor"
-          viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
-            clip-rule="evenodd"
-          ></path>
-        </svg>
-        <div
-          class="w-20 h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 mr-3"
-        ></div>
-        <div class="w-24 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
-      </div>
-      <span class="sr-only">Loading...</span>
-    </div>
-    <div
-      role="status"
-      class="space-y-2.5 animate-pulse max-w-lg mx-auto mt-12 flex flex-col items-center"
+      className="w-full min-h-[20em] max-w-[60em] mx-auto flex flex-col md:flex-row p-8 box-border"
     >
-      <div>
-        <h3 className="text-blue-primary mb-2 text-center">
-          ทำไมคุณถึงควรใช้ Summarite
-        </h3>
-        <p className="text-center mb-4 text-gray-4">
-          เพราะคุณหล่อเท่มากพ่อไงละ แล้วถ้าคุณจะไม่ให้ Prototype
-          นี้ผ่านได้อย่างไร?
-        </p>
+      <div
+        class="flex flex-1 flex-col items-center md:items-start justify-center"
+      >
+        <h1
+          class="bg-clip-text text-transparent bg-gradient-to-br from-blue-primary to-blue-primary/60"
+        >
+          รวมสรุปสำหรับนักศึกษาไอที
+        </h1>
+        <h3 class="text-slate-500">ร่วมกันสนับสนุนการอ่านหนังสือกัน!</h3>
+        <ul class="mt-2 text-slate-500 list-inside">
+          <li>สนับสนุนการแบ่งปันเพื่อส่งเสริมศักยภาพเด็กไอที</li>
+          <li>รวมสรุปจากเพื่อนๆ พี่ๆ</li>
+          <li>อ่าน <span class="font-medium text-blue-primary">ฟรี!</span></li>
+        </ul>
       </div>
-      <div class="flex items-center w-full space-x-2">
-        <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-32"></div>
-        <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
-        <div
-          class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-full"
-        ></div>
+      <div class="flex-1 flex items-center justify-center">
+        <img
+          src="../assets/read-book.png"
+          alt="read-book"
+          width="500px"
+          class="w-full max-w-[23em]"
+        />
       </div>
-      <div class="flex items-center w-full space-x-2 max-w-[480px]">
-        <div
-          class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-full"
-        ></div>
-        <div
-          class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-full"
-        ></div>
-        <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
-      </div>
-      <div class="flex items-center w-full space-x-2 max-w-[400px]">
-        <div
-          class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-full"
-        ></div>
-        <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-80"></div>
-        <div
-          class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-full"
-        ></div>
-      </div>
-      <div class="flex items-center w-full space-x-2 max-w-[480px]">
-        <div
-          class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-full"
-        ></div>
-        <div
-          class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-full"
-        ></div>
-        <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
-      </div>
-      <div class="flex items-center w-full space-x-2 max-w-[440px]">
-        <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-32"></div>
-        <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
-        <div
-          class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-full"
-        ></div>
-      </div>
-      <div class="flex items-center w-full space-x-2 max-w-[360px]">
-        <div
-          class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-full"
-        ></div>
-        <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-80"></div>
-        <div
-          class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-full"
-        ></div>
-      </div>
-      <span class="sr-only">Loading...</span>
     </div>
+  </div>
+  <div class="p-8 grid grid-cols-4 gap-12 justify-items-center">
+    <p class="w-full text-block bg-slate-50 rounded p-4">
+      <span class="text-xl font-medium text-blue-primary mb-2 block"
+        >ทำไมคุณถึงต้องใช้</span
+      >
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa harum quo
+      reprehenderit praesentium repellendus a omnis porro corporis beatae ipsum.
+    </p>
+    <p class="w-full text-block bg-slate-50 rounded p-4">
+      <span class="text-xl font-medium text-blue-primary mb-2 block"
+        >การอ่านจะสร้างสังคม</span
+      >
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa harum quo
+      reprehenderit praesentium repellendus a omnis porro corporis beatae ipsum.
+    </p>
+    <p class="w-full text-block bg-slate-50 rounded p-4">
+      <span class="text-xl font-medium text-blue-primary mb-2 block"
+        >ร่วมกันสร้างชุมชนที่น่าอยู่</span
+      >
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa harum quo
+      reprehenderit praesentium repellendus a omnis porro corporis beatae ipsum.
+    </p>
+    <p class="w-full text-block bg-slate-50 rounded p-4">
+      <span class="text-xl font-medium text-blue-primary mb-2 block"
+        >แหล่งศึกษาเพื่อเด็กไอที</span
+      >
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa harum quo
+      reprehenderit praesentium repellendus a omnis porro corporis beatae ipsum.
+    </p>
   </div>
 </template>
 
